@@ -7,22 +7,24 @@
     "packageManagers": []
   },
   "commands": {
-    "build": "",
-    "test": "",
-    "start": "",
-    "lint": ""
+    "build": null,
+    "test": null,
+    "start": "open mocks/index.html in a desktop browser",
+    "lint": null,
+    "serve": "npx serve mocks",
+    "serveAlt": "python -m http.server"
   },
   "paths": {
     "entry": "mocks/index.html",
     "src": "mocks",
-    "tests": "",
-    "artifacts": "",
-    "configs": ["AGENTS.md", "agent.context.json"]
+    "tests": null,
+    "artifacts": null,
+    "configs": ["agent.context.json"]
   },
   "env": {
     "required": [],
     "profiles": {},
-    "notes": ""
+    "notes": "No build toolchain; static assets only"
   },
   "constraints": {
     "sandbox": "danger-full-access",
@@ -30,20 +32,101 @@
     "network": "enabled",
     "os": "any (desktop browser)"
   },
+  "guidance": {
+    "scope": "Applies to the entire repository rooted at this folder.",
+    "purpose": [
+      "Provide fast orientation for agents and humans",
+      "Point to exact commands, paths, and configs",
+      "Capture decisions, tradeoffs, and open questions",
+      "Document current product focus on Succession Planning inside the Talent Management suite"
+    ],
+    "guardrails": [
+      "Do NOT create new mocks, screens, or sample data unless explicitly requested and specified by the Product Owner",
+      "Keep content static unless interactions are explicitly requested",
+      "Confirm scope and acceptance criteria before implementing any new screen or interaction",
+      "UI theme stays locked to light mode; remove any dark-mode toggles if reintroduced",
+      "Interactivity expectation is exactly the current experience (successor click opens modal, modal tabs toggle trend/latest); no new dynamic behavior without PO approval"
+    ],
+    "quickStart": [
+      "Primary machine-readable source is this file",
+      "Prefer declared commands over ad-hoc guesses",
+      "Ask before making destructive structural changes",
+      "Mock entry is mocks/index.html (hash routing works via file://)"
+    ],
+    "mocksOverview": [
+      "Static interactive mock lives under mocks/",
+      "No build step: open mocks/index.html directly in a browser",
+      "Active hash route is /org for the Succession Org Chart",
+      "Shared component: Modal (forms/talent profile overlay)"
+    ],
+    "activeSuccessionMock": {
+      "summary": [
+        "Executive org tree rooted at the CEO with VP-level branches; VP, Fleet Operations exposes a successor list with readiness chips",
+        "Org chart reflects the current hierarchy: Jordan Reyes (CEO) with Maya Chen, Elias Romero, Priya Nair, and Connor Blake reporting to Jordan; Olivia Brooks, Amir Hassan, and Lena Ortiz report up through Elias",
+        "Succession plan lives inside Elias Romero's node: three successor rows stay inline, use readiness color chips (green/yellow/red), and act as the only entry point to the Talent Card",
+        "Successor rows support keyboard and mouse activation, open the Talent Card modal, and expose placeholder action menu items",
+        "Assign Learning menu action opens a dedicated modal showing the selected employee plus Competency vs Catalog search tabs with searchable cards; selecting a card drills into a course detail modal with placeholder Assign CTA",
+        "Talent Card modal shows talent pool nominations, performance/potential nine-box (latest + trend toggle), rating trend chart, career goals, experience, skills, and education",
+        "Readiness chips map ready-green/yellow/red to Ready Now, 1-2 Years, and 3+ Years",
+        "Styling is light theme only with custom org connectors, modal layout, and SVG trend visuals"
+      ],
+      "interactivity": "Match existing behavior: click/keyboard to open modal, switch between Latest and Trend views inside modal."
+    },
+    "structure": [
+      "mocks/index.html — entry file",
+      "mocks/styles.css — theme and layout styles",
+      "mocks/app.js — shell, header/sidebar, routes (only #/org) and nav highlighting",
+      "mocks/router.js — hash router",
+      "mocks/state.js — in-memory state with localStorage persistence retained for future scenarios",
+      "mocks/components/Modal.js — modal backdrop + open/close API",
+      "mocks/screens/orgchart.js — Succession Org Chart (only screen present; add new files only with PO approval)"
+    ],
+    "addingScreens": [
+      "Requires explicit Product Owner approval",
+      "Default experience must remain the Succession Org Chart",
+      "If approved, add mocks/screens/<name>.js, register it in mocks/app.js, and document the route here"
+    ],
+    "environment": [
+      "Target modern desktop browsers (Linux currently in use, but Windows/macOS acceptable)",
+      "No required environment variables",
+      "No tooling versions beyond a browser"
+    ],
+    "tasksNotes": [
+      "Track current work in the tasks array of this file"
+    ],
+    "agentNotes": [
+      "Prefer minimal, targeted changes respecting existing structure",
+      "Do not introduce new dependencies without confirmation",
+      "Validate manually in the browser using the provided commands",
+      "mocks/index.html injects cache-busted CSS/JS URLs each load; keep the inline script so browsers do not cache updates"
+    ]
+  },
   "tasks": [
     {
       "id": "guardrails",
       "title": "Honor explicit-only mock creation",
       "acceptanceCriteria": [
         "No new screens or sample data are added without a written request",
-        "AGENTS.md includes guardrails"
+        "Guidance.guardrails remains accurate"
+      ]
+    },
+    {
+      "id": "succession-orgchart",
+      "title": "Maintain Succession Planning mock",
+      "acceptanceCriteria": [
+        "Route #/org remains the default and loads the org chart shell",
+        "VP, Fleet Operations branch exposes successor list rows with readiness chips and context menu",
+        "Assign Learning modal provides search tabs (Competency / Catalog) with clickable cards that open a follow-up course modal and inert Assign button",
+        "Talent Card modal surfaces pool nominations, performance/potential nine-box, performance rating metric, and career info cards",
+        "Any updates to the mock are reflected in this context file"
       ]
     }
   ],
   "conventions": {
-    "formatter": "",
-    "linter": "",
-    "commitStyle": "",
+    "codeStyle": "Keep edits small and consistent with existing plain JS/CSS; no repo-wide formatter",
+    "linting": "No automated linting; rely on manual browser checks",
+    "naming": "Files use kebab-case; JS identifiers use camelCase",
+    "commitStyle": "Confirm with Product Owner before branching or merging",
     "branching": ""
   }
 }

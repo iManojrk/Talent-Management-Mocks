@@ -1,19 +1,22 @@
 import { Modal } from '../components/Modal.js?v=20250205';
 
 const orgData = {
-  name: 'Jordan Patel',
+  name: 'Jordan Reyes',
   position: 'Chief Executive Officer',
+  color: '#111827',
   children: [
-    { name: 'Maya Chen', position: 'Chief People Officer' },
+    { name: 'Maya Chen', position: 'Chief Logistics Officer', color: '#1e293b' },
     {
       name: 'Elias Romero',
-      position: 'VP, Talent Strategy',
+      position: 'VP, Fleet Operations',
+      color: '#0f766e',
       showChildrenList: true,
       children: [
         {
           name: 'Olivia Brooks',
-          position: 'Talent Operations Lead',
+          position: 'Regional Distribution Manager',
           readiness: 'ready-green',
+          color: '#1d4ed8',
           talentPools: [{ name: 'Top Talent', readiness: 'ready-green' }],
           perfSnapshot: {
             summary: 'Marginal Performer',
@@ -61,20 +64,219 @@ const orgData = {
         },
         {
           name: 'Amir Hassan',
-          position: 'Succession Planning Manager',
+          position: 'Fleet Optimization Manager',
           readiness: 'ready-yellow',
-          talentPools: [{ name: 'Strategic Bench', readiness: 'ready-yellow' }]
+          color: '#6d28d9',
+          talentPools: [{ name: 'Strategic Bench', readiness: 'ready-yellow' }],
+          perfSnapshot: {
+            summary: 'Consistent Performer with high potential',
+            performance: 2,
+            potential: 3,
+            trend: [
+              { label: '12/31', performance: 2, potential: 3 },
+              { label: '07/01', performance: 2, potential: 3 },
+              { label: '01/01', performance: 2, potential: 2 },
+              { label: '07/04', performance: 3, potential: 2 },
+              { label: '01/04', performance: 3, potential: 3 }
+            ]
+          },
+          performanceRating: {
+            latest: 3.1,
+            scale: 5,
+            trend: [
+              { label: 'H1 2023', value: 2.7 },
+              { label: 'H2 2023', value: 2.9 },
+              { label: 'H1 2024', value: 3.0 },
+              { label: 'H2 2024', value: 3.1 },
+              { label: 'H1 2025', value: 3.1 }
+            ]
+          },
+          careerGoals: {
+            title: 'Senior Director, Fleet Strategy',
+            level: 'Senior Director',
+            function: 'Operations',
+            readiness: 'Ready in 1-2 years'
+          },
+          languageSkills: [
+            'Telematics Integration',
+            'Network Optimization Modeling',
+            'Fuel Efficiency Programs',
+            'Vendor Partnership Management'
+          ],
+          workExperience: [
+            { position: 'Fleet Optimization Manager', company: 'ForwardFlow Logistics', years: '2020 – Present' },
+            { position: 'Transportation Analyst', company: 'Atlantic Freightways', years: '2015 – 2020' }
+          ],
+          formalEducation: [
+            { degree: 'B.S. Industrial Engineering', university: 'Purdue University', graduation: '2013', level: 'Bachelors' },
+            { degree: 'M.S. Supply Chain Analytics', university: 'MIT', graduation: '2015', level: 'Masters' }
+          ]
         },
         {
           name: 'Lena Ortiz',
-          position: 'Performance Programs Lead',
+          position: 'Warehouse Automation Lead',
           readiness: 'ready-red',
-          talentPools: [{ name: 'Emerging Leaders', readiness: 'ready-red' }]
+          color: '#b45309',
+          talentPools: [{ name: 'Emerging Leaders', readiness: 'ready-red' }],
+          perfSnapshot: {
+            summary: 'Emerging leader driving automation pilots',
+            performance: 2,
+            potential: 2,
+            trend: [
+              { label: '12/31', performance: 2, potential: 2 },
+              { label: '07/01', performance: 1, potential: 2 },
+              { label: '01/01', performance: 1, potential: 2 },
+              { label: '07/04', performance: 2, potential: 1 },
+              { label: '01/04', performance: 2, potential: 1 }
+            ]
+          },
+          performanceRating: {
+            latest: 2.8,
+            scale: 5,
+            trend: [
+              { label: 'H1 2023', value: 2.3 },
+              { label: 'H2 2023', value: 2.4 },
+              { label: 'H1 2024', value: 2.6 },
+              { label: 'H2 2024', value: 2.7 },
+              { label: 'H1 2025', value: 2.8 }
+            ]
+          },
+          careerGoals: {
+            title: 'Director, Smart Warehousing',
+            level: 'Director',
+            function: 'Operations Technology',
+            readiness: 'Ready in 3+ years'
+          },
+          languageSkills: [
+            'Automation Roadmapping',
+            'Robotics Vendor Management',
+            'Lean Warehousing',
+            'OT Cybersecurity Basics'
+          ],
+          workExperience: [
+            { position: 'Warehouse Automation Lead', company: 'ForwardFlow Logistics', years: '2022 – Present' },
+            { position: 'Continuous Improvement Specialist', company: 'MetroFulfillment', years: '2018 – 2022' }
+          ],
+          formalEducation: [
+            { degree: 'B.S. Mechanical Engineering', university: 'University of Texas at Austin', graduation: '2016', level: 'Bachelors' },
+            { degree: 'Certificate in Robotics Systems', university: 'Georgia Tech Professional Education', graduation: '2021', level: 'Certificate' }
+          ]
         }
       ]
     },
-    { name: 'Priya Nair', position: 'Head of HR Technology' },
-    { name: 'Connor Blake', position: 'Director, People Analytics' }
+    { name: 'Priya Nair', position: 'Head of Supply Chain Systems', color: '#312e81' },
+    { name: 'Connor Blake', position: 'Director, Route Analytics', color: '#27272a' }
+  ]
+};
+
+const learningLibrary = {
+  competency: [
+    {
+      title: 'Route Reliability',
+      summary: 'Cross-dock playbook for contingencies and proactive reroutes.',
+      duration: '45 min',
+      competencies: ['Crisis routing', 'Scenario planning', 'On-time performance']
+    },
+    {
+      title: 'Driver Coaching',
+      summary: 'Micro-lessons on feedback loops, rider safety, and route hygiene.',
+      duration: '35 min',
+      competencies: ['Coaching frameworks', 'Behavior feedback', 'Safety mentoring']
+    },
+    {
+      title: 'SLA Triage',
+      summary: 'Tabletop simulations to diagnose SLAs and reset expectations fast.',
+      duration: '1 hr',
+      competencies: ['Service diagnostics', 'Escalation design', 'Stakeholder alignment']
+    },
+    {
+      title: 'Strategic Bench Readiness',
+      summary: 'Readiness kit for elevating successors through simulations and feedback.',
+      duration: '55 min',
+      competencies: ['Succession coaching', 'Capability mapping', 'Stakeholder updates']
+    },
+    {
+      title: 'Ops Mentorship Circuits',
+      summary: 'Guided peer mentor loops with structured prompts and facilitator packs.',
+      duration: '30 min',
+      competencies: ['Mentor frameworks', 'Peer learning', 'Feedback hygiene']
+    },
+    {
+      title: 'Precision Workforce Planning',
+      summary: 'Scenario math lab for blending attrition, hiring, and upskilling pipelines.',
+      duration: '1 hr 15 min',
+      competencies: ['Capacity modeling', 'Upskilling design', 'Hiring tradeoffs']
+    },
+    {
+      title: 'Ops Influence Studio',
+      summary: 'Role-play reps to align dotted-line partners on tough resourcing calls.',
+      duration: '50 min',
+      competencies: ['Stakeholder influence', 'Narrative building', 'Decision framing']
+    },
+    {
+      title: 'Governance Scrums',
+      summary: 'Teaches tight rituals for linking steering forums to field execution.',
+      duration: '35 min',
+      competencies: ['Governance design', 'Meeting hygiene', 'Accountability loops']
+    }
+  ],
+  catalog: [
+    {
+      title: 'Auto Systems 101',
+      summary: 'Covers robotics cells, AMR orchestration, and telemetry dashboards.',
+      tags: ['Automation', 'Robotics'],
+      duration: '1 hr 20 min',
+      competencies: ['Automation fluency', 'Systems thinking', 'Telemetry interpretation']
+    },
+    {
+      title: 'Energy Optimizer',
+      summary: 'Simulated lab trimming idle time and blending EV range planning.',
+      tags: ['Sustainability', 'Fleet'],
+      duration: '50 min',
+      competencies: ['Fuel stewardship', 'EV route planning', 'Efficiency coaching']
+    },
+    {
+      title: 'Cold Chain Core',
+      summary: 'Ensures SOP alignment across chill, freeze, and ambient zones.',
+      tags: ['Compliance', 'Cold Chain'],
+      duration: '55 min',
+      competencies: ['Temperature governance', 'Audit readiness', 'Contingency mapping']
+    },
+    {
+      title: 'Ops Scenario Lab',
+      summary: 'Immersive scenario drills for hub disruptions and crew shortages.',
+      tags: ['Operations', 'Leadership'],
+      duration: '40 min',
+      competencies: ['Crisis decisioning', 'Cross-team comms', 'Risk triage']
+    },
+    {
+      title: 'Data Stories for Ops',
+      summary: 'Storytelling sprint translating telemetry into exec-ready briefs.',
+      tags: ['Analytics', 'Communication'],
+      duration: '35 min',
+      competencies: ['Insight framing', 'Data literacy', 'Executive storytelling']
+    },
+    {
+      title: 'Network Refresh Studio',
+      summary: 'Workshop to re-balance zones, optimize linehaul cadence, and right-size nodes.',
+      tags: ['Network Design', 'Strategy'],
+      duration: '1 hr 10 min',
+      competencies: ['Network modeling', 'Capacity planning', 'Strategic tradeoffs']
+    },
+    {
+      title: 'Digital Twin Sandbox',
+      summary: 'Hands-on lab mirroring live operations for rapid scenario testing.',
+      tags: ['Simulation', 'Innovation'],
+      duration: '45 min',
+      competencies: ['Simulation fluency', 'Hypothesis testing', 'Experiment design']
+    },
+    {
+      title: 'Cost-To-Serve Deep Dive',
+      summary: 'Analytics sprint to expose unprofitable lanes and rebalance capital spend.',
+      tags: ['Finance', 'Analytics'],
+      duration: '1 hr',
+      competencies: ['Financial acumen', 'Scenario modeling', 'Value storytelling']
+    }
   ]
 };
 
@@ -86,24 +288,28 @@ export function OrgChart() {
 
   const chart = document.createElement('div');
   chart.className = 'org';
-  const modal = Modal();
-  chart.appendChild(renderBranch(orgData, modal));
+  const modals = {
+    profile: Modal(),
+    assign: Modal(),
+    learning: Modal()
+  };
+  chart.appendChild(renderBranch(orgData, modals));
 
   wrap.append(title, chart);
   return wrap;
 }
 
-function renderBranch(nodeData, modal) {
-  const parentBlock = block(renderNode(nodeData, modal));
+function renderBranch(nodeData, modals) {
+  const parentBlock = block(renderNode(nodeData, modals));
   if (!nodeData.children || !nodeData.children.length) {
     return parentBlock;
   }
-  const childBlocks = nodeData.children.map(child => renderBranch(child, modal));
+  const childBlocks = nodeData.children.map(child => renderBranch(child, modals));
   const group = withChildren(parentBlock, childBlocks);
   return group;
 }
 
-function renderNode({ name = 'Name', position = 'Position', showChildrenList = false, children = [] }, modal) {
+function renderNode({ name = 'Name', position = 'Position', showChildrenList = false, children = [], color }, modals) {
   const n = document.createElement('div');
   n.className = 'org-node';
   if (showChildrenList) {
@@ -114,6 +320,8 @@ function renderNode({ name = 'Name', position = 'Position', showChildrenList = f
   const avatar = document.createElement('div');
   avatar.className = 'avatar';
   avatar.textContent = initials(name);
+  const avatarColor = color ?? '#1f2937';
+  avatar.style.backgroundColor = avatarColor;
   const line1 = document.createElement('div');
   line1.className = 'org-name';
   line1.textContent = name;
@@ -138,12 +346,12 @@ function renderNode({ name = 'Name', position = 'Position', showChildrenList = f
       childLine.setAttribute('role', 'button');
       childLine.addEventListener('click', (e) => {
         if (e.target.closest('.org-child-menu-btn')) return;
-        openProfile(modal, child);
+        openProfile(modals.profile, child);
       });
       childLine.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          openProfile(modal, child);
+          openProfile(modals.profile, child);
         }
       });
 
@@ -155,7 +363,7 @@ function renderNode({ name = 'Name', position = 'Position', showChildrenList = f
       menuBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         openContextMenu(menuBtn, [
-          { label: 'Assign Learning', onSelect: () => console.log(`Assign Learning -> ${child.name}`) },
+          { label: 'Assign Learning', onSelect: () => openAssignLearning(modals, child) },
           { label: 'Edit Successor', onSelect: () => console.log(`Edit Successor -> ${child.name}`) },
           { label: 'Remove Successor', onSelect: () => console.log(`Remove Successor -> ${child.name}`) }
         ]);
@@ -220,6 +428,8 @@ function openProfile(modal, person) {
   const avatar = document.createElement('div');
   avatar.className = 'avatar large';
   avatar.textContent = initials(person.name);
+  const avatarColor = person.color ?? '#1f2937';
+  avatar.style.backgroundColor = avatarColor;
 
   const info = document.createElement('div');
   const nameEl = document.createElement('div');
@@ -274,7 +484,245 @@ function openProfile(modal, person) {
 
   body.append(careerSection(person));
 
-  modal.open({ title: 'Talent Profile', body });
+  modal.open({ title: 'Talent Card', body });
+}
+
+function openAssignLearning(modals, person) {
+  const modal = modals.assign;
+  const detailModal = modals.learning;
+  closeContextMenu();
+
+  const body = document.createElement('div');
+  body.className = 'assign-modal';
+
+  const header = document.createElement('div');
+  header.className = 'assign-header';
+  const title = document.createElement('div');
+  title.className = 'assign-title';
+  title.textContent = 'Assign learning to';
+  const target = document.createElement('div');
+  target.className = 'assign-target';
+  target.textContent = person.name;
+  header.append(title, target);
+  body.append(header);
+
+  const tabs = [
+    {
+      key: 'competency',
+      label: 'Search by Competency',
+      placeholder: 'Search competencies or behaviors',
+      items: learningLibrary.competency
+    },
+    {
+      key: 'catalog',
+      label: 'Search by Catalog',
+      placeholder: 'Search catalog titles or tags',
+      items: learningLibrary.catalog
+    }
+  ];
+
+  let activeTab = tabs[0].key;
+  let query = '';
+
+  const tabBar = document.createElement('div');
+  tabBar.className = 'assign-tabs';
+  tabs.forEach(tab => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.textContent = tab.label;
+    btn.className = 'assign-tab';
+    btn.dataset.tab = tab.key;
+    btn.addEventListener('click', () => {
+      activeTab = tab.key;
+      query = '';
+      renderTabs();
+      renderContent();
+    });
+    tabBar.appendChild(btn);
+  });
+  body.append(tabBar);
+
+  const content = document.createElement('div');
+  content.className = 'assign-content';
+  body.append(content);
+
+  function renderTabs() {
+    [...tabBar.children].forEach(btn => btn.classList.toggle('active', btn.dataset.tab === activeTab));
+  }
+
+  function renderContent() {
+    const config = tabs.find(t => t.key === activeTab);
+    content.innerHTML = '';
+
+    const form = document.createElement('form');
+    form.className = 'assign-search';
+    form.addEventListener('submit', (e) => e.preventDefault());
+
+    const input = document.createElement('input');
+    input.type = 'search';
+    input.placeholder = config.placeholder;
+    input.value = query;
+    input.addEventListener('input', (e) => {
+      query = e.target.value;
+      renderResults();
+    });
+    form.appendChild(input);
+
+    content.appendChild(form);
+
+    const results = document.createElement('div');
+    results.className = 'assign-results';
+    content.appendChild(results);
+
+    function renderResults() {
+      results.innerHTML = '';
+      const normalized = query.trim().toLowerCase();
+      const filtered = config.items.filter(item => {
+        if (!normalized) return true;
+        const haystack = [
+          item.title,
+          item.summary,
+          ...(item.tags ?? []),
+          ...(item.competencies ?? [])
+        ].join(' ').toLowerCase();
+        return haystack.includes(normalized);
+      });
+      results.classList.toggle('grid-three', true);
+
+      if (!filtered.length) {
+        const empty = document.createElement('div');
+        empty.className = 'assign-empty';
+        empty.textContent = normalized ? 'No learning items match that search.' : 'Start typing to search available learning.';
+        results.appendChild(empty);
+        return;
+      }
+
+      filtered.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'assign-card';
+        card.classList.add('compact');
+        card.classList.add('clickable');
+        card.tabIndex = 0;
+        card.setAttribute('role', 'button');
+        const openDetail = () => {
+          modal.close();
+          openLearningDetail(detailModal, person, { ...item, source: config.label });
+        };
+        card.addEventListener('click', () => {
+          openDetail();
+        });
+        card.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openDetail();
+          }
+        });
+
+        const info = document.createElement('div');
+        info.className = 'assign-card-info';
+        const h4 = document.createElement('div');
+        h4.className = 'assign-card-title';
+        h4.textContent = item.title;
+        const summary = document.createElement('p');
+        summary.textContent = item.summary;
+        const meta = document.createElement('div');
+        meta.className = 'assign-card-meta';
+        meta.textContent = item.duration;
+        info.append(h4, summary, meta);
+
+        if (config.key === 'competency' && item.competencies?.length) {
+          const pillWrap = document.createElement('div');
+          pillWrap.className = 'assign-competency-pills';
+          item.competencies.forEach(label => {
+            const pill = document.createElement('span');
+            pill.textContent = label;
+            pillWrap.appendChild(pill);
+          });
+          info.appendChild(pillWrap);
+        }
+
+        card.append(info);
+        results.appendChild(card);
+      });
+    }
+
+    renderResults();
+  }
+
+  renderTabs();
+  renderContent();
+  modal.open({ title: 'Assign Learning', body, className: 'modal-wide' });
+}
+
+function openLearningDetail(modal, person, course) {
+  const body = document.createElement('div');
+  body.className = 'learning-detail';
+
+  const header = document.createElement('div');
+  header.className = 'learning-detail-header';
+  const label = document.createElement('div');
+  label.className = 'learning-detail-label';
+  label.textContent = `Course selected for ${person.name}`;
+  const title = document.createElement('h3');
+  title.textContent = course.title;
+  header.append(label, title);
+  body.appendChild(header);
+
+  const summary = document.createElement('p');
+  summary.className = 'learning-detail-summary';
+  summary.textContent = course.summary;
+  body.appendChild(summary);
+
+  const meta = document.createElement('div');
+  meta.className = 'learning-detail-meta';
+  const duration = document.createElement('span');
+  duration.textContent = course.duration;
+  const source = document.createElement('span');
+  source.textContent = course.source ?? 'Learning Catalog';
+  meta.append(duration, source);
+  body.appendChild(meta);
+
+  if (course.tags?.length) {
+    const tags = document.createElement('div');
+    tags.className = 'learning-detail-tags';
+    course.tags.forEach(tag => {
+      const chip = document.createElement('span');
+      chip.textContent = tag;
+      tags.appendChild(chip);
+    });
+    body.appendChild(tags);
+  }
+
+  if (course.competencies?.length) {
+    const compSection = document.createElement('div');
+    compSection.className = 'learning-detail-competencies';
+    const compTitle = document.createElement('div');
+    compTitle.className = 'learning-detail-competency-title';
+    compTitle.textContent = 'Competencies reinforced';
+    const pills = document.createElement('div');
+    pills.className = 'learning-detail-competency-pills';
+    course.competencies.forEach(item => {
+      const pill = document.createElement('span');
+      pill.textContent = item;
+      pills.appendChild(pill);
+    });
+    compSection.append(compTitle, pills);
+    body.appendChild(compSection);
+  }
+
+  modal.open({
+    title: 'Learning Details',
+    body,
+    actions: [
+      {
+        label: 'Assign',
+        onClick: () => {
+          // placeholder assign action
+        }
+      }
+    ],
+    className: 'modal-wide'
+  });
 }
 
 function performanceSection(snapshot) {

@@ -5,7 +5,8 @@ export function Modal() {
   modal.className = 'modal';
   backdrop.appendChild(modal);
 
-  function open({ title = '', body, actions = [] }) {
+  function open({ title = '', body, actions = [], className = '' }) {
+    modal.className = ['modal', className].filter(Boolean).join(' ');
     modal.innerHTML = '';
     const header = document.createElement('div');
     header.className = 'modal-header';
