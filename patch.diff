@@ -1,0 +1,6 @@
+*** Begin Patch
+*** Update File: mocks/screens/orgchart.js
+@@
+-import { Modal } from '../components/Modal.js';
++import { Modal } from '../components/Modal.js';
+*** End Patch

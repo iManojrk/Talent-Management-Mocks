@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "name": "Talent Management Mocks",
+  "stack": {
+    "languages": ["HTML", "CSS", "JavaScript"],
+    "runtimes": ["Browser"],
+    "packageManagers": []
+  },
+  "commands": {
+    "build": "",
+    "test": "",
+    "start": "",
+    "lint": ""
+  },
+  "paths": {
+    "entry": "mocks/index.html",
+    "src": "mocks",
+    "tests": "",
+    "artifacts": "",
+    "configs": ["AGENTS.md", "agent.context.json"]
+  },
+  "env": {
+    "required": [],
+    "profiles": {},
+    "notes": ""
+  },
+  "constraints": {
+    "sandbox": "danger-full-access",
+    "approvals": "never",
+    "network": "enabled",
+    "os": "any (desktop browser)"
+  },
+  "tasks": [
+    {
+      "id": "guardrails",
+      "title": "Honor explicit-only mock creation",
+      "acceptanceCriteria": [
+        "No new screens or sample data are added without a written request",
+        "AGENTS.md includes guardrails"
+      ]
+    }
+  ],
+  "conventions": {
+    "formatter": "",
+    "linter": "",
+    "commitStyle": "",
+    "branching": ""
+  }
+}

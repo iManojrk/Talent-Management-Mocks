@@ -1,0 +1,107 @@
+*** Begin Patch
+*** Update File: mocks/screens/orgchart.js
+@@
+-import { Modal } from '../components/Modal.js';
++import { Modal } from '../components/Modal.js';
+@@
+-function renderNode({ name = 'Name', position = 'Position', showChildrenList = false, children = [] }, modal) {
++function renderNode({ name = 'Name', position = 'Position', showChildrenList = false, children = [] }, modal) {
+@@
+-    children.forEach(child => {
+-      const childLine = document.createElement('div');
+-      childLine.className = `org-child-line ${child.readiness ?? ''}`.trim();
+-      childLine.textContent = child.name;
+-      childLine.tabIndex = 0;
+-      childLine.setAttribute('role', 'button');
+-      childLine.addEventListener('click', () => openProfile(modal, child));
+-      childLine.addEventListener('keydown', (e) => {
+-        if (e.key === 'Enter' || e.key === ' ') {
+-          e.preventDefault();
+-          openProfile(modal, child);
+-        }
+-      });
+-      n.appendChild(childLine);
+-    });
++    children.forEach(child => {
++      const row = document.createElement('div');
++      row.className = `org-child-line ${child.readiness ?? ''}`.trim();
++
++      const name = document.createElement('span');
++      name.textContent = child.name;
++      row.appendChild(name);
++
++      row.tabIndex = 0;
++      row.setAttribute('role', 'button');
++      row.addEventListener('click', (e) => {
++        if (e.target.closest('.org-child-menu-btn')) return;
++        openProfile(modal, child);
++      });
++      row.addEventListener('keydown', (e) => {
++        if (e.key === 'Enter' || e.key === ' ') {
++          e.preventDefault();
++          openProfile(modal, child);
++        }
++      });
++
++      const menuBtn = document.createElement('button');
++      menuBtn.type = 'button';
++      menuBtn.className = 'org-child-menu-btn';
++      menuBtn.setAttribute('aria-label', `Actions for ${child.name}`);
++      menuBtn.textContent = '?';
++      menuBtn.addEventListener('click', (e) => {
++        e.stopPropagation();
++        openSuccessorMenu(menuBtn, child);
++      });
++      row.appendChild(menuBtn);
++
++      n.appendChild(row);
++    });
+   }
+   return n;
+ }
++
++let activeMenu;
++function openSuccessorMenu(anchor, person) {
++  closeSuccessorMenu();
++  const menu = document.createElement('div');
++  menu.className = 'successor-menu';
++  const options = [
++    { label: 'Assign Learning' },
++    { label: 'Edit Successor' },
++    { label: 'Remove Successor' },
++  ];
++  options.forEach(opt => {
++    const btn = document.createElement('button');
++    btn.type = 'button';
++    btn.textContent = opt.label;
++    btn.addEventListener('click', () => {
++      console.log(`${opt.label} -> ${person.name}`);
++      closeSuccessorMenu();
++    });
++    menu.appendChild(btn);
++  });
++  document.body.appendChild(menu);
++
++  const rect = anchor.getBoundingClientRect();
++  requestAnimationFrame(() => {
++    menu.style.top = `${rect.bottom + window.scrollY + 4}px`;
++    menu.style.left = `${rect.right + window.scrollX - menu.offsetWidth}px`;
++  });
++
++  const handleOutside = (e) => {
++    if (!menu.contains(e.target)) {
++      closeSuccessorMenu();
++    }
++  };
++  setTimeout(() => document.addEventListener('mousedown', handleOutside, { once: true }), 0);
++  activeMenu = { menu, handleOutside };
++}
++
++function closeSuccessorMenu() {
++  if (activeMenu) {
++    activeMenu.menu.remove();
++    document.removeEventListener('mousedown', activeMenu.handleOutside, { once: true });
++    activeMenu = null;
++  }
++}
+*** End Patch
