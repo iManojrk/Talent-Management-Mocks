@@ -19,7 +19,7 @@
     "src": "mocks",
     "tests": null,
     "artifacts": null,
-    "configs": ["agent.context.json"]
+    "configs": ["codex.context.json"]
   },
   "env": {
     "required": [],
@@ -56,7 +56,7 @@
     "mocksOverview": [
       "Static interactive mock lives under mocks/",
       "No build step: open mocks/index.html directly in a browser",
-      "Active hash route is /org for the Succession Org Chart",
+      "Active hash routes: /org (Succession Org Chart), /performance (Performance Evaluation placeholder), /cycle (Create Talent Planning Cycle placeholder)",
       "Shared component: Modal (forms/talent profile overlay)"
     ],
     "activeSuccessionMock": {

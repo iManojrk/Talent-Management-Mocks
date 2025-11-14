@@ -344,31 +344,15 @@ function renderNode({ name = 'Name', position = 'Position', showChildrenList = f
 
       childLine.tabIndex = 0;
       childLine.setAttribute('role', 'button');
-      childLine.addEventListener('click', (e) => {
-        if (e.target.closest('.org-child-menu-btn')) return;
-        openProfile(modals.profile, child);
+      childLine.addEventListener('click', () => {
+        openProfile(modals, child);
       });
       childLine.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          openProfile(modals.profile, child);
+          openProfile(modals, child);
         }
       });
-
-      const menuBtn = document.createElement('button');
-      menuBtn.type = 'button';
-      menuBtn.className = 'org-child-menu-btn';
-      menuBtn.setAttribute('aria-label', `Actions for ${child.name}`);
-      menuBtn.textContent = '⋯';
-      menuBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        openContextMenu(menuBtn, [
-          { label: 'Assign Learning', onSelect: () => openAssignLearning(modals, child) },
-          { label: 'Edit Successor', onSelect: () => console.log(`Edit Successor -> ${child.name}`) },
-          { label: 'Remove Successor', onSelect: () => console.log(`Remove Successor -> ${child.name}`) }
-        ]);
-      });
-      childLine.appendChild(menuBtn);
 
       n.appendChild(childLine);
     });
@@ -417,7 +401,8 @@ function closeContextMenu() {
   activeMenu = null;
 }
 
-function openProfile(modal, person) {
+function openProfile(modals, person) {
+  const modal = modals.profile;
   closeContextMenu();
   const body = document.createElement('div');
   body.className = 'profile-modal';
@@ -431,7 +416,10 @@ function openProfile(modal, person) {
   const avatarColor = person.color ?? '#1f2937';
   avatar.style.backgroundColor = avatarColor;
 
+  const main = document.createElement('div');
+  main.className = 'profile-main';
   const info = document.createElement('div');
+  info.className = 'profile-text';
   const nameEl = document.createElement('div');
   nameEl.className = 'profile-name';
   nameEl.textContent = person.name;
@@ -441,11 +429,27 @@ function openProfile(modal, person) {
   posEl.textContent = person.position;
 
   const readiness = document.createElement('span');
-  readiness.className = `chip readiness ${person.readiness ?? ''}`.trim();
+  readiness.className = `chip readiness ${person.readiness ?? ''} readiness-pill`.trim();
   readiness.textContent = readinessLabel(person.readiness);
 
   info.append(nameEl, posEl, readiness);
-  header.append(avatar, info);
+  main.append(avatar, info);
+  const headActions = document.createElement('div');
+  headActions.className = 'profile-head-actions';
+  const actionBtn = document.createElement('button');
+  actionBtn.className = 'button profile-action';
+  actionBtn.textContent = 'Action';
+  actionBtn.onclick = (e) => {
+    e.stopPropagation();
+    openContextMenu(actionBtn, [
+      { label: 'Assign Learning', onSelect: () => openAssignLearning(modals, person) },
+      { label: 'Edit Successor', onSelect: () => console.log(`Edit Successor -> ${person.name}`) },
+      { label: 'Remove Successor', onSelect: () => console.log(`Remove Successor -> ${person.name}`) }
+    ]);
+  };
+  headActions.appendChild(actionBtn);
+
+  header.append(main, headActions);
   body.append(header);
 
   const pools = person.talentPools ?? [{ name: 'Top Talent', readiness: person.readiness }];

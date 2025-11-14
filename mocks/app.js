@@ -1,8 +1,12 @@
 import { createRouter } from './router.js?v=20250205';
 import { OrgChart } from './screens/orgchart.js?v=20250205';
+import { PerformanceEvaluation } from './screens/performance.js?v=20250205';
+import { CreateTalentPlanningCycle } from './screens/cycle.js?v=20250205';
 
 const routes = {
   '/org': OrgChart,
+  '/performance': PerformanceEvaluation,
+  '/cycle': CreateTalentPlanningCycle,
 };
 
 const app = document.getElementById('app');
@@ -36,6 +40,8 @@ function shell() {
 
   nav.append(
     link('/org','Succession Org Chart'),
+    link('/performance','Performance Evaluation'),
+    link('/cycle','Create Talent Planning Cycle'),
   );
   sidebar.appendChild(nav);
 
