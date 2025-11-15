@@ -1,19 +1,149 @@
 export function CreateTalentPlanningCycle() {
   const wrap = document.createElement('div');
-  const title = document.createElement('h1');
-  title.className = 'page-title';
-  title.textContent = 'Create Talent Planning Cycle';
+  wrap.className = 'cycle-page';
+  wrap.innerHTML = `
+    <div class="cycle-header">
+      <div>
+        <h1 class="page-title">Create Talent Planning Cycle</h1>
+        <div class="cycle-subtitle">Assessment Settings</div>
+      </div>
+      <div class="cycle-actions">
+        <button class="btn ghost">Cancel</button>
+        <button class="btn outline">← Back</button>
+        <button class="btn primary">Next →</button>
+      </div>
+    </div>
+    <div class="cycle-body">
+      <aside class="cycle-nav">
+        <ol class="cycle-steps">
+          <li class="done"><span></span>Cycle Details</li>
+          <li class="done"><span></span>Eligible Associates</li>
+          <li class="active"><span></span>Assessment Settings</li>
+          <li><span></span>Schedule</li>
+          <li><span></span>Review</li>
+        </ol>
+      </aside>
+      <main class="cycle-content">
+        <section class="panel">
+          <h2>Assessment Settings</h2>
+          <p class="muted">Configure talent assessment questions and the derived values that appear in the assessment.</p>
+          <div class="check-group">
+            <label class="check-row">
+              <input type="checkbox" />
+              <div>
+                <div class="check-title">Performance Ratings</div>
+                <div class="check-desc">Ratings will be derived from the most recent performance plan.</div>
+              </div>
+            </label>
+            <label class="check-row">
+              <input type="checkbox" />
+              <div>
+                <div class="check-title">Mobility Preferences</div>
+                <div class="check-desc">Preferences will be derived from associates’ entries in their career profile.</div>
+              </div>
+            </label>
+          </div>
+          <div class="callout warning">
+            <div class="icon">⚠️</div>
+            <div>In order to populate the Talent Matrix correctly, any question you choose for the X or Y matrix axis must have exactly 3 answer choices.</div>
+          </div>
+        </section>
 
-  const placeholder = document.createElement('div');
-  placeholder.className = 'card placeholder';
-  placeholder.style.padding = '24px';
-  placeholder.style.border = '1px dashed var(--border)';
-  placeholder.style.borderRadius = '12px';
-  placeholder.style.background = 'var(--panel)';
-  placeholder.style.color = 'var(--muted)';
-  placeholder.textContent = 'Specs pending. Provide layout/instructions to build this screen.';
+        <section class="panel question-layout">
+          <div>
+            <h2>Questions</h2>
+            <div class="question-card">
+              <div class="question-main">
+                <label class="field">
+                  <span>Question*</span>
+                  <input class="input" value="Potential" />
+                  <small>Question should not exceed 30 characters (ex. Potential, Performance, Impact of Loss).</small>
+                </label>
+              <div class="field toggle-field">
+                <span>Required</span>
+                <div class="toggle on"><span></span></div>
+              </div>
+              <label class="field">
+                <span>Question Description</span>
+                <textarea class="input" rows="3">The degree to which an associate has demonstrated initial mastery of skills required to do their current role and a high likelihood of being able to make an impact in a larger scope.</textarea>
+                </label>
 
-  wrap.append(title, placeholder);
+              <div class="options">
+                ${['Low','Medium','High'].map((option, idx) => `
+                  <div class="option-row">
+                    <label class="radio">
+                      <input type="radio" name="questionOne" ${idx === 1 ? 'checked' : ''} />
+                    </label>
+                    <input class="input" value="${option}" />
+                    <button class="icon-btn" title="Remove option">🗑</button>
+                  </div>
+                `).join('')}
+                </div>
+                <button class="link-btn">+ Add Option</button>
+              </div>
+              <div class="axis-card">
+                <div class="axis-header">
+                  <span>Talent Matrix Axis Settings</span>
+                  <button class="icon-btn minimal">⌃</button>
+                </div>
+                <label class="radio">
+                  <input type="radio" name="axisSetting1" />
+                  <span>Assign to X Axis</span>
+                </label>
+                <label class="radio">
+                  <input type="radio" name="axisSetting1" checked />
+                  <span>Assign to Y Axis</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card">
+              <div class="question-main">
+                <label class="field">
+                  <span>Question*</span>
+                  <input class="input" value="Performance" />
+                </label>
+                <div class="field toggle-field">
+                  <span>Required</span>
+                  <div class="toggle on"><span></span></div>
+                </div>
+                <label class="field">
+                  <span>Question Description</span>
+                  <textarea class="input" rows="3">Measures the overall execution and business impact demonstrated in the associate's most recent review cycle.</textarea>
+                </label>
+
+                <div class="options">
+                  ${['Low','Medium','High'].map(option => `
+                    <div class="option-row">
+                      <label class="radio">
+                        <input type="radio" name="questionTwo" />
+                      </label>
+                      <input class="input" value="${option}" />
+                      <button class="icon-btn" title="Remove option">🗑</button>
+                    </div>
+                  `).join('')}
+                </div>
+                <button class="link-btn">+ Add Option</button>
+              </div>
+              <div class="axis-card">
+                <div class="axis-header">
+                  <span>Talent Matrix Axis Settings</span>
+                  <button class="icon-btn minimal">⌃</button>
+                </div>
+                <label class="radio">
+                  <input type="radio" name="axisSetting2" checked />
+                  <span>Assign to X Axis</span>
+                </label>
+                <label class="radio">
+                  <input type="radio" name="axisSetting2" />
+                  <span>Assign to Y Axis</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  `;
   return wrap;
 }
-
