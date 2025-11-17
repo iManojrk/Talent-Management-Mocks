@@ -94,11 +94,13 @@ tr:hover td { background: rgba(122,162,247,0.08); }
 .org-name { font-weight: 600; }
 .org-position { color: var(--muted); font-size: 12px; }
 .org-divider { height: 1px; background: var(--border); margin: 6px 0; }
-.org-child-line { font-size: 13px; padding: 8px 12px; border-radius: 6px; width: 100%; color: #111; display: grid; justify-items: center; }
-.org-child-line span { font-weight: 600; }
+.org-child-line { font-size: 13px; padding: 8px 12px; border-radius: 6px; width: 100%; color: #111; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.org-child-line span { font-weight: 600; flex: 1; text-align: left; }
 .org-child-line.ready-green { background: rgba(126, 231, 135, 0.6); }
 .org-child-line.ready-yellow { background: rgba(255, 211, 99, 0.6); }
 .org-child-line.ready-red { background: rgba(255, 140, 148, 0.6); }
+.successor-menu-btn { border: none; background: transparent; color: #111; font-size: 18px; line-height: 1; padding: 0 4px; border-radius: 6px; cursor: pointer; }
+.successor-menu-btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 1px; }
 
 .context-menu { position: absolute; min-width: 180px; background: var(--panel); border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 12px 30px rgba(0,0,0,0.35); display: grid; z-index: 10; }
 .context-menu button { background: transparent; border: none; text-align: left; padding: 10px 14px; color: var(--text); cursor: pointer; font-size: 14px; }

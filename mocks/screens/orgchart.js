@@ -342,6 +342,22 @@ function renderNode({ name = 'Name', position = 'Position', showChildrenList = f
       name.textContent = child.name;
       childLine.appendChild(name);
 
+      const menuBtn = document.createElement('button');
+      menuBtn.type = 'button';
+      menuBtn.className = 'successor-menu-btn';
+      menuBtn.setAttribute('aria-label', `Actions for ${child.name}`);
+      menuBtn.textContent = '⋯';
+      menuBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        openContextMenu(menuBtn, [
+          { label: 'Assign Learning', onSelect: () => openAssignLearning(modals, child) },
+          { label: 'Edit Successor', onSelect: () => console.log(`Edit Successor -> ${child.name}`) },
+          { label: 'Remove Successor', onSelect: () => console.log(`Remove Successor -> ${child.name}`) }
+        ]);
+      });
+      childLine.appendChild(menuBtn);
+
       childLine.tabIndex = 0;
       childLine.setAttribute('role', 'button');
       childLine.addEventListener('click', () => {
@@ -434,22 +450,7 @@ function openProfile(modals, person) {
 
   info.append(nameEl, posEl, readiness);
   main.append(avatar, info);
-  const headActions = document.createElement('div');
-  headActions.className = 'profile-head-actions';
-  const actionBtn = document.createElement('button');
-  actionBtn.className = 'button profile-action';
-  actionBtn.textContent = 'Action';
-  actionBtn.onclick = (e) => {
-    e.stopPropagation();
-    openContextMenu(actionBtn, [
-      { label: 'Assign Learning', onSelect: () => openAssignLearning(modals, person) },
-      { label: 'Edit Successor', onSelect: () => console.log(`Edit Successor -> ${person.name}`) },
-      { label: 'Remove Successor', onSelect: () => console.log(`Remove Successor -> ${person.name}`) }
-    ]);
-  };
-  headActions.appendChild(actionBtn);
-
-  header.append(main, headActions);
+  header.append(main);
   body.append(header);
 
   const pools = person.talentPools ?? [{ name: 'Top Talent', readiness: person.readiness }];
