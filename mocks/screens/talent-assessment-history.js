@@ -15,8 +15,8 @@ export function TalentAssessmentHistory() {
     <label class="talent-assessment-history__cycle-select">
       <span>Cycle</span>
       <select class="input">
-        <option>A Test Talent Cycle - Nov 12 - Criteria Based</option>
-        <option>Q1 2025 - Calibration</option>
+        <option>Enterprise Leadership Cycle - Nov 12 (Criteria Based)</option>
+        <option selected>Q1 2025 - Talent Assessment</option>
       </select>
     </label>
   `;

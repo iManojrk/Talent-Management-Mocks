@@ -27,7 +27,7 @@ function shell() {
   header.className = 'header';
   const brand = document.createElement('div');
   brand.className = 'brand';
-  brand.innerHTML = '<span class="dot"></span>Talent Management';
+  brand.innerHTML = '<span class="dot"></span>Talent';
 
   header.append(brand);
 
