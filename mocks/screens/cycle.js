@@ -4,7 +4,7 @@ export function CreateTalentPlanningCycle() {
   wrap.innerHTML = `
     <div class="cycle-header">
       <div>
-        <h1 class="page-title">Create Talent Planning Cycle</h1>
+        <h1 class="page-title">Create Talent Planning Cycle (Current)</h1>
         <div class="cycle-subtitle">Assessment Settings</div>
       </div>
       <div class="cycle-actions">
@@ -69,10 +69,10 @@ export function CreateTalentPlanningCycle() {
                 </label>
 
               <div class="options">
-                ${['Low','Medium','High'].map((option, idx) => `
+                ${['Low','Medium','High'].map(option => `
                   <div class="option-row">
                     <label class="radio">
-                      <input type="radio" name="questionOne" ${idx === 1 ? 'checked' : ''} />
+                      <input type="radio" name="questionOne" />
                     </label>
                     <input class="input" value="${option}" />
                     <button class="icon-btn" title="Remove option">🗑</button>
@@ -93,6 +93,10 @@ export function CreateTalentPlanningCycle() {
                 <label class="radio">
                   <input type="radio" name="axisSetting1" checked />
                   <span>Assign to Y Axis</span>
+                </label>
+                <label class="radio">
+                  <input type="radio" name="axisSetting1" />
+                  <span>N/A</span>
                 </label>
               </div>
             </div>
@@ -137,6 +141,58 @@ export function CreateTalentPlanningCycle() {
                 <label class="radio">
                   <input type="radio" name="axisSetting2" />
                   <span>Assign to Y Axis</span>
+                </label>
+                <label class="radio">
+                  <input type="radio" name="axisSetting2" />
+                  <span>N/A</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card">
+              <div class="question-main">
+                <label class="field">
+                  <span>Question*</span>
+                  <input class="input" value="Risk of Loss" />
+                </label>
+                <div class="field toggle-field">
+                  <span>Required</span>
+                  <div class="toggle on"><span></span></div>
+                </div>
+                <label class="field">
+                  <span>Question Description</span>
+                  <textarea class="input" rows="3">Likelihood the associate will depart in the next 12 months based on intent, engagement, and market pull.</textarea>
+                </label>
+
+                <div class="options">
+                  ${['Low','Medium','High'].map(option => `
+                    <div class="option-row">
+                      <label class="radio">
+                        <input type="radio" name="questionThree" />
+                      </label>
+                      <input class="input" value="${option}" />
+                      <button class="icon-btn" title="Remove option">🗑</button>
+                    </div>
+                  `).join('')}
+                </div>
+                <button class="link-btn">+ Add Option</button>
+              </div>
+              <div class="axis-card">
+                <div class="axis-header">
+                  <span>Talent Matrix Axis Settings</span>
+                  <button class="icon-btn minimal">⌃</button>
+                </div>
+                <label class="radio">
+                  <input type="radio" name="axisSetting3" />
+                  <span>Assign to X Axis</span>
+                </label>
+                <label class="radio">
+                  <input type="radio" name="axisSetting3" />
+                  <span>Assign to Y Axis</span>
+                </label>
+                <label class="radio">
+                  <input type="radio" name="axisSetting3" checked />
+                  <span>N/A</span>
                 </label>
               </div>
             </div>

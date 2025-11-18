@@ -421,10 +421,10 @@ function openProfile(modals, person) {
   const modal = modals.profile;
   closeContextMenu();
   const body = document.createElement('div');
-  body.className = 'profile-modal';
+  body.className = 'talent-card';
 
   const header = document.createElement('div');
-  header.className = 'profile-header';
+  header.className = 'talent-card__header';
 
   const avatar = document.createElement('div');
   avatar.className = 'avatar large';
@@ -433,15 +433,15 @@ function openProfile(modals, person) {
   avatar.style.backgroundColor = avatarColor;
 
   const main = document.createElement('div');
-  main.className = 'profile-main';
+  main.className = 'talent-card__main';
   const info = document.createElement('div');
-  info.className = 'profile-text';
+  info.className = 'talent-card__bio';
   const nameEl = document.createElement('div');
-  nameEl.className = 'profile-name';
+  nameEl.className = 'talent-card__name';
   nameEl.textContent = person.name;
 
   const posEl = document.createElement('div');
-  posEl.className = 'profile-position';
+  posEl.className = 'talent-card__position';
   posEl.textContent = person.position;
 
   const readiness = document.createElement('span');
@@ -455,19 +455,19 @@ function openProfile(modals, person) {
 
   const pools = person.talentPools ?? [{ name: 'Top Talent', readiness: person.readiness }];
   const section = document.createElement('div');
-  section.className = 'profile-section';
+  section.className = 'talent-card__section';
   const sectionTitle = document.createElement('div');
-  sectionTitle.className = 'profile-section-title';
+  sectionTitle.className = 'talent-card__section-title';
   sectionTitle.textContent = `Talent Pool Nominations (${pools.length || 0})`;
   section.appendChild(sectionTitle);
 
   const poolList = document.createElement('div');
-  poolList.className = 'talent-pool-list';
+  poolList.className = 'talent-card__pool-list';
   pools.forEach(pool => {
     const row = document.createElement('div');
-    row.className = 'talent-pool-row';
+    row.className = 'talent-card__pool-row';
     const name = document.createElement('div');
-    name.className = 'talent-pool-name';
+    name.className = 'talent-card__pool-name';
     name.textContent = pool.name;
     const chip = document.createElement('span');
     chip.className = `chip readiness ${pool.readiness ?? ''}`.trim();
@@ -732,15 +732,15 @@ function openLearningDetail(modal, person, course) {
 
 function performanceSection(snapshot) {
   const section = document.createElement('div');
-  section.className = 'profile-section performance';
+  section.className = 'talent-card__section talent-card__section--performance';
 
   const header = document.createElement('div');
-  header.className = 'perf-header';
+  header.className = 'talent-card__perf-header';
   const title = document.createElement('div');
-  title.className = 'profile-section-title';
+  title.className = 'talent-card__section-title';
   title.textContent = 'Performance & Potential';
   const links = document.createElement('div');
-  links.className = 'perf-links';
+  links.className = 'talent-card__tabs';
   const latestBtn = document.createElement('button');
   latestBtn.type = 'button';
   latestBtn.textContent = 'Latest Rating';
@@ -751,7 +751,7 @@ function performanceSection(snapshot) {
   header.append(title, links);
 
   const content = document.createElement('div');
-  content.className = 'perf-content';
+  content.className = 'talent-card__tab-content';
   section.append(header, content);
 
   let mode = 'latest';
@@ -779,33 +779,33 @@ function performanceSection(snapshot) {
 
   function renderLatest() {
     const summary = document.createElement('div');
-    summary.className = 'perf-summary';
+    summary.className = 'talent-card__summary';
     summary.textContent = snapshot.summary ?? 'No data available';
 
     const grid = document.createElement('div');
-    grid.className = 'ninebox';
+    grid.className = 'talent-card__ninebox-grid';
     for (let row = 3; row >= 1; row--) {
       for (let col = 1; col <= 3; col++) {
         const cell = document.createElement('div');
-        cell.className = 'ninebox-cell';
+        cell.className = 'talent-card__ninebox-cell';
         if (row === snapshot.potential && col === snapshot.performance) {
-          cell.classList.add('active');
+          cell.classList.add('talent-card__ninebox-cell--active');
         }
         grid.appendChild(cell);
       }
     }
     const perfLabel = document.createElement('div');
-    perfLabel.className = 'ninebox-label ninebox-label-x';
+    perfLabel.className = 'talent-card__ninebox-label talent-card__ninebox-label--x';
     perfLabel.textContent = 'Performance';
     const potLabel = document.createElement('div');
-    potLabel.className = 'ninebox-label ninebox-label-y';
+    potLabel.className = 'talent-card__ninebox-label talent-card__ninebox-label--y';
     potLabel.textContent = 'Potential';
     const gridWrap = document.createElement('div');
-    gridWrap.className = 'ninebox-wrap';
+    gridWrap.className = 'talent-card__ninebox';
     gridWrap.append(grid, perfLabel, potLabel);
 
     const latestLayout = document.createElement('div');
-    latestLayout.className = 'perf-latest-layout';
+    latestLayout.className = 'talent-card__latest-layout';
     latestLayout.append(summary, gridWrap);
     content.appendChild(latestLayout);
   }
@@ -813,7 +813,7 @@ function performanceSection(snapshot) {
   function renderTrend() {
     const trendData = snapshot.trend ?? [];
     const trendWrap = document.createElement('div');
-    trendWrap.className = 'perf-trend';
+    trendWrap.className = 'talent-card__trend';
 
     const svgNS = 'http://www.w3.org/2000/svg';
     const svg = document.createElementNS(svgNS, 'svg');
@@ -862,14 +862,14 @@ function performanceSection(snapshot) {
     potPoints.forEach(pt => svg.appendChild(pointDot(pt, '#111')));
 
     const leftLabel = document.createElement('div');
-    leftLabel.className = 'trend-axis trend-axis-y';
+    leftLabel.className = 'talent-card__trend-axis talent-card__trend-axis--y';
     leftLabel.textContent = 'PERFORMANCE';
     const rightLabel = document.createElement('div');
-    rightLabel.className = 'trend-axis trend-axis-right';
+    rightLabel.className = 'talent-card__trend-axis talent-card__trend-axis--right';
     rightLabel.textContent = 'POTENTIAL';
 
     const bottom = document.createElement('div');
-    bottom.className = 'trend-bottom';
+    bottom.className = 'talent-card__trend-bottom';
     trendData.forEach(point => {
       const span = document.createElement('span');
       span.textContent = point.label;
@@ -877,8 +877,8 @@ function performanceSection(snapshot) {
     });
 
     const legend = document.createElement('div');
-    legend.className = 'perf-legend';
-    legend.innerHTML = '<span><i class="dot perf"></i>Performance</span><span><i class="dot pot"></i>Potential</span>';
+    legend.className = 'talent-card__trend-legend';
+    legend.innerHTML = '<span><i class="talent-card__legend-dot is-performance"></i>Performance</span><span><i class="talent-card__legend-dot is-potential"></i>Potential</span>';
 
     trendWrap.append(svg, leftLabel, rightLabel, bottom, legend);
     content.appendChild(trendWrap);
@@ -914,15 +914,15 @@ function performanceSection(snapshot) {
 
 function performanceRatingSection(rating) {
   const section = document.createElement('div');
-  section.className = 'profile-section rating';
+  section.className = 'talent-card__section talent-card__section--rating';
 
   const header = document.createElement('div');
-  header.className = 'perf-header';
+  header.className = 'talent-card__perf-header';
   const title = document.createElement('div');
-  title.className = 'profile-section-title';
+  title.className = 'talent-card__section-title';
   title.textContent = 'Performance Rating';
   const links = document.createElement('div');
-  links.className = 'perf-links';
+  links.className = 'talent-card__tabs';
   const latestBtn = document.createElement('button');
   latestBtn.type = 'button';
   latestBtn.textContent = 'Latest Rating';
@@ -933,7 +933,7 @@ function performanceRatingSection(rating) {
   header.append(title, links);
 
   const content = document.createElement('div');
-  content.className = 'rating-content';
+  content.className = 'talent-card__rating';
   section.append(header, content);
 
   let mode = 'latest';
@@ -948,11 +948,11 @@ function performanceRatingSection(rating) {
     content.innerHTML = '';
     if (mode === 'latest') {
       const score = document.createElement('div');
-      score.className = 'rating-score';
+      score.className = 'talent-card__rating-score';
       score.innerHTML = `<span>${rating.latest.toFixed(1)}</span><small>/ ${rating.scale}</small>`;
 
       const meter = document.createElement('div');
-      meter.className = 'rating-meter';
+      meter.className = 'talent-card__rating-meter';
       const fill = document.createElement('div');
       fill.style.width = `${(rating.latest / rating.scale) * 100}%`;
       meter.appendChild(fill);
@@ -960,7 +960,7 @@ function performanceRatingSection(rating) {
       content.append(score, meter);
     } else {
       const trendWrap = document.createElement('div');
-      trendWrap.className = 'rating-trend';
+      trendWrap.className = 'talent-card__rating-trend';
       const svgNS = 'http://www.w3.org/2000/svg';
       const svg = document.createElementNS(svgNS, 'svg');
       svg.setAttribute('viewBox', '0 0 260 120');
@@ -999,7 +999,7 @@ function performanceRatingSection(rating) {
       });
 
       const labels = document.createElement('div');
-      labels.className = 'rating-trend-labels';
+      labels.className = 'talent-card__rating-labels';
       rating.trend.forEach(point => {
         const span = document.createElement('span');
         span.textContent = point.label;
@@ -1028,7 +1028,7 @@ function performanceRatingSection(rating) {
 
 function careerSection(person) {
   const wrap = document.createElement('div');
-  wrap.className = 'profile-section info-list';
+  wrap.className = 'talent-card__section talent-card__section--info-list';
 
   const blocks = [
     {
@@ -1057,26 +1057,26 @@ function careerSection(person) {
 
   blocks.forEach(block => {
     const card = document.createElement('div');
-    card.className = 'info-card';
+    card.className = 'talent-card__info-card';
     const header = document.createElement('div');
-    header.className = 'info-card-header';
+    header.className = 'talent-card__info-card-header';
 
     const title = document.createElement('div');
-    title.className = 'info-card-title';
+    title.className = 'talent-card__info-card-title';
     title.textContent = block.title;
     const menuBtn = document.createElement('button');
     menuBtn.type = 'button';
-    menuBtn.className = 'section-menu-btn';
+    menuBtn.className = 'talent-card__section-menu-btn';
     menuBtn.setAttribute('aria-label', `${block.title}`);
     menuBtn.textContent = '⋯';
     menuBtn.disabled = true;
     header.append(title, menuBtn);
 
     const body = document.createElement('div');
-    body.className = 'info-card-body';
+    body.className = 'talent-card__info-card-body';
 
     if (block.type === 'skills') {
-      body.classList.add('skills-body');
+      body.classList.add('talent-card__info-card-body--skills');
       if (block.value?.length) {
         block.value.forEach(skill => {
           const pill = document.createElement('span');
@@ -1087,11 +1087,11 @@ function careerSection(person) {
         body.textContent = 'No Records Found';
       }
     } else if (block.type === 'experience') {
-      body.classList.add('experience-body');
+      body.classList.add('talent-card__info-card-body--experience');
       if (block.value?.length) {
         block.value.forEach(item => {
           const entry = document.createElement('div');
-          entry.className = 'exp-entry';
+          entry.className = 'talent-card__experience-entry';
           entry.innerHTML = `<strong>${item.position}</strong> · ${item.company}<br/><span>${item.years}</span>`;
           body.appendChild(entry);
         });
@@ -1099,11 +1099,11 @@ function careerSection(person) {
         body.textContent = 'No Records Found';
       }
     } else if (block.type === 'education') {
-      body.classList.add('education-body');
+      body.classList.add('talent-card__info-card-body--education');
       if (block.value?.length) {
         block.value.forEach(item => {
           const entry = document.createElement('div');
-          entry.className = 'edu-entry';
+          entry.className = 'talent-card__education-entry';
           entry.innerHTML = `<strong>${item.degree}</strong> · ${item.university}<br/><span>${item.level} · Graduated ${item.graduation}</span>`;
           body.appendChild(entry);
         });

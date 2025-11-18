@@ -34,6 +34,7 @@
   },
   "guidance": {
     "scope": "Applies to the entire repository rooted at this folder.",
+    "productOwner": "Active chat requester (this repo owner) is the Product Owner; treat their instructions as authoritative.",
     "purpose": [
       "Provide fast orientation for agents and humans",
       "Point to exact commands, paths, and configs",
@@ -45,7 +46,9 @@
       "Keep content static unless interactions are explicitly requested",
       "Confirm scope and acceptance criteria before implementing any new screen or interaction",
       "UI theme stays locked to light mode; remove any dark-mode toggles if reintroduced",
-      "Interactivity expectation is exactly the current experience (successor click opens modal, modal tabs toggle trend/latest); no new dynamic behavior without PO approval"
+      "Interactivity expectation is exactly the current experience (successor click opens modal, modal tabs toggle trend/latest); no new dynamic behavior without PO approval",
+      "Capture any new PO-provided dos/don'ts or style-guide adjustments in this file immediately so the next agent inherits the directives",
+      "PO may have a keyboard issue causing stray 'e' letters or transposed characters; interpret instructions accordingly without overcorrecting"
     ],
     "quickStart": [
       "Primary machine-readable source is this file",
@@ -56,7 +59,7 @@
     "mocksOverview": [
       "Static interactive mock lives under mocks/",
       "No build step: open mocks/index.html directly in a browser",
-      "Active hash routes: /org (Succession Org Chart), /performance (Performance Evaluation placeholder), /cycle (Create Talent Planning Cycle placeholder)",
+      "Active hash routes: /org (Succession Org Chart), /performance (Performance Evaluation placeholder), /performance-plan (Create Performance Plan placeholder), /talent-assessment-history (Talent Assessmeent History tab showing completed cycle details mock), /cycle (Create Talent Planning Cycle - Current), /cycle-proposed (Create Talent Planning Cycle - Proposed clone for PO experimentation)",
       "Shared component: Modal (forms/talent profile overlay)"
     ],
     "activeSuccessionMock": {
@@ -79,7 +82,11 @@
       "mocks/router.js — hash router",
       "mocks/state.js — in-memory state with localStorage persistence retained for future scenarios",
       "mocks/components/Modal.js — modal backdrop + open/close API",
-      "mocks/screens/orgchart.js — Succession Org Chart (only screen present; add new files only with PO approval)"
+      "mocks/screens/orgchart.js — Succession Org Chart (only screen present; add new files only with PO approval)",
+      "mocks/screens/cycle.js — Create Talent Planning Cycle (Current tab)",
+      "mocks/screens/cycle-proposed.js — Create Talent Planning Cycle (Proposed tab with isolated styles)",
+      "mocks/screens/performance-plan.js — Create Performance Plan placeholder screen",
+      "mocks/screens/talent-assessment-history.js — Talent Assessmeent History tab replicates completed review layout (static content)"
     ],
     "addingScreens": [
       "Requires explicit Product Owner approval",
@@ -98,7 +105,9 @@
       "Prefer minimal, targeted changes respecting existing structure",
       "Do not introduce new dependencies without confirmation",
       "Validate manually in the browser using the provided commands",
-      "mocks/index.html injects cache-busted CSS/JS URLs each load; keep the inline script so browsers do not cache updates"
+      "mocks/index.html injects cache-busted CSS/JS URLs each load; keep the inline script so browsers do not cache updates",
+      "Talent Card styles must stay namespaced via the talent-card__* BEM pattern to prevent cross-tab contamination; apply the same approach if new sections are added",
+      "Cycle Proposed tab uses cycle-proposed__* class names/CSS; edit those selectors when iterating so the Current tab remains untouched"
     ]
   },
   "tasks": [
@@ -126,6 +135,7 @@
     "codeStyle": "Keep edits small and consistent with existing plain JS/CSS; no repo-wide formatter",
     "linting": "No automated linting; rely on manual browser checks",
     "naming": "Files use kebab-case; JS identifiers use camelCase",
+    "cssNamespaces": "Shared UI elements (e.g., Talent Card) require BEM-style namespaces like talent-card__section to localize styling; extend this convention for any new PO-approved UI work",
     "commitStyle": "Confirm with Product Owner before branching or merging",
     "branching": ""
   }
