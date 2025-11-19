@@ -12,8 +12,9 @@ export function Modal() {
     header.className = 'modal-header';
     header.innerHTML = `<div>${title}</div>`;
     const closeBtn = document.createElement('button');
-    closeBtn.className = 'button';
-    closeBtn.textContent = 'Close';
+    closeBtn.className = 'modal-close';
+    closeBtn.innerHTML = '';
+    closeBtn.setAttribute('aria-label', 'Close');
     closeBtn.onclick = close;
     header.appendChild(closeBtn);
 

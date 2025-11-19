@@ -48,7 +48,7 @@ function shell() {
     link('/org','Succession Org Chart'),
     link('/performance','Performance Evaluation'),
     link('/performance-plan','Create Performance Plan'),
-    link('/talent-assessment-history','Talent Assessmeent History'),
+    link('/talent-assessment-history','Talent Assessment'),
     link('/cycle','Create Talent Planning Cycle (Current)'),
     link('/cycle-proposed','Create Talent Planning Cycle (Proposed)'),
   );
