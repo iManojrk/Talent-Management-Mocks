@@ -156,7 +156,7 @@ export function TalentAssessmentHistory() {
   comments.innerHTML = `
     <label class="talent-assessment-history__comments-label">
       <span>Comments and Action Items</span>
-      <textarea class="input" rows="4">Mixed</textarea>
+      <textarea class="input" rows="4">Needs broader exposure to enterprise operations. Line up a 3-month rotation with the logistics team and pair Ava with a senior mentor to refine executive communication skills.</textarea>
     </label>
   `;
 
@@ -181,7 +181,8 @@ export function TalentAssessmentHistory() {
         risk: 'Medium',
         impact: 'Low',
         nextMove: 'Director'
-      }
+      },
+      comments: 'Piloted a cross-functional analytics project; recommend scheduling monthly CEO readouts to keep visibility high.'
     },
     {
       label: 'Q1 2025 Assessment',
@@ -193,7 +194,8 @@ export function TalentAssessmentHistory() {
         risk: 'Low',
         impact: 'Medium',
         nextMove: 'Manager'
-      }
+      },
+      comments: 'Needs more ownership over roadmap planning; pair her with Priya to co-lead the Q2 planning workshop.'
     },
     {
       label: 'Q3 2024 Assessment',
@@ -205,7 +207,8 @@ export function TalentAssessmentHistory() {
         risk: 'Medium',
         impact: 'Low',
         nextMove: 'Manager'
-      }
+      },
+      comments: 'Delivered the fleet optimization MVP; assign her as mentor to two new PM hires to practice people leadership.'
     },
     {
       label: 'Q1 2024 Assessment',
@@ -217,7 +220,8 @@ export function TalentAssessmentHistory() {
         risk: 'Medium',
         impact: 'Medium',
         nextMove: 'Individual Contributor'
-      }
+      },
+      comments: 'Performance dip driven by delayed partner integration; map out escalation paths and revisit vendor commitments.'
     },
     {
       label: 'Q3 2023 Assessment',
@@ -229,7 +233,8 @@ export function TalentAssessmentHistory() {
         risk: 'High',
         impact: 'High',
         nextMove: 'N/A'
-      }
+      },
+      comments: 'High attrition risk after reorg; schedule bi-weekly check-ins and fast-track executive comms training.'
     }
   ];
 
@@ -251,7 +256,7 @@ export function TalentAssessmentHistory() {
       `;
       const body = document.createElement('div');
       body.className = 'talent-assessment-history__modal-body';
-      body.innerHTML = sections
+      const qaMarkup = sections
         .map(
           section => `
             <div class="talent-assessment-history__modal-item">
@@ -261,6 +266,14 @@ export function TalentAssessmentHistory() {
           `
         )
         .join('');
+      body.innerHTML = qaMarkup;
+      const comments = document.createElement('div');
+      comments.className = 'talent-assessment-history__modal-comment';
+      comments.innerHTML = `
+        <div class="talent-assessment-history__modal-comment-label">Comments & Action Items</div>
+        <p>${record.comments ?? 'No additional notes recorded for this assessment.'}</p>
+      `;
+      body.appendChild(comments);
       if (index !== 0) {
         section.classList.add('is-collapsed');
         body.style.display = 'none';

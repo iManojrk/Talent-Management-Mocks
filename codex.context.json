@@ -12,7 +12,7 @@
     "start": "open mocks/index.html in a desktop browser",
     "lint": null,
     "serve": "npx serve mocks",
-    "serveAlt": "python -m http.server"
+    "serveAlt": "python -m http.server 4173 --directory mocks"
   },
   "paths": {
     "entry": "mocks/index.html",
@@ -27,9 +27,9 @@
     "notes": "No build toolchain; static assets only"
   },
   "constraints": {
-    "sandbox": "danger-full-access",
-    "approvals": "never",
-    "network": "enabled",
+    "sandbox": "workspace-write",
+    "approvals": "on-request",
+    "network": "restricted",
     "os": "any (desktop browser)"
   },
   "guidance": {
@@ -41,13 +41,16 @@
       "Capture decisions, tradeoffs, and open questions",
       "Document current product focus on Succession Planning inside the Talent Management suite"
     ],
+    "alwaysUpdate": "This context file must be updated immediately whenever repo behavior, guardrails, copy, or styling changes so every agent works from current instructions—no exceptions.",
     "guardrails": [
       "Do NOT create new mocks, screens, or sample data unless explicitly requested and specified by the Product Owner",
       "Keep content static unless interactions are explicitly requested",
       "Confirm scope and acceptance criteria before implementing any new screen or interaction",
       "UI theme stays locked to light mode; remove any dark-mode toggles if reintroduced",
       "Interactivity expectation is exactly the current experience (successor click opens modal, modal tabs toggle trend/latest); no new dynamic behavior without PO approval",
-      "Capture any new PO-provided dos/don'ts or style-guide adjustments in this file immediately so the next agent inherits the directives",
+      "Accessibility affordances (ARIA labels, tab order helpers, keyboard handlers) have been intentionally removed for presentation fidelity—do not reintroduce them without PO approval",
+      "Successor rows and Assign Learning cards are mouse-click only; do not restore keyboard/focus handling unless the PO reverses this directive",
+      "Capture any new PO-provided dos/don'ts, copy tweaks, or style-guide adjustments in this file immediately so the next agent inherits the directives",
       "PO may have a keyboard issue causing stray 'e' letters or transposed characters; interpret instructions accordingly without overcorrecting"
     ],
     "quickStart": [
@@ -59,34 +62,50 @@
     "mocksOverview": [
       "Static interactive mock lives under mocks/",
       "No build step: open mocks/index.html directly in a browser",
-      "Active hash routes: /org (Succession Org Chart), /performance (Performance Evaluation placeholder), /performance-plan (Create Performance Plan placeholder), /talent-assessment-history (Talent Assessmeent History tab showing completed cycle details mock), /cycle (Create Talent Planning Cycle - Current), /cycle-proposed (Create Talent Planning Cycle - Proposed clone for PO experimentation)",
+      "Active hash routes: /org (Succession Org Chart), /performance (Performance Evaluation mock for Manager Evaluations), /performance-plan (Create Performance Plan placeholder), /talent-assessment-history (Talent Assessment History tab showing completed cycle details mock), /cycle (Create Talent Planning Cycle - Current), /cycle-proposed (Create Talent Planning Cycle - Proposed clone for PO experimentation)",
       "Shared component: Modal (forms/talent profile overlay)"
+    ],
+    "performanceEvaluationNotes": [
+      "Performance tab recreates the Manager Evaluations UI with a left-hand report list, plan selector pill, draft/submission actions, and a Peppermint Patty summary card mirroring the provided screenshot.",
+      "Associates list in the left rail is static; Peppermint Patty is pre-selected as the active report and other names are inert until additional behavior is requested.",
+      "Tab strip shows Evaluation/Touchpoint History/Peer Feedback with Evaluation active; content currently focuses on the Manager Evaluation card with Overall Evaluation guidance, pending self feedback callout, and an override checkbox.",
+      "Top-of-panel metrics (Overall Rating, Completed, Team Rank, Gap Analysis, Attachments) are presentational only and do not drive logic.",
+      "Progress indicator for the required submission is static at 0% until PO supplies logic—treat it as presentational."
     ],
     "activeSuccessionMock": {
       "summary": [
         "Executive org tree rooted at the CEO with VP-level branches; VP, Fleet Operations exposes a successor list with readiness chips",
         "Org chart reflects the current hierarchy: Jordan Reyes (CEO) with Maya Chen, Elias Romero, Priya Nair, and Connor Blake reporting to Jordan; Olivia Brooks, Amir Hassan, and Lena Ortiz report up through Elias",
         "Succession plan lives inside Elias Romero's node: three successor rows stay inline, use readiness color chips (green/yellow/red), and act as the only entry point to the Talent Card",
-        "Successor rows support keyboard and mouse activation, open the Talent Card modal, and expose placeholder action menu items",
+        "Successor rows are activated via mouse click only (keyboard support intentionally removed for presentation fidelity), open the Talent Card modal, and expose placeholder action menu items",
         "Assign Learning menu action opens a dedicated modal showing the selected employee plus Competency vs Catalog search tabs with searchable cards; selecting a card drills into a course detail modal with placeholder Assign CTA",
         "Talent Card modal shows talent pool nominations, performance/potential nine-box (latest + trend toggle), rating trend chart, career goals, experience, skills, and education",
         "Readiness chips map ready-green/yellow/red to Ready Now, 1-2 Years, and 3+ Years",
         "Styling is light theme only with custom org connectors, modal layout, and SVG trend visuals"
       ],
-      "interactivity": "Match existing behavior: click/keyboard to open modal, switch between Latest and Trend views inside modal."
+      "interactivity": "Match existing behavior: click successor rows to open the Talent Card modal, then click Latest/Trend buttons inside the modal to switch views; no keyboard handlers are wired."
     },
+    "talentAssessmentHistoryNotes": [
+      "Completed associates list currently features Ava Mitchell (active) and Ryan Carter; keep these names unless the PO supplies new ones.",
+      "Performance question description highlights meeting/exceeding expectations in the current review cycle.",
+      "View History modal accordion mirrors the six assessment questions per cycle, displays the recorded responses, and loads with only the first panel expanded.",
+      "Each historical accordion includes a Comments & Action Items block with record-specific guidance—maintain unique narrative copy per cycle.",
+      "History modal answers render as neutral gray pills (no blue links) to emphasize values without suggesting interactivity.",
+      "Comments & Action Items field defaults to: \"Needs broader exposure to enterprise operations. Line up a 3-month rotation with the logistics team and pair Ava with a senior mentor to refine executive communication skills.\""
+    ],
     "structure": [
       "mocks/index.html — entry file",
       "mocks/styles.css — theme and layout styles",
-      "mocks/app.js — shell, header/sidebar, routes (only #/org) and nav highlighting",
+      "mocks/app.js — shell, header/sidebar, and route registration for #/org, #/performance, #/performance-plan, #/talent-assessment-history, #/cycle, and #/cycle-proposed with nav highlighting",
       "mocks/router.js — hash router",
       "mocks/state.js — in-memory state with localStorage persistence retained for future scenarios",
       "mocks/components/Modal.js — modal backdrop + open/close API",
-      "mocks/screens/orgchart.js — Succession Org Chart (only screen present; add new files only with PO approval)",
+      "mocks/screens/orgchart.js — Succession Org Chart (primary mock and default route; add new files only with PO approval)",
+      "mocks/screens/performance.js — Performance Evaluation screen mirroring Manager Evaluations UI",
       "mocks/screens/cycle.js — Create Talent Planning Cycle (Current tab)",
       "mocks/screens/cycle-proposed.js — Create Talent Planning Cycle (Proposed tab with isolated styles)",
       "mocks/screens/performance-plan.js — Create Performance Plan placeholder screen",
-      "mocks/screens/talent-assessment-history.js — Talent Assessmeent History tab replicates completed review layout (static content)"
+      "mocks/screens/talent-assessment-history.js — Talent Assessment History tab replicates completed review layout (static content)"
     ],
     "addingScreens": [
       "Requires explicit Product Owner approval",
@@ -107,7 +126,8 @@
       "Validate manually in the browser using the provided commands",
       "mocks/index.html injects cache-busted CSS/JS URLs each load; keep the inline script so browsers do not cache updates",
       "Talent Card styles must stay namespaced via the talent-card__* BEM pattern to prevent cross-tab contamination; apply the same approach if new sections are added",
-      "Cycle Proposed tab uses cycle-proposed__* class names/CSS; edit those selectors when iterating so the Current tab remains untouched"
+      "Cycle Proposed tab uses cycle-proposed__* class names/CSS; edit those selectors when iterating so the Current tab remains untouched",
+      "Modal close control is a compact grey circle housing a bold × icon; maintain this treatment instead of reverting to text buttons"
     ]
   },
   "tasks": [
@@ -116,7 +136,7 @@
       "title": "Honor explicit-only mock creation",
       "acceptanceCriteria": [
         "No new screens or sample data are added without a written request",
-        "Guidance.guardrails remains accurate"
+        "Guidance.guardrails remains accurate and context file updates happen with every scoped change"
       ]
     },
     {

@@ -345,7 +345,6 @@ function renderNode({ name = 'Name', position = 'Position', showChildrenList = f
       const menuBtn = document.createElement('button');
       menuBtn.type = 'button';
       menuBtn.className = 'successor-menu-btn';
-      menuBtn.setAttribute('aria-label', `Actions for ${child.name}`);
       menuBtn.textContent = '⋯';
       menuBtn.addEventListener('click', (e) => {
         e.preventDefault();
@@ -358,16 +357,8 @@ function renderNode({ name = 'Name', position = 'Position', showChildrenList = f
       });
       childLine.appendChild(menuBtn);
 
-      childLine.tabIndex = 0;
-      childLine.setAttribute('role', 'button');
       childLine.addEventListener('click', () => {
         openProfile(modals, child);
-      });
-      childLine.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          openProfile(modals, child);
-        }
       });
 
       n.appendChild(childLine);
@@ -607,20 +598,12 @@ function openAssignLearning(modals, person) {
         card.className = 'assign-card';
         card.classList.add('compact');
         card.classList.add('clickable');
-        card.tabIndex = 0;
-        card.setAttribute('role', 'button');
         const openDetail = () => {
           modal.close();
           openLearningDetail(detailModal, person, { ...item, source: config.label });
         };
         card.addEventListener('click', () => {
           openDetail();
-        });
-        card.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            openDetail();
-          }
         });
 
         const info = document.createElement('div');
@@ -1067,7 +1050,6 @@ function careerSection(person) {
     const menuBtn = document.createElement('button');
     menuBtn.type = 'button';
     menuBtn.className = 'talent-card__section-menu-btn';
-    menuBtn.setAttribute('aria-label', `${block.title}`);
     menuBtn.textContent = '⋯';
     menuBtn.disabled = true;
     header.append(title, menuBtn);

@@ -10,15 +10,26 @@ Static, interactive mock-ups for Talent Management with the Succession Org Chart
 
 ### Server options
 
-```bash
+```zsh
 # Node-based
 npx serve mocks
 ```
 
-```bash
+```zsh
 # Python 3
-python -m http.server 4173 --directory mocks
+python3 -m http.server 4173 --directory mocks
 ```
+
+## GitHub Actions & GitHub Pages
+
+To host these mocks with GitHub Pages using a GitHub Action:
+
+- Push this repo to GitHub and open it in the browser.
+- In the repo, go to **Settings → Pages → Build and deployment** and set **Source** to **GitHub Actions**.
+- Use the GitHub Pages static HTML template to create a workflow (or create `.github/workflows/pages.yml`) that uploads the `mocks/` folder as the Pages artifact.
+- Commit the workflow to your default branch; each push will run the GitHub Action and redeploy GitHub Pages. If the workflow includes `workflow_dispatch`, you can also trigger it manually from the **Actions** tab.
+- After the workflow succeeds, open the Pages URL shown in **Settings → Pages** (for this repo: `https://iManojRK.github.io/Talent-Management-Mocks/`) to view the mocks. All hash routes (like `#/org` and `#/performance`) work the same as they do locally.
+- Once the workflow file exists (for example at `.github/workflows/pages.yml`), you can see its runs at `https://github.com/iManojRK/Talent-Management-Mocks/actions/workflows/pages.yml`.
 
 ```powershell
 # Windows Python launcher

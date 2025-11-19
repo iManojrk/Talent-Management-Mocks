@@ -57,7 +57,7 @@ export function CreateTalentPlanningCycleProposed() {
                 </label>
                 <div class="cycle-proposed__field cycle-proposed__toggle-field">
                   <span>Required</span>
-                  <div class="cycle-proposed__toggle cycle-proposed__toggle--disabled is-on" aria-disabled="true"><span></span></div>
+                  <div class="cycle-proposed__toggle cycle-proposed__toggle--disabled is-on"><span></span></div>
                 </div>
                 <label class="cycle-proposed__field">
                   <span>Question Description</span>
@@ -87,7 +87,7 @@ export function CreateTalentPlanningCycleProposed() {
                 </label>
                 <div class="cycle-proposed__field cycle-proposed__toggle-field">
                   <span>Required</span>
-                  <div class="cycle-proposed__toggle cycle-proposed__toggle--disabled is-on" aria-disabled="true"><span></span></div>
+                  <div class="cycle-proposed__toggle cycle-proposed__toggle--disabled is-on"><span></span></div>
                 </div>
                 <label class="cycle-proposed__field">
                   <span>Question Description</span>
