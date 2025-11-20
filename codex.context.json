@@ -82,7 +82,9 @@
         "Assign Learning menu action opens a dedicated modal showing the selected employee plus Competency vs Catalog search tabs with searchable cards; selecting a card drills into a course detail modal with placeholder Assign CTA",
         "Talent Card modal shows talent pool nominations, performance/potential nine-box (latest + trend toggle), rating trend chart, career goals, experience, skills, and education",
         "Readiness chips map ready-green/yellow/red to Ready Now, 1-2 Years, and 3+ Years",
-        "Styling is light theme only with custom org connectors, modal layout, and SVG trend visuals"
+        "Styling is light theme only with custom org connectors, modal layout, and SVG trend visuals",
+        "Org-chart connectors render as continuous SVG paths between parent and children to stay aligned at every viewport size",
+        "Entire org chart now renders as a single three-tier grid (CEO, VPs, successors) so layout is consistent regardless of nested depth"
       ],
       "interactivity": "Match existing behavior: click successor rows to open the Talent Card modal, then click Latest/Trend buttons inside the modal to switch views; no keyboard handlers are wired."
     },

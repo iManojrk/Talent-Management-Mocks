@@ -286,27 +286,15 @@ export function OrgChart() {
   title.className = 'page-title';
   title.textContent = 'Succession Org Chart';
 
-  const chart = document.createElement('div');
-  chart.className = 'org';
   const modals = {
     profile: Modal(),
     assign: Modal(),
     learning: Modal()
   };
-  chart.appendChild(renderBranch(orgData, modals));
+  const chart = renderOrgTree(orgData, modals);
 
   wrap.append(title, chart);
   return wrap;
-}
-
-function renderBranch(nodeData, modals) {
-  const parentBlock = block(renderNode(nodeData, modals));
-  if (!nodeData.children || !nodeData.children.length) {
-    return parentBlock;
-  }
-  const childBlocks = nodeData.children.map(child => renderBranch(child, modals));
-  const group = withChildren(parentBlock, childBlocks);
-  return group;
 }
 
 function renderNode({ name = 'Name', position = 'Position', showChildrenList = false, children = [], color }, modals) {
@@ -1123,25 +1111,135 @@ function block(content) {
   return b;
 }
 
-function withChildren(parentBlock, childBlocks) {
-  const group = document.createElement('div');
-  group.className = 'org-group';
-  const parentRow = document.createElement('div');
-  parentRow.className = 'org-parent';
-  parentRow.appendChild(parentBlock);
+const ORG_SVG_NS = 'http://www.w3.org/2000/svg';
+let orgNodeIdCounter = 0;
+let activeOrgChart = null;
 
-  const childrenRow = document.createElement('div');
-  childrenRow.className = 'org-children';
-  childBlocks.forEach(cb => childrenRow.appendChild(cb));
+function renderOrgTree(rootData, modals) {
+  orgNodeIdCounter = 0;
+  const entries = flattenOrgTree(rootData);
+  const levelEntries = [];
+  const childrenByParent = new Map();
+  entries.forEach(entry => {
+    if (!levelEntries[entry.depth]) levelEntries[entry.depth] = [];
+    levelEntries[entry.depth].push(entry);
+    if (entry.parentId) {
+      if (!childrenByParent.has(entry.parentId)) {
+        childrenByParent.set(entry.parentId, []);
+      }
+      childrenByParent.get(entry.parentId).push(entry);
+    }
+  });
+  const chart = document.createElement('div');
+  chart.className = 'org';
 
-  group.append(parentRow, connector(), childrenRow);
-  return group;
+  const svg = document.createElementNS(ORG_SVG_NS, 'svg');
+  svg.classList.add('org-lines');
+  chart.appendChild(svg);
+
+  const tiersWrap = document.createElement('div');
+  tiersWrap.className = 'org-tiers';
+  chart.appendChild(tiersWrap);
+
+  levelEntries.forEach((levelList = [], depth) => {
+    if (!levelList?.length) return;
+    const tier = document.createElement('div');
+    tier.className = `org-tier org-tier--level${depth}`;
+    tier.dataset.level = depth;
+
+    if (depth === 0) {
+      levelList.forEach(entry => {
+        const blockEl = block(renderNode(entry.data, modals));
+        blockEl.dataset.nodeId = entry.id;
+        tier.appendChild(blockEl);
+      });
+    } else {
+      const parentLevel = levelEntries[depth - 1] ?? [];
+      const totalCols = parentLevel.reduce((sum, parentEntry) => {
+        const count = Math.max(childrenByParent.get(parentEntry.id)?.length ?? 0, 1);
+        return sum + count;
+      }, 0) || 1;
+      tier.style.display = 'grid';
+      tier.style.gridTemplateColumns = `repeat(${totalCols}, minmax(220px, 1fr))`;
+      parentLevel.forEach(parentEntry => {
+        const slot = document.createElement('div');
+        slot.className = 'org-tier-slot';
+        const kids = childrenByParent.get(parentEntry.id) ?? [];
+        const span = Math.max(kids.length, 1);
+        slot.style.gridColumn = `span ${span}`;
+        slot.dataset.parentRef = parentEntry.id;
+        kids.forEach(entry => {
+          const blockEl = block(renderNode(entry.data, modals));
+          blockEl.dataset.nodeId = entry.id;
+          blockEl.dataset.parentId = entry.parentId;
+          slot.appendChild(blockEl);
+        });
+        tier.appendChild(slot);
+      });
+    }
+    tiersWrap.appendChild(tier);
+  });
+
+  scheduleOrgLineLayout(chart);
+  return chart;
 }
 
-function connector() {
-  const c = document.createElement('div');
-  c.className = 'org-connector';
-  return c;
+function flattenOrgTree(node, depth = 0, parentId = null, acc = []) {
+  const id = `org-node-${++orgNodeIdCounter}`;
+  acc.push({ id, data: node, depth, parentId });
+  (node.children ?? []).forEach(child => flattenOrgTree(child, depth + 1, id, acc));
+  return acc;
+}
+
+function scheduleOrgLineLayout(chart) {
+  activeOrgChart = chart;
+  requestAnimationFrame(() => {
+    if (activeOrgChart !== chart || !chart.isConnected) return;
+    layoutOrgLines(chart);
+  });
+}
+
+window.addEventListener('resize', () => {
+  if (activeOrgChart?.isConnected) {
+    layoutOrgLines(activeOrgChart);
+  }
+});
+
+function layoutOrgLines(chart) {
+  const svg = chart.querySelector('.org-lines');
+  if (!svg) return;
+  const nodes = chart.querySelectorAll('[data-node-id]');
+  if (!nodes.length) {
+    svg.innerHTML = '';
+    return;
+  }
+
+  const chartRect = chart.getBoundingClientRect();
+  const width = chartRect.width;
+  const height = chartRect.height;
+  svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+  svg.setAttribute('width', width);
+  svg.setAttribute('height', height);
+  svg.innerHTML = '';
+
+  nodes.forEach(node => {
+    const parentId = node.dataset.parentId;
+    if (!parentId) return;
+    const parent = chart.querySelector(`[data-node-id="${parentId}"]`);
+    if (!parent) return;
+    const parentRect = parent.getBoundingClientRect();
+    const childRect = node.getBoundingClientRect();
+    const startX = parentRect.left + parentRect.width / 2 - chartRect.left;
+    const startY = parentRect.bottom - chartRect.top;
+    const endX = childRect.left + childRect.width / 2 - chartRect.left;
+    const endY = childRect.top - chartRect.top;
+    const midY = (startY + endY) / 2;
+
+    const path = document.createElementNS(ORG_SVG_NS, 'path');
+    path.setAttribute('d', `M ${startX} ${startY} L ${startX} ${midY} L ${endX} ${midY} L ${endX} ${endY}`);
+    path.classList.add('org-line');
+    svg.appendChild(path);
+  });
 }
 
 function initials(name) {

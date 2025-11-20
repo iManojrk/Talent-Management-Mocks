@@ -86,15 +86,14 @@ tr:hover td { background: rgba(122,162,247,0.08); }
 }
 
 /* Org chart styles */
-.org { display: grid; gap: 18px; }
-.org-group { display: grid; gap: 8px; justify-items: center; }
-.org-parent { display: grid; justify-items: center; position: relative; }
-.org-parent::after { content: ""; width: 2px; height: 12px; background: #94a3b8; margin-top: 4px; justify-self: center; border-radius: 99px; }
-.org-children { display: grid; gap: 18px; grid-auto-flow: column; justify-content: center; }
-.org-children > .org-block { position: relative; padding-top: 10px; }
-.org-children > .org-block::before { content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 2px; height: 10px; background: #94a3b8; border-radius: 99px; }
-.org-connector { height: 18px; width: 100%; position: relative; }
-.org-connector::before { content: ""; position: absolute; top: 50%; left: 10%; right: 10%; height: 2px; background: #94a3b8; border-radius: 99px; transform: translateY(-50%); }
+.org { position: relative; display: grid; gap: 32px; justify-items: center; padding: 16px 0 40px; width: 100%; }
+.org-lines { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+.org-lines path { stroke: #94a3b8; stroke-width: 3px; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.org-tiers { position: relative; z-index: 1; display: grid; gap: 36px; width: 100%; }
+.org-tier { display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; }
+.org-tier--level0 { justify-content: center; }
+.org-tier-slot { display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; align-items: flex-start; min-height: 0; }
+.org-tier-slot:empty { min-height: 0; }
 
 .org-block { display: grid; justify-items: center; }
 .org-node { width: 180px; height: 140px; background: var(--panel); border: 1px solid transparent; border-radius: 16px; padding: 16px 12px; display: grid; gap: 6px; text-align: center; overflow: hidden; box-shadow: 0 10px 25px rgba(15, 23, 42, 0.18), 0 4px 12px rgba(15, 23, 42, 0.08); }
