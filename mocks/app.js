@@ -44,13 +44,19 @@ function shell() {
     return a;
   };
 
-  nav.append(
+  const groupedNav = document.createElement('div');
+  groupedNav.className = 'nav-group';
+  groupedNav.append(
     link('/org','Succession Org Chart'),
-    link('/performance','Performance Evaluation'),
-    link('/performance-plan','Create Performance Plan'),
     link('/talent-assessment-history','Talent Assessment'),
     link('/cycle','Create Talent Planning Cycle (Current)'),
     link('/cycle-proposed','Create Talent Planning Cycle (Proposed)'),
+  );
+
+  nav.append(
+    groupedNav,
+    link('/performance','Performance Evaluation'),
+    link('/performance-plan','Create Performance Plan'),
   );
   sidebar.appendChild(nav);
 

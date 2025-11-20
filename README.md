@@ -22,25 +22,16 @@ python3 -m http.server 4173 --directory mocks
 
 ## GitHub Actions & GitHub Pages
 
-To host these mocks with GitHub Pages using a GitHub Action:
+These Mocks are hosted in GitHub Pages using a GitHub Action
 
 - Push this repo to GitHub and open it in the browser.
-- In the repo, go to **Settings → Pages → Build and deployment** and set **Source** to **GitHub Actions**.
-- Use the GitHub Pages static HTML template to create a workflow (or create `.github/workflows/pages.yml`) that uploads the `mocks/` folder as the Pages artifact.
-- Commit the workflow to your default branch; each push will run the GitHub Action and redeploy GitHub Pages. If the workflow includes `workflow_dispatch`, you can also trigger it manually from the **Actions** tab.
-- After the workflow succeeds, open the Pages URL shown in **Settings → Pages** (for this repo: `https://iManojRK.github.io/Talent-Management-Mocks/`) to view the mocks. All hash routes (like `#/org` and `#/performance`) work the same as they do locally.
-- Once the workflow file exists (for example at `.github/workflows/pages.yml`), you can see its runs at `https://github.com/iManojRK/Talent-Management-Mocks/actions/workflows/pages.yml`.
+- Once the workflow file exists (for example at `.github/workflows/pages.yml`), you can see its runs at <https://github.com/iManojRK/Talent-Management-Mocks/actions/workflows/pages.yml>.
+- After the workflow succeeds, open the Pages URL shown in **Settings → Pages** (for this repo: <https://iManojRK.github.io/Talent-Management-Mocks>) to view the mocks. All hash routes (like `#/org` and `#/performance`) work the same as they do locally.
 
 ```powershell
 # Windows Python launcher
 py -m http.server 4173 --directory mocks
 ```
-
-## Routes & Behavior
-
-- `#/org` loads the Succession Org Chart (default).
-- `#/performance` and `#/cycle` are placeholder routes accessible via the mock navigation.
-- VP, Fleet Operations exposes the only interactive successor list; selecting a successor opens the Talent Card modal with Latest/Trend toggles plus Assign Learning flows.
 
 ## Repo Layout
 
@@ -49,9 +40,3 @@ py -m http.server 4173 --directory mocks
 - `mocks/app.js` / `mocks/router.js` – shell, navigation, and hash routing.
 - `mocks/screens/orgchart.js` – Succession Org Chart markup and modal wiring.
 - `mocks/state.js` – simple in-memory state stub preserved for future enhancements.
-
-## Guardrails
-
-- Do not add new screens, sample data, or interactions without Product Owner approval.
-- Keep the experience locked to light mode.
-- Any updates should still open the Talent Card modal through the successor rows only.

@@ -57,7 +57,8 @@
       "Primary machine-readable source is this file",
       "Prefer declared commands over ad-hoc guesses",
       "Ask before making destructive structural changes",
-      "Mock entry is mocks/index.html (hash routing works via file://)"
+      "Mock entry is mocks/index.html (hash routing works via file://)",
+      "After reviewing this context, scan the entire repo to understand every relevant file before making changes"
     ],
     "mocksOverview": [
       "Static interactive mock lives under mocks/",
@@ -107,6 +108,25 @@
       "mocks/screens/performance-plan.js — Create Performance Plan placeholder screen",
       "mocks/screens/talent-assessment-history.js — Talent Assessment History tab replicates completed review layout (static content)"
     ],
+    "navOrder": [
+      "Succession Org Chart (#/org)",
+      "Talent Assessment (#/talent-assessment-history)",
+      "Create Talent Planning Cycle (Current) (#/cycle)",
+      "Create Talent Planning Cycle (Proposed) (#/cycle-proposed)",
+      "Performance Evaluation (#/performance)",
+      "Create Performance Plan (#/performance-plan)"
+    ],
+    "navGrouping": "The first four tabs share a bordered nav-group container in the sidebar to visually connect related planning/assessment flows; the remaining tabs render as standalone links.",
+    "todosWorkflow": {
+      "file": "TODOs.md",
+      "instructions": [
+        "User maintains TODOs.md and may request help on specific unchecked items; do not treat prose without checkboxes as work.",
+        "If the user says to work on TODOs without naming one, read TODOs.md and select the next unchecked task only (if the task has subtasks, start with the first unchecked nested task instead of the parent).",
+        "Before implementing, ask the user to clarify any ambiguities; never assume requirements beyond the TODO text or explicit user direction.",
+        "Work on a single task at a time and stop once it is complete; the user will mark it checked when satisfied.",
+        "Ignore tasks already marked complete (checked) on the next visit."
+      ]
+    },
     "addingScreens": [
       "Requires explicit Product Owner approval",
       "Default experience must remain the Succession Org Chart",
