@@ -12,7 +12,7 @@
     "start": "open mocks/index.html in a desktop browser",
     "lint": null,
     "serve": "npx serve mocks",
-    "serveAlt": "python -m http.server 4173 --directory mocks"
+    "serveAlt": "python3 -m http.server 4173 --directory mocks"
   },
   "paths": {
     "entry": "mocks/index.html",
@@ -24,7 +24,7 @@
   "env": {
     "required": [],
     "profiles": {},
-    "notes": "No build toolchain; static assets only"
+    "notes": "No build toolchain; static assets only. Python is available at /usr/bin/python3 and should be invoked via the python3 command"
   },
   "constraints": {
     "sandbox": "workspace-write",

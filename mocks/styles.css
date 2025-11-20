@@ -89,12 +89,12 @@ tr:hover td { background: rgba(122,162,247,0.08); }
 .org { display: grid; gap: 18px; }
 .org-group { display: grid; gap: 8px; justify-items: center; }
 .org-parent { display: grid; justify-items: center; position: relative; }
-.org-parent::after { content: ""; width: 1px; height: 8px; background: var(--border); margin-top: 4px; justify-self: center; }
+.org-parent::after { content: ""; width: 2px; height: 12px; background: #94a3b8; margin-top: 4px; justify-self: center; border-radius: 99px; }
 .org-children { display: grid; gap: 18px; grid-auto-flow: column; justify-content: center; }
-.org-children > .org-block { position: relative; padding-top: 8px; }
-.org-children > .org-block::before { content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 1px; height: 8px; background: var(--border); }
-.org-connector { height: 14px; width: 100%; position: relative; }
-.org-connector::before { content: ""; position: absolute; top: 50%; left: 10%; right: 10%; height: 1px; background: var(--border); }
+.org-children > .org-block { position: relative; padding-top: 10px; }
+.org-children > .org-block::before { content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 2px; height: 10px; background: #94a3b8; border-radius: 99px; }
+.org-connector { height: 18px; width: 100%; position: relative; }
+.org-connector::before { content: ""; position: absolute; top: 50%; left: 10%; right: 10%; height: 2px; background: #94a3b8; border-radius: 99px; transform: translateY(-50%); }
 
 .org-block { display: grid; justify-items: center; }
 .org-node { width: 180px; height: 140px; background: var(--panel); border: 1px solid transparent; border-radius: 16px; padding: 16px 12px; display: grid; gap: 6px; text-align: center; overflow: hidden; box-shadow: 0 10px 25px rgba(15, 23, 42, 0.18), 0 4px 12px rgba(15, 23, 42, 0.08); }
