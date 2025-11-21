@@ -17,7 +17,21 @@ const orgData = {
           position: 'Regional Distribution Manager',
           readiness: 'ready-green',
           color: '#1d4ed8',
-          talentPools: [{ name: 'Top Talent', readiness: 'ready-green' }],
+          talentPools: [
+            { name: 'Top Talent', readiness: 'ready-green' },
+            { name: 'Strategic Mobility Bench', readiness: 'ready-yellow' }
+          ],
+          incumbentNominations: [
+            { incumbent: 'Elias Romero', position: 'VP, Fleet Operations', status: 'Primary Successor' },
+            { incumbent: 'Connor Blake', position: 'Director, Route Analytics', status: 'Network Bench' }
+          ],
+          competencyGap: {
+            focusAreas: [
+              { label: 'Network Scenario Modeling' },
+              { label: 'Fleet Cost-to-Serve' },
+              { label: 'Union/Carrier Negotiations' }
+            ]
+          },
           perfSnapshot: {
             summary: 'Marginal Performer',
             performance: 2,
@@ -67,7 +81,22 @@ const orgData = {
           position: 'Fleet Optimization Manager',
           readiness: 'ready-yellow',
           color: '#6d28d9',
-          talentPools: [{ name: 'Strategic Bench', readiness: 'ready-yellow' }],
+          talentPools: [
+            { name: 'Strategic Bench', readiness: 'ready-yellow' },
+            { name: 'Fleet Innovation Guild', readiness: 'ready-green' }
+          ],
+          incumbentNominations: [
+            { incumbent: 'Elias Romero', position: 'VP, Fleet Operations', status: '1-2 Year Successor' },
+            { incumbent: 'Connor Blake', position: 'Director, Route Analytics', status: 'Pipeline Nomination' }
+          ],
+          competencyGap: {
+            summary: 'Needs to refine executive influence and sharpen financial storytelling for capital requests.',
+            focusAreas: [
+              { label: 'Telematics Storytelling' },
+              { label: 'Fleet Cost Modeling' },
+              { label: 'Vendor SLA Governance' }
+            ]
+          },
           perfSnapshot: {
             summary: 'Consistent Performer with high potential',
             performance: 2,
@@ -117,7 +146,22 @@ const orgData = {
           position: 'Warehouse Automation Lead',
           readiness: 'ready-red',
           color: '#b45309',
-          talentPools: [{ name: 'Emerging Leaders', readiness: 'ready-red' }],
+          talentPools: [
+            { name: 'Emerging Leaders', readiness: 'ready-red' },
+            { name: 'Automation Futures Cohort', readiness: 'ready-yellow' }
+          ],
+          incumbentNominations: [
+            { incumbent: 'Elias Romero', position: 'VP, Fleet Operations', status: 'Emerging Successor' },
+            { incumbent: 'Connor Blake', position: 'Director, Route Analytics', status: 'Watchlist' }
+          ],
+          competencyGap: {
+            summary: 'Needs deeper executive communication polish and broader finance fluency for automation investments.',
+            focusAreas: [
+              { label: 'Automation Uptime' },
+              { label: 'Pick-Pack Flow' },
+              { label: 'Maintenance Handoff' }
+            ]
+          },
           perfSnapshot: {
             summary: 'Emerging leader driving automation pilots',
             performance: 2,
@@ -168,6 +212,22 @@ const orgData = {
     { name: 'Connor Blake', position: 'Director, Route Analytics', color: '#27272a' }
   ]
 };
+
+const talentProfileMap = {};
+collectTalentProfiles(orgData);
+
+function collectTalentProfiles(node) {
+  if (!node || typeof node !== 'object') return;
+  const hasTalentData = node.talentPools || node.perfSnapshot || node.performanceRating || node.competencyGap || node.workExperience || node.formalEducation;
+  if (hasTalentData) {
+    talentProfileMap[node.name] = node;
+  }
+  (node.children ?? []).forEach(child => collectTalentProfiles(child));
+}
+
+export function getTalentProfile(name) {
+  return talentProfileMap[name];
+}
 
 const learningLibrary = {
   competency: [
@@ -396,9 +456,8 @@ function closeContextMenu() {
   activeMenu = null;
 }
 
-function openProfile(modals, person) {
-  const modal = modals.profile;
-  closeContextMenu();
+export function createTalentCard(person = {}) {
+  const profile = person ?? {};
   const body = document.createElement('div');
   body.className = 'talent-card';
 
@@ -407,8 +466,9 @@ function openProfile(modals, person) {
 
   const avatar = document.createElement('div');
   avatar.className = 'avatar large';
-  avatar.textContent = initials(person.name);
-  const avatarColor = person.color ?? '#1f2937';
+  const displayName = profile.name ?? 'Associate Profile';
+  avatar.textContent = initials(displayName);
+  const avatarColor = profile.color ?? '#1f2937';
   avatar.style.backgroundColor = avatarColor;
 
   const main = document.createElement('div');
@@ -417,57 +477,44 @@ function openProfile(modals, person) {
   info.className = 'talent-card__bio';
   const nameEl = document.createElement('div');
   nameEl.className = 'talent-card__name';
-  nameEl.textContent = person.name;
+  nameEl.textContent = displayName;
 
   const posEl = document.createElement('div');
   posEl.className = 'talent-card__position';
-  posEl.textContent = person.position;
+  posEl.textContent = profile.position ?? 'Role not provided';
 
-  const readiness = document.createElement('span');
-  readiness.className = `chip readiness ${person.readiness ?? ''} readiness-pill`.trim();
-  readiness.textContent = readinessLabel(person.readiness);
-
-  info.append(nameEl, posEl, readiness);
+  info.append(nameEl, posEl);
   main.append(avatar, info);
   header.append(main);
   body.append(header);
 
-  const pools = person.talentPools ?? [{ name: 'Top Talent', readiness: person.readiness }];
-  const section = document.createElement('div');
-  section.className = 'talent-card__section';
-  const sectionTitle = document.createElement('div');
-  sectionTitle.className = 'talent-card__section-title';
-  sectionTitle.textContent = `Talent Pool Nominations (${pools.length || 0})`;
-  section.appendChild(sectionTitle);
+  const sections = [];
+  if (profile.perfSnapshot) {
+    sections.push(talentAssessmentSection(profile.perfSnapshot));
+  }
+  if (profile.performanceRating) {
+    sections.push(performanceRatingSection(profile.performanceRating));
+  }
+  sections.push(incumbentNominationSection(profile));
+  sections.push(talentPoolSection(profile));
+  sections.push(competencyGapSection(profile));
+  sections.push(workExperienceSection(profile));
+  sections.push(skillsSection(profile));
+  sections.push(educationSection(profile));
 
-  const poolList = document.createElement('div');
-  poolList.className = 'talent-card__pool-list';
-  pools.forEach(pool => {
-    const row = document.createElement('div');
-    row.className = 'talent-card__pool-row';
-    const name = document.createElement('div');
-    name.className = 'talent-card__pool-name';
-    name.textContent = pool.name;
-    const chip = document.createElement('span');
-    chip.className = `chip readiness ${pool.readiness ?? ''}`.trim();
-    chip.textContent = readinessLabel(pool.readiness ?? person.readiness);
-    name.appendChild(chip);
-    row.append(name);
-    poolList.appendChild(row);
+  sections.forEach(section => {
+    if (section) {
+      body.append(section);
+    }
   });
-  section.appendChild(poolList);
-  body.append(section);
 
-  if (person.perfSnapshot) {
-    body.append(performanceSection(person.perfSnapshot));
-  }
+  return body;
+}
 
-  if (person.performanceRating) {
-    body.append(performanceRatingSection(person.performanceRating));
-  }
-
-  body.append(careerSection(person));
-
+function openProfile(modals, person) {
+  const modal = modals.profile;
+  closeContextMenu();
+  const body = createTalentCard(person);
   modal.open({ title: 'Talent Card', body });
 }
 
@@ -493,7 +540,7 @@ function openAssignLearning(modals, person) {
   const tabs = [
     {
       key: 'competency',
-      label: 'Search by Competency',
+      label: 'Recommended Courses',
       placeholder: 'Search competencies or behaviors',
       items: learningLibrary.competency
     },
@@ -537,6 +584,24 @@ function openAssignLearning(modals, person) {
   function renderContent() {
     const config = tabs.find(t => t.key === activeTab);
     content.innerHTML = '';
+
+    if (config.key === 'competency') {
+      const recWrap = document.createElement('div');
+      recWrap.className = 'assign-recommendations';
+      const recTitle = document.createElement('div');
+      recTitle.className = 'assign-recommendations__title';
+      recTitle.textContent = 'Selected Competencies';
+      const recList = document.createElement('div');
+      recList.className = 'assign-recommendations__pills';
+      const focusAreas = (person.competencyGap?.focusAreas ?? []).slice(0, 3);
+      focusAreas.forEach(area => {
+        const pill = document.createElement('span');
+        pill.textContent = area.label;
+        recList.appendChild(pill);
+      });
+     recWrap.append(recTitle, recList);
+     content.appendChild(recWrap);
+   }
 
     const form = document.createElement('form');
     form.className = 'assign-search';
@@ -701,7 +766,162 @@ function openLearningDetail(modal, person, course) {
   });
 }
 
-function performanceSection(snapshot) {
+function incumbentNominationSection(person) {
+  const nominations = person.incumbentNominations ?? [];
+  const section = document.createElement('div');
+  section.className = 'talent-card__section';
+  const title = document.createElement('div');
+  title.className = 'talent-card__section-title';
+  title.textContent = `Nominated for Incumbents and Positions (${nominations.length || 0})`;
+  section.appendChild(title);
+
+  if (!nominations.length) {
+    section.appendChild(createEmptyState('No incumbent nominations recorded.'));
+    return section;
+  }
+
+  const list = document.createElement('div');
+  list.className = 'talent-card__pool-list';
+  nominations.forEach(item => {
+    const row = document.createElement('div');
+    row.className = 'talent-card__pool-row talent-card__pool-row--incumbent';
+    const name = document.createElement('div');
+    name.className = 'talent-card__pool-name';
+    name.innerHTML = `<strong>${item.incumbent}</strong> <span>${item.position}</span>`;
+    row.appendChild(name);
+    list.appendChild(row);
+  });
+  section.appendChild(list);
+  return section;
+}
+
+function talentPoolSection(person) {
+  const pools = person.talentPools ?? [{ name: 'Top Talent', readiness: person.readiness }];
+  const section = document.createElement('div');
+  section.className = 'talent-card__section';
+  const sectionTitle = document.createElement('div');
+  sectionTitle.className = 'talent-card__section-title';
+  sectionTitle.textContent = `Talent Pool Nominations (${pools.length || 0})`;
+  section.appendChild(sectionTitle);
+
+  if (!pools.length) {
+    section.appendChild(createEmptyState('No pool nominations recorded.'));
+    return section;
+  }
+
+  const poolList = document.createElement('div');
+  poolList.className = 'talent-card__pool-list';
+  pools.forEach(pool => {
+    const row = document.createElement('div');
+    row.className = 'talent-card__pool-row';
+    const name = document.createElement('div');
+    name.className = 'talent-card__pool-name';
+    name.textContent = pool.name;
+    const chip = document.createElement('span');
+    chip.className = `chip readiness ${pool.readiness ?? ''}`.trim();
+    chip.textContent = readinessLabel(pool.readiness ?? person.readiness);
+    name.appendChild(chip);
+    row.appendChild(name);
+    poolList.appendChild(row);
+  });
+  section.appendChild(poolList);
+  return section;
+}
+
+function competencyGapSection(person) {
+  const { section, body } = buildInfoSection('Competency Gaps');
+  const gap = person.competencyGap ?? {};
+  const focusAreas = gap.focusAreas ?? [];
+  if (focusAreas.length) {
+    const list = document.createElement('div');
+    list.className = 'talent-card__gap-list';
+    focusAreas.forEach(area => {
+      const pill = document.createElement('span');
+      pill.className = 'talent-card__gap-pill';
+      pill.textContent = area.label;
+      list.appendChild(pill);
+    });
+    body.appendChild(list);
+  }
+  return section;
+}
+
+function workExperienceSection(person) {
+  const { section, body } = buildInfoSection('Work Experience', 'talent-card__info-card-body--experience');
+  const experiences = person.workExperience ?? [];
+  if (experiences.length) {
+    experiences.forEach(item => {
+      const entry = document.createElement('div');
+      entry.className = 'talent-card__experience-entry';
+      entry.innerHTML = `<strong>${item.position}</strong> · ${item.company}<br/><span>${item.years}</span>`;
+      body.appendChild(entry);
+    });
+  } else if (!body.children.length) {
+    body.textContent = 'No Records Found';
+  }
+
+  return section;
+}
+
+function skillsSection(person) {
+  const { section, body } = buildInfoSection('Skills', 'talent-card__info-card-body--skills');
+  const skills = person.languageSkills ?? [];
+  if (skills.length) {
+    skills.forEach(skill => {
+      const pill = document.createElement('span');
+      pill.textContent = skill;
+      body.appendChild(pill);
+    });
+  } else {
+    body.textContent = 'No Records Found';
+  }
+  return section;
+}
+
+function educationSection(person) {
+  const { section, body } = buildInfoSection('Education', 'talent-card__info-card-body--education');
+  const education = person.formalEducation ?? [];
+  if (education.length) {
+    education.forEach(item => {
+      const entry = document.createElement('div');
+      entry.className = 'talent-card__education-entry';
+      entry.innerHTML = `<strong>${item.degree}</strong> · ${item.university}<br/><span>${item.level} · Graduated ${item.graduation}</span>`;
+      body.appendChild(entry);
+    });
+  } else {
+    body.textContent = 'No Records Found';
+  }
+  return section;
+}
+
+function buildInfoSection(title, bodyClass) {
+  const section = document.createElement('div');
+  section.className = 'talent-card__section talent-card__section--info-list';
+  const sectionTitle = document.createElement('div');
+  sectionTitle.className = 'talent-card__section-title';
+  sectionTitle.textContent = title;
+  section.appendChild(sectionTitle);
+
+  const card = document.createElement('div');
+  card.className = 'talent-card__info-card';
+  const body = document.createElement('div');
+  body.className = 'talent-card__info-card-body';
+  if (bodyClass) {
+    body.classList.add(bodyClass);
+  }
+  card.appendChild(body);
+  section.appendChild(card);
+  return { section, body };
+}
+
+function createEmptyState(text) {
+  const wrap = document.createElement('div');
+  wrap.className = 'talent-card__empty';
+  wrap.textContent = text;
+  return wrap;
+}
+
+function talentAssessmentSection(snapshot) {
   const section = document.createElement('div');
   section.className = 'talent-card__section talent-card__section--performance';
 
@@ -709,7 +929,7 @@ function performanceSection(snapshot) {
   header.className = 'talent-card__perf-header';
   const title = document.createElement('div');
   title.className = 'talent-card__section-title';
-  title.textContent = 'Performance & Potential';
+  title.textContent = 'Talent Assessment';
   const links = document.createElement('div');
   links.className = 'talent-card__tabs';
   const latestBtn = document.createElement('button');
@@ -997,100 +1217,6 @@ function performanceRatingSection(rating) {
   return section;
 }
 
-function careerSection(person) {
-  const wrap = document.createElement('div');
-  wrap.className = 'talent-card__section talent-card__section--info-list';
-
-  const blocks = [
-    {
-      title: 'Career Goals',
-      type: 'text',
-      value: person.careerGoals
-        ? `Title: ${person.careerGoals.title}, Level: ${person.careerGoals.level}<br/>Function: ${person.careerGoals.function}, ${person.careerGoals.readiness}`
-        : null
-    },
-    {
-      title: 'Work Experience',
-      type: 'experience',
-      value: person.workExperience ?? []
-    },
-    {
-      title: 'Skills',
-      type: 'skills',
-      value: person.languageSkills ?? []
-    },
-    {
-      title: 'Education',
-      type: 'education',
-      value: person.formalEducation ?? []
-    }
-  ];
-
-  blocks.forEach(block => {
-    const card = document.createElement('div');
-    card.className = 'talent-card__info-card';
-    const header = document.createElement('div');
-    header.className = 'talent-card__info-card-header';
-
-    const title = document.createElement('div');
-    title.className = 'talent-card__info-card-title';
-    title.textContent = block.title;
-    const menuBtn = document.createElement('button');
-    menuBtn.type = 'button';
-    menuBtn.className = 'talent-card__section-menu-btn';
-    menuBtn.textContent = '⋯';
-    menuBtn.disabled = true;
-    header.append(title, menuBtn);
-
-    const body = document.createElement('div');
-    body.className = 'talent-card__info-card-body';
-
-    if (block.type === 'skills') {
-      body.classList.add('talent-card__info-card-body--skills');
-      if (block.value?.length) {
-        block.value.forEach(skill => {
-          const pill = document.createElement('span');
-          pill.textContent = skill;
-          body.appendChild(pill);
-        });
-      } else {
-        body.textContent = 'No Records Found';
-      }
-    } else if (block.type === 'experience') {
-      body.classList.add('talent-card__info-card-body--experience');
-      if (block.value?.length) {
-        block.value.forEach(item => {
-          const entry = document.createElement('div');
-          entry.className = 'talent-card__experience-entry';
-          entry.innerHTML = `<strong>${item.position}</strong> · ${item.company}<br/><span>${item.years}</span>`;
-          body.appendChild(entry);
-        });
-      } else {
-        body.textContent = 'No Records Found';
-      }
-    } else if (block.type === 'education') {
-      body.classList.add('talent-card__info-card-body--education');
-      if (block.value?.length) {
-        block.value.forEach(item => {
-          const entry = document.createElement('div');
-          entry.className = 'talent-card__education-entry';
-          entry.innerHTML = `<strong>${item.degree}</strong> · ${item.university}<br/><span>${item.level} · Graduated ${item.graduation}</span>`;
-          body.appendChild(entry);
-        });
-      } else {
-        body.textContent = 'No Records Found';
-      }
-    } else {
-      body.innerHTML = block.value ?? 'No Records Found';
-    }
-
-    card.append(header, body);
-    wrap.appendChild(card);
-  });
-
-  return wrap;
-}
-
 function readinessLabel(code) {
   switch (code) {
     case 'ready-green':
@@ -1130,6 +1256,7 @@ function renderOrgTree(rootData, modals) {
       childrenByParent.get(entry.parentId).push(entry);
     }
   });
+
   const chart = document.createElement('div');
   chart.className = 'org';
 
@@ -1146,7 +1273,6 @@ function renderOrgTree(rootData, modals) {
     const tier = document.createElement('div');
     tier.className = `org-tier org-tier--level${depth}`;
     tier.dataset.level = depth;
-
     if (depth === 0) {
       levelList.forEach(entry => {
         const blockEl = block(renderNode(entry.data, modals));
@@ -1155,19 +1281,30 @@ function renderOrgTree(rootData, modals) {
       });
     } else {
       const parentLevel = levelEntries[depth - 1] ?? [];
-      const totalCols = parentLevel.reduce((sum, parentEntry) => {
-        const count = Math.max(childrenByParent.get(parentEntry.id)?.length ?? 0, 1);
-        return sum + count;
-      }, 0) || 1;
+      const parentsWithChildren = parentLevel.filter(parentEntry => {
+        const kids = childrenByParent.get(parentEntry.id) ?? [];
+        return kids.length > 0;
+      });
+      const slotParents = parentsWithChildren.length ? parentsWithChildren : parentLevel;
+      const totalCols = slotParents.length || 1;
       tier.style.display = 'grid';
       tier.style.gridTemplateColumns = `repeat(${totalCols}, minmax(220px, 1fr))`;
-      parentLevel.forEach(parentEntry => {
+      tier.style.justifyItems = 'center';
+
+      slotParents.forEach(parentEntry => {
+        const kids = childrenByParent.get(parentEntry.id) ?? [];
+        if (!kids.length && parentsWithChildren.length) return;
+
         const slot = document.createElement('div');
         slot.className = 'org-tier-slot';
-        const kids = childrenByParent.get(parentEntry.id) ?? [];
-        const span = Math.max(kids.length, 1);
-        slot.style.gridColumn = `span ${span}`;
-        slot.dataset.parentRef = parentEntry.id;
+        slot.dataset.parentId = parentEntry.id;
+
+        slot.style.display = 'flex';
+        slot.style.justifyContent = 'center';
+        slot.style.alignItems = 'flex-start';
+        slot.style.gap = '18px';
+        slot.style.flexWrap = 'wrap';
+
         kids.forEach(entry => {
           const blockEl = block(renderNode(entry.data, modals));
           blockEl.dataset.nodeId = entry.id;
@@ -1222,6 +1359,40 @@ function layoutOrgLines(chart) {
   svg.setAttribute('height', height);
   svg.innerHTML = '';
 
+  // Reset slot offsets before remeasuring
+  const slots = chart.querySelectorAll('.org-tier-slot[data-parent-id]');
+  slots.forEach(slot => {
+    slot.style.transform = 'translateX(0px)';
+  });
+
+  // Align successor slot centers under their parent nodes
+  slots.forEach(slot => {
+    const parentId = slot.dataset.parentId;
+    if (!parentId) return;
+    const parent = chart.querySelector(`[data-node-id="${parentId}"]`);
+    if (!parent) return;
+
+    const slotRect = slot.getBoundingClientRect();
+    const parentRect = parent.getBoundingClientRect();
+    const slotCenter = slotRect.left + slotRect.width / 2;
+    const parentCenter = parentRect.left + parentRect.width / 2;
+    let delta = parentCenter - slotCenter;
+
+    const slotLeft = slotRect.left - chartRect.left;
+    const slotRight = slotRect.right - chartRect.left;
+    const newLeft = slotLeft + delta;
+    const newRight = slotRight + delta;
+
+    if (newLeft < 0) {
+      delta -= newLeft;
+    }
+    if (newRight > width) {
+      delta -= (newRight - width);
+    }
+
+    slot.style.transform = `translateX(${delta}px)`;
+  });
+
   nodes.forEach(node => {
     const parentId = node.dataset.parentId;
     if (!parentId) return;
@@ -1235,8 +1406,22 @@ function layoutOrgLines(chart) {
     const endY = childRect.top - chartRect.top;
     const midY = (startY + endY) / 2;
 
+    const horizontalDir = Math.sign(endX - startX) || 1;
+    const verticalDir = Math.sign(endY - midY) || 1;
+    const cornerRadius = Math.min(14, Math.abs(endX - startX) / 2);
+    const verticalCornerY = midY;
+    const horizontalCornerX = endX;
+    const firstVerticalStop = verticalCornerY - cornerRadius;
+    const horizontalEnd = horizontalCornerX - horizontalDir * cornerRadius;
+
     const path = document.createElementNS(ORG_SVG_NS, 'path');
-    path.setAttribute('d', `M ${startX} ${startY} L ${startX} ${midY} L ${endX} ${midY} L ${endX} ${endY}`);
+    let d = `M ${startX} ${startY}`;
+    d += ` L ${startX} ${firstVerticalStop}`;
+    d += ` Q ${startX} ${verticalCornerY} ${startX + horizontalDir * cornerRadius} ${verticalCornerY}`;
+    d += ` L ${horizontalEnd} ${verticalCornerY}`;
+    d += ` Q ${horizontalCornerX} ${verticalCornerY} ${horizontalCornerX} ${verticalCornerY + verticalDir * cornerRadius}`;
+    d += ` L ${horizontalCornerX} ${endY}`;
+    path.setAttribute('d', d);
     path.classList.add('org-line');
     svg.appendChild(path);
   });

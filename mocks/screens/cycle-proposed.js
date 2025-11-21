@@ -138,6 +138,96 @@ export function CreateTalentPlanningCycleProposed() {
                 <button class="cycle-proposed__link-btn">+ Add Option</button>
               </div>
             </div>
+
+            <div class="cycle-proposed__question-card">
+              <div class="cycle-proposed__question-main">
+                <label class="cycle-proposed__field">
+                  <span>Question*</span>
+                  <input class="cycle-proposed__input" value="Impact of Loss" />
+                </label>
+                <div class="cycle-proposed__field cycle-proposed__toggle-field">
+                  <span>Required</span>
+                  <div class="cycle-proposed__toggle is-on"><span></span></div>
+                </div>
+                <label class="cycle-proposed__field">
+                  <span>Question Description</span>
+                  <textarea class="cycle-proposed__input" rows="3">The impact on the organization if an associate leaves or transitions roles, including difficulty to replace and knowledge at risk.</textarea>
+                </label>
+
+                <div class="cycle-proposed__options">
+                  ${['Low','Medium','High','N/A'].map(option => `
+                    <div class="cycle-proposed__option-row">
+                      <label class="cycle-proposed__radio">
+                        <input type="radio" name="proposedQuestionFour" />
+                      </label>
+                      <input class="cycle-proposed__input" value="${option}" />
+                      <button class="cycle-proposed__icon-btn" title="Remove option">🗑</button>
+                    </div>
+                  `).join('')}
+                </div>
+                <button class="cycle-proposed__link-btn">+ Add Option</button>
+              </div>
+            </div>
+
+            <div class="cycle-proposed__question-card">
+              <div class="cycle-proposed__question-main">
+                <label class="cycle-proposed__field">
+                  <span>Question*</span>
+                  <input class="cycle-proposed__input" value="Readiness" />
+                </label>
+                <div class="cycle-proposed__field cycle-proposed__toggle-field">
+                  <span>Required</span>
+                  <div class="cycle-proposed__toggle is-on"><span></span></div>
+                </div>
+                <label class="cycle-proposed__field">
+                  <span>Question Description</span>
+                  <textarea class="cycle-proposed__input" rows="3">The extent to which the associate has the skills and experiences needed to be successful in their envisioned next role.</textarea>
+                </label>
+
+                <div class="cycle-proposed__options">
+                  ${['Ready now','6 - 12 months','12 - 24 months'].map(option => `
+                    <div class="cycle-proposed__option-row">
+                      <label class="cycle-proposed__radio">
+                        <input type="radio" name="proposedQuestionFive" />
+                      </label>
+                      <input class="cycle-proposed__input" value="${option}" />
+                      <button class="cycle-proposed__icon-btn" title="Remove option">🗑</button>
+                    </div>
+                  `).join('')}
+                </div>
+                <button class="cycle-proposed__link-btn">+ Add Option</button>
+              </div>
+            </div>
+
+            <div class="cycle-proposed__question-card">
+              <div class="cycle-proposed__question-main">
+                <label class="cycle-proposed__field">
+                  <span>Question*</span>
+                  <input class="cycle-proposed__input" value="Next Move" />
+                </label>
+                <div class="cycle-proposed__field cycle-proposed__toggle-field">
+                  <span>Required</span>
+                  <div class="cycle-proposed__toggle is-on"><span></span></div>
+                </div>
+                <label class="cycle-proposed__field">
+                  <span>Question Description</span>
+                  <textarea class="cycle-proposed__input" rows="3">Based on capabilities, drive, and interests, identify the role you see this associate growing into next.</textarea>
+                </label>
+
+                <div class="cycle-proposed__options">
+                  ${['Individual Contributor','Manager','Director','N/A'].map(option => `
+                    <div class="cycle-proposed__option-row">
+                      <label class="cycle-proposed__radio">
+                        <input type="radio" name="proposedQuestionSix" />
+                      </label>
+                      <input class="cycle-proposed__input" value="${option}" />
+                      <button class="cycle-proposed__icon-btn" title="Remove option">🗑</button>
+                    </div>
+                  `).join('')}
+                </div>
+                <button class="cycle-proposed__link-btn">+ Add Option</button>
+              </div>
+            </div>
           </div>
         </section>
       </main>

@@ -1,10 +1,14 @@
+import { Modal } from '../components/Modal.js?v=20250205';
+import { createTalentCard, getTalentProfile } from './orgchart.js?v=20250205';
+import { createTalentAssessmentHistoryModal } from './talent-assessment-history.js?v=20250205';
+
 const associates = [
   'Amina Patel',
   'Brandon Keller',
   'Carlos Dominguez',
   'Daria Novak',
   'Emiko Sato',
-  'Peppermint Patty',
+  'Olivia Brooks',
   'Gabriel Turner',
   'Nia Robinson',
   'Owen Graves'
@@ -27,6 +31,10 @@ const evaluationMetrics = [
 export function PerformanceEvaluation() {
   const page = document.createElement('div');
   page.className = 'manager-evaluations';
+  const overlays = {
+    talentCard: Modal(),
+    history: Modal()
+  };
 
   const header = document.createElement('div');
   header.className = 'manager-evaluations__header';
@@ -45,7 +53,7 @@ export function PerformanceEvaluation() {
   aside.className = 'manager-evaluations__list';
   aside.innerHTML = associates
     .map(name => `
-      <button class="manager-evaluations__person${name === 'Peppermint Patty' ? ' is-active' : ''}">
+      <button class="manager-evaluations__person${name === 'Olivia Brooks' ? ' is-active' : ''}">
         <span>${name}</span>
       </button>
     `)
@@ -84,7 +92,7 @@ export function PerformanceEvaluation() {
       <div class="manager-evaluations__profile">
         <div class="manager-evaluations__avatar">PP</div>
         <div>
-          <strong>Peppermint Patty</strong>
+          <button class="manager-evaluations__profile-name" type="button">Olivia Brooks</button>
           <span>Quality Engineers</span>
         </div>
       </div>
@@ -98,7 +106,9 @@ export function PerformanceEvaluation() {
           <span class="due">Due in 11 days</span>
         </div>
       </div>
-      <a class="manager-evaluations__link" href="#">Download Draft Evaluation</a>
+      <div class="manager-evaluations__summary-actions">
+        <a class="manager-evaluations__link" href="#">Download Draft Evaluation</a>
+      </div>
     </div>
     <div class="manager-evaluations__tabs">
       <button class="is-active">Evaluation</button>
@@ -107,8 +117,11 @@ export function PerformanceEvaluation() {
     </div>
     <section class="manager-evaluations__panel">
       <div class="manager-evaluations__panel-header">
-        <h3>Manager Evaluation</h3>
-        <p>For the evaluation process, use examples to describe how this associate achieved their goals and any accomplishments you would like to highlight.</p>
+        <div class="manager-evaluations__panel-title">
+          <h3>Manager Evaluation</h3>
+          <p>For the evaluation process, use examples to describe how this associate achieved their goals and any accomplishments you would like to highlight.</p>
+        </div>
+        <button class="manager-evaluations__history-link" type="button">View Talent Assessment History</button>
       </div>
       <div class="manager-evaluations__metrics">
         ${evaluationMetrics
@@ -169,6 +182,23 @@ export function PerformanceEvaluation() {
       </div>
     </section>
   `;
+
+  const historyBtn = content.querySelector('.manager-evaluations__history-link');
+  historyBtn?.addEventListener('click', () => {
+    overlays.history.open({
+      title: 'Talent Assessment History',
+      body: createTalentAssessmentHistoryModal()
+    });
+  });
+
+  const talentCardBtn = content.querySelector('.manager-evaluations__profile-name');
+  talentCardBtn?.addEventListener('click', () => {
+    const profile = getTalentProfile('Olivia Brooks') ?? { name: 'Olivia Brooks', position: 'Quality Engineers' };
+    overlays.talentCard.open({
+      title: 'Talent Card',
+      body: createTalentCard(profile)
+    });
+  });
 
   body.append(aside, content);
   page.append(header, body);

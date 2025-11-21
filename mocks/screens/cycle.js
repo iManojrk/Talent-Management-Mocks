@@ -146,8 +146,8 @@ export function CreateTalentPlanningCycle() {
                   <input type="radio" name="axisSetting2" />
                   <span>N/A</span>
                 </label>
-              </div>
             </div>
+          </div>
 
             <div class="question-card">
               <div class="question-main">
@@ -192,6 +192,150 @@ export function CreateTalentPlanningCycle() {
                 </label>
                 <label class="radio">
                   <input type="radio" name="axisSetting3" checked />
+                  <span>N/A</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card">
+              <div class="question-main">
+                <label class="field">
+                  <span>Question*</span>
+                  <input class="input" value="Impact of Loss" />
+                </label>
+                <div class="field toggle-field">
+                  <span>Required</span>
+                  <div class="toggle on"><span></span></div>
+                </div>
+                <label class="field">
+                  <span>Question Description</span>
+                  <textarea class="input" rows="3">The impact on the organization if an associate leaves or transitions to a different role, factoring in replacement difficulty and knowledge transfer.</textarea>
+                </label>
+
+                <div class="options">
+                  ${['Low','Medium','High','N/A'].map(option => `
+                    <div class="option-row">
+                      <label class="radio">
+                        <input type="radio" name="questionFour" />
+                      </label>
+                      <input class="input" value="${option}" />
+                      <button class="icon-btn" title="Remove option">🗑</button>
+                    </div>
+                  `).join('')}
+                </div>
+                <button class="link-btn">+ Add Option</button>
+              </div>
+              <div class="axis-card">
+                <div class="axis-header">
+                  <span>Talent Matrix Axis Settings</span>
+                  <button class="icon-btn minimal">⌃</button>
+                </div>
+                <label class="radio">
+                  <input type="radio" name="axisSetting4" />
+                  <span>Assign to X Axis</span>
+                </label>
+                <label class="radio">
+                  <input type="radio" name="axisSetting4" />
+                  <span>Assign to Y Axis</span>
+                </label>
+                <label class="radio">
+                  <input type="radio" name="axisSetting4" checked />
+                  <span>N/A</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card">
+              <div class="question-main">
+                <label class="field">
+                  <span>Question*</span>
+                  <input class="input" value="Readiness" />
+                </label>
+                <div class="field toggle-field">
+                  <span>Required</span>
+                  <div class="toggle on"><span></span></div>
+                </div>
+                <label class="field">
+                  <span>Question Description</span>
+                  <textarea class="input" rows="3">The extent to which the associate has the skills and experiences necessary to succeed in the next role you envision for them.</textarea>
+                </label>
+
+                <div class="options">
+                  ${['Ready now','6 - 12 months','12 - 24 months'].map(option => `
+                    <div class="option-row">
+                      <label class="radio">
+                        <input type="radio" name="questionFive" />
+                      </label>
+                      <input class="input" value="${option}" />
+                      <button class="icon-btn" title="Remove option">🗑</button>
+                    </div>
+                  `).join('')}
+                </div>
+                <button class="link-btn">+ Add Option</button>
+              </div>
+              <div class="axis-card">
+                <div class="axis-header">
+                  <span>Talent Matrix Axis Settings</span>
+                  <button class="icon-btn minimal">⌃</button>
+                </div>
+                <label class="radio">
+                  <input type="radio" name="axisSetting5" />
+                  <span>Assign to X Axis</span>
+                </label>
+                <label class="radio">
+                  <input type="radio" name="axisSetting5" />
+                  <span>Assign to Y Axis</span>
+                </label>
+                <label class="radio">
+                  <input type="radio" name="axisSetting5" checked />
+                  <span>N/A</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card">
+              <div class="question-main">
+                <label class="field">
+                  <span>Question*</span>
+                  <input class="input" value="Next Move" />
+                </label>
+                <div class="field toggle-field">
+                  <span>Required</span>
+                  <div class="toggle on"><span></span></div>
+                </div>
+                <label class="field">
+                  <span>Question Description</span>
+                  <textarea class="input" rows="3">Based on their capabilities, drive, and interests, which role do you see this associate growing into next.</textarea>
+                </label>
+
+                <div class="options">
+                  ${['Individual Contributor','Manager','Director','N/A'].map(option => `
+                    <div class="option-row">
+                      <label class="radio">
+                        <input type="radio" name="questionSix" />
+                      </label>
+                      <input class="input" value="${option}" />
+                      <button class="icon-btn" title="Remove option">🗑</button>
+                    </div>
+                  `).join('')}
+                </div>
+                <button class="link-btn">+ Add Option</button>
+              </div>
+              <div class="axis-card">
+                <div class="axis-header">
+                  <span>Talent Matrix Axis Settings</span>
+                  <button class="icon-btn minimal">⌃</button>
+                </div>
+                <label class="radio">
+                  <input type="radio" name="axisSetting6" />
+                  <span>Assign to X Axis</span>
+                </label>
+                <label class="radio">
+                  <input type="radio" name="axisSetting6" />
+                  <span>Assign to Y Axis</span>
+                </label>
+                <label class="radio">
+                  <input type="radio" name="axisSetting6" checked />
                   <span>N/A</span>
                 </label>
               </div>

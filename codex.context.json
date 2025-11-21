@@ -67,9 +67,10 @@
       "Shared component: Modal (forms/talent profile overlay)"
     ],
     "performanceEvaluationNotes": [
-      "Performance tab recreates the Manager Evaluations UI with a left-hand report list, plan selector pill, draft/submission actions, and a Peppermint Patty summary card mirroring the provided screenshot.",
-      "Associates list in the left rail is static; Peppermint Patty is pre-selected as the active report and other names are inert until additional behavior is requested.",
-      "Tab strip shows Evaluation/Touchpoint History/Peer Feedback with Evaluation active; content currently focuses on the Manager Evaluation card with Overall Evaluation guidance, pending self feedback callout, and an override checkbox.",
+      "Performance tab recreates the Manager Evaluations UI with a left-hand report list, plan selector pill, draft/submission actions, and a Olivia Brooks summary card mirroring the provided screenshot.",
+      "Associates list in the left rail is static; Olivia Brooks is pre-selected as the active report and other names are inert until additional behavior is requested.",
+      "Tab strip shows Evaluation/Touchpoint History/Peer Feedback with Evaluation active; content currently focuses on the Manager Evaluation card with Overall Evaluation guidance, pending self feedback callout, and an override checkbox. A right-aligned button above the metrics opens the shared Talent Assessment History modal for Olivia.",
+      "Clicking Olivia Brooks' name in the summary card opens the same Talent Card modal surfaced from the org chart successors for quick reference.",
       "Top-of-panel metrics (Overall Rating, Completed, Team Rank, Gap Analysis, Attachments) are presentational only and do not drive logic.",
       "Progress indicator for the required submission is static at 0% until PO supplies logic—treat it as presentational."
     ],
@@ -78,9 +79,10 @@
         "Executive org tree rooted at the CEO with VP-level branches; VP, Fleet Operations exposes a successor list with readiness chips",
         "Org chart reflects the current hierarchy: Jordan Reyes (CEO) with Maya Chen, Elias Romero, Priya Nair, and Connor Blake reporting to Jordan; Olivia Brooks, Amir Hassan, and Lena Ortiz report up through Elias",
         "Succession plan lives inside Elias Romero's node: three successor rows stay inline, use readiness color chips (green/yellow/red), and act as the only entry point to the Talent Card",
+        "Org tiers keep VP-level nodes evenly spaced and now render Elias’s three successors on their own responsive row beneath his card so they stay grouped without inheriting the empty VP columns",
         "Successor rows are activated via mouse click only (keyboard support intentionally removed for presentation fidelity), open the Talent Card modal, and expose placeholder action menu items",
         "Assign Learning menu action opens a dedicated modal showing the selected employee plus Competency vs Catalog search tabs with searchable cards; selecting a card drills into a course detail modal with placeholder Assign CTA",
-        "Talent Card modal shows talent pool nominations, performance/potential nine-box (latest + trend toggle), rating trend chart, career goals, experience, skills, and education",
+        "Talent Card modal now orders sections as: Talent Assessment (nine-box latest/trend), Performance Rating, Nominated for Incumbents & Positions, Talent Pool Nominations, Competency Gap, Work Experience, Skills, and Education",
         "Readiness chips map ready-green/yellow/red to Ready Now, 1-2 Years, and 3+ Years",
         "Styling is light theme only with custom org connectors, modal layout, and SVG trend visuals",
         "Org-chart connectors render as continuous SVG paths between parent and children to stay aligned at every viewport size",
@@ -91,7 +93,7 @@
     "talentAssessmentHistoryNotes": [
       "Completed associates list currently features Ava Mitchell (active) and Ryan Carter; keep these names unless the PO supplies new ones.",
       "Performance question description highlights meeting/exceeding expectations in the current review cycle.",
-      "View History modal accordion mirrors the six assessment questions per cycle, displays the recorded responses, and loads with only the first panel expanded.",
+      "View History modal accordion mirrors the six assessment questions per cycle, displays the recorded responses, and loads with all panels collapsed until the viewer expands them.",
       "Each historical accordion includes a Comments & Action Items block with record-specific guidance—maintain unique narrative copy per cycle.",
       "History modal answers render as neutral gray pills (no blue links) to emphasize values without suggesting interactivity.",
       "Comments & Action Items field defaults to: \"Needs broader exposure to enterprise operations. Line up a 3-month rotation with the logistics team and pair Ava with a senior mentor to refine executive communication skills.\""
@@ -119,16 +121,6 @@
       "Create Performance Plan (#/performance-plan)"
     ],
     "navGrouping": "The first four tabs share a bordered nav-group container in the sidebar to visually connect related planning/assessment flows; the remaining tabs render as standalone links.",
-    "todosWorkflow": {
-      "file": "TODOs.md",
-      "instructions": [
-        "User maintains TODOs.md and may request help on specific unchecked items; do not treat prose without checkboxes as work.",
-        "If the user says to work on TODOs without naming one, read TODOs.md and select the next unchecked task only (if the task has subtasks, start with the first unchecked nested task instead of the parent).",
-        "Before implementing, ask the user to clarify any ambiguities; never assume requirements beyond the TODO text or explicit user direction.",
-        "Work on a single task at a time and stop once it is complete; the user will mark it checked when satisfied.",
-        "Ignore tasks already marked complete (checked) on the next visit."
-      ]
-    },
     "addingScreens": [
       "Requires explicit Product Owner approval",
       "Default experience must remain the Succession Org Chart",
@@ -147,6 +139,7 @@
       "Do not introduce new dependencies without confirmation",
       "Validate manually in the browser using the provided commands",
       "mocks/index.html injects cache-busted CSS/JS URLs each load; keep the inline script so browsers do not cache updates",
+      "Favicon is set inline via SVG data URI in mocks/index.html; no standalone favicon.ico is needed",
       "Talent Card styles must stay namespaced via the talent-card__* BEM pattern to prevent cross-tab contamination; apply the same approach if new sections are added",
       "Cycle Proposed tab uses cycle-proposed__* class names/CSS; edit those selectors when iterating so the Current tab remains untouched",
       "Modal close control is a compact grey circle housing a bold × icon; maintain this treatment instead of reverting to text buttons"
