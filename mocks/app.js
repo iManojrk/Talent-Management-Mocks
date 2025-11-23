@@ -5,6 +5,8 @@ import { CreatePerformancePlan } from './screens/performance-plan.js?v=20250205'
 import { CreateTalentPlanningCycle } from './screens/cycle.js?v=20250205';
 import { CreateTalentPlanningCycleProposed } from './screens/cycle-proposed.js?v=20250205';
 import { TalentAssessmentHistory } from './screens/talent-assessment-history.js?v=20250205';
+import { TeamSuccessionPlans } from './screens/team-succession-plans.js?v=20250205';
+import { SuccessionSummary } from './screens/succession-summary.js?v=20250205';
 
 const routes = {
   '/org': OrgChart,
@@ -13,6 +15,8 @@ const routes = {
   '/talent-assessment-history': TalentAssessmentHistory,
   '/cycle': CreateTalentPlanningCycle,
   '/cycle-proposed': CreateTalentPlanningCycleProposed,
+  '/team-succession-plans': TeamSuccessionPlans,
+  '/succession-summary': SuccessionSummary,
 };
 
 const app = document.getElementById('app');
@@ -55,6 +59,8 @@ function shell() {
 
   nav.append(
     groupedNav,
+    link('/team-succession-plans','Team Succession Plans'),
+    link('/succession-summary','Succession Summary'),
     link('/performance','Performance Evaluation'),
     link('/performance-plan','Create Performance Plan'),
   );

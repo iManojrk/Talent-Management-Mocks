@@ -570,7 +570,7 @@ function openAssignLearning(modals, person) {
     {
       key: 'competency',
       label: 'Recommended Courses',
-      placeholder: 'Search competencies or behaviors',
+      placeholder: 'Search competencies',
       items: learningLibrary.competency
     },
     {
@@ -635,22 +635,7 @@ function openAssignLearning(modals, person) {
         empty.textContent = 'No competency gaps recorded.';
         recList.appendChild(empty);
       }
-      const recCourses = getLearningRecommendations(person);
       recWrap.append(recTitle, recList);
-      if (recCourses.length) {
-        const recCards = document.createElement('div');
-        recCards.className = 'assign-recommendations__cards';
-        const recCardsTitle = document.createElement('div');
-        recCardsTitle.className = 'assign-recommendations__title';
-        recCardsTitle.textContent = 'Recommended Courses';
-        const recGrid = document.createElement('div');
-        recGrid.className = 'assign-recommendations__card-grid';
-        recCourses.forEach(course => {
-          recGrid.appendChild(buildCourseCard(course, 'Recommended'));
-        });
-        recCards.append(recCardsTitle, recGrid);
-        recWrap.appendChild(recCards);
-      }
       content.appendChild(recWrap);
     }
 

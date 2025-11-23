@@ -571,3 +571,41 @@ tr:hover td { background: rgba(122,162,247,0.08); }
   .talent-assessment-history__cycle-select select { min-width: 180px; }
   .talent-assessment-history__detail { padding: 20px; }
 }
+
+.succession-plans { display: grid; gap: 18px; }
+.succession-plans__header { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; padding: 20px; border: 1px solid var(--border); border-radius: 18px; background: var(--panel); }
+.succession-plans__eyebrow { margin: 0; color: var(--primary); font-weight: 600; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; }
+.succession-plans__header h1 { margin: 6px 0; font-size: 22px; }
+.succession-plans__lead { margin: 0; color: var(--muted); max-width: 520px; line-height: 1.4; }
+.succession-plans__header-actions { display: flex; gap: 8px; align-items: flex-start; }
+.succession-plans__icon-btn { width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--border); background: var(--subtle); color: var(--text); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; font-size: 16px; }
+.succession-plans__icon-btn:hover { background: #e0e7ff; border-color: #c7d2fe; }
+.succession-plans__table-card { overflow: hidden; }
+.succession-plans__toolbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 14px 16px; border-bottom: 1px solid var(--border); background: var(--panel); }
+.succession-plans__count { font-weight: 600; font-size: 14px; display: block; }
+.succession-plans__description { margin: 2px 0 0; color: var(--muted); font-size: 13px; }
+.succession-plans__toolbar-actions { display: flex; gap: 8px; }
+.succession-plans__table-wrapper { overflow-x: auto; background: var(--panel); }
+.succession-plans__table { width: 100%; min-width: 960px; }
+.succession-plans__risk { display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 999px; font-weight: 600; font-size: 13px; }
+.succession-plans__risk--low { background: #dcfce7; color: #166534; }
+.succession-plans__risk--medium { background: #fef3c7; color: #92400e; }
+.succession-plans__risk--high { background: #fee2e2; color: #b91c1c; }
+.succession-plans__menu-cell { text-align: right; width: 50px; position: relative; }
+.succession-plans__menu-btn { border: none; background: transparent; font-size: 20px; cursor: pointer; color: var(--muted); padding: 4px 6px; border-radius: 6px; }
+.succession-plans__menu-btn:hover { background: var(--subtle); color: var(--text); }
+.succession-plans__menu { position: absolute; top: calc(100% + 6px); right: 0; min-width: 160px; background: #f5f6fa; border: 2px solid #cbd5f5; border-radius: 12px; box-shadow: 0 10px 30px rgba(15,23,42,0.15); z-index: 5; overflow: hidden; }
+.succession-plans__menu-item { width: 100%; border: none; background: transparent; padding: 10px 14px; text-align: left; cursor: pointer; font-size: 14px; color: var(--text); }
+.succession-plans__menu-item:hover { background: var(--subtle); }
+.succession-plans__person-btn { border: none; background: none; padding: 0; font: inherit; color: var(--text); cursor: pointer; }
+.succession-plans__person-btn:hover { color: var(--primary); text-decoration: underline; }
+.succession-plans__link { border: none; background: none; color: var(--primary); cursor: pointer; font-weight: 600; padding: 0; }
+.succession-plans__link:hover { text-decoration: underline; }
+.succession-plans__muted { color: var(--muted); font-size: 13px; }
+
+@media (max-width: 720px) {
+  .succession-plans__header { flex-direction: column; }
+  .succession-plans__header-actions { align-self: flex-end; }
+  .succession-plans__toolbar { flex-direction: column; align-items: flex-start; }
+  .succession-plans__table { min-width: 720px; }
+}

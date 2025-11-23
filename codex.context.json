@@ -63,7 +63,7 @@
     "mocksOverview": [
       "Static interactive mock lives under mocks/",
       "No build step: open mocks/index.html directly in a browser",
-      "Active hash routes: /org (Succession Org Chart), /performance (Performance Evaluation mock for Manager Evaluations), /performance-plan (Create Performance Plan placeholder), /talent-assessment-history (Talent Assessment History tab showing completed cycle details mock), /cycle (Create Talent Planning Cycle - Current), /cycle-proposed (Create Talent Planning Cycle - Proposed clone for PO experimentation)",
+      "Active hash routes: /org (Succession Org Chart), /performance (Performance Evaluation mock for Manager Evaluations), /performance-plan (Create Performance Plan placeholder), /talent-assessment-history (Talent Assessment History tab showing completed cycle details mock), /cycle (Create Talent Planning Cycle - Current), /cycle-proposed (Create Talent Planning Cycle - Proposed clone for PO experimentation), /team-succession-plans (My Team's Succession Plans grid recreated from the screenshot), /succession-summary (Succession Planning Summary report)",
       "Shared component: Modal (forms/talent profile overlay)"
     ],
     "performanceEvaluationNotes": [
@@ -98,10 +98,25 @@
       "History modal answers render as neutral gray pills (no blue links) to emphasize values without suggesting interactivity.",
       "Comments & Action Items field defaults to: \"Needs broader exposure to enterprise operations. Line up a 3-month rotation with the logistics team and pair Ava with a senior mentor to refine executive communication skills.\""
     ],
+    "teamSuccessionPlansNotes": [
+      "Page title stays \"My Team's Succession Plans\" without recreating the legacy blue gradient bar; compact download/print icon buttons on the right are decorative only.",
+      "Toolbar simply shows the items count and descriptor; no column/filter buttons are present.",
+      "Table columns run left to right: Incumbent, Position, Potential (pill), Performance (pill), Risk of Loss (colored chips), Impact of Loss (colored chips), Top Candidates (blue name link), Candidates, Last Updated, and a trailing three-dot menu button.",
+      "Dataset highlights six Human Resources director roles with mixed readiness/risk states; numbers and names remain the provided placeholders.",
+      "Clicking an Incumbent or Top Candidate name opens the shared Talent Card modal; it reuses Olivia Brooks' detailed layout and only swaps in the clicked name and position.",
+      "Three-dot menu reveals a single \"Manage Successors\" option (inert) to mimic the screenshot affordance."
+    ],
+    "successionSummaryNotes": [
+      "Header mirrors the other planning tabs with just the title text (no download/print buttons).",
+      "Table renders directly inside the shared table card with no toolbar count/descriptor or filter pills.",
+      "Table uses a double-row header with a \"Candidates\" grouping for the latter columns. Column order: Incumbent, Position, Readiness, then Potential, Achievable Level, Risk of Loss, Impact of Loss, Is High Potential, and Performance Rating.",
+      "Potential/Risk of Loss/Impact of Loss values are limited to Low, Medium, or High.",
+      "Dataset recreates the three shown records; copy is static and there is no modal or interaction wiring."
+    ],
     "structure": [
       "mocks/index.html — entry file",
       "mocks/styles.css — theme and layout styles",
-      "mocks/app.js — shell, header/sidebar, and route registration for #/org, #/performance, #/performance-plan, #/talent-assessment-history, #/cycle, and #/cycle-proposed with nav highlighting",
+      "mocks/app.js — shell, header/sidebar, and route registration for #/org, #/performance, #/performance-plan, #/talent-assessment-history, #/cycle, #/cycle-proposed, #/team-succession-plans, and #/succession-summary with nav highlighting",
       "mocks/router.js — hash router",
       "mocks/state.js — in-memory state with localStorage persistence retained for future scenarios",
       "mocks/components/Modal.js — modal backdrop + open/close API",
@@ -110,17 +125,21 @@
       "mocks/screens/cycle.js — Create Talent Planning Cycle (Current tab)",
       "mocks/screens/cycle-proposed.js — Create Talent Planning Cycle (Proposed tab with isolated styles)",
       "mocks/screens/performance-plan.js — Create Performance Plan placeholder screen",
-      "mocks/screens/talent-assessment-history.js — Talent Assessment History tab replicates completed review layout (static content)"
+      "mocks/screens/talent-assessment-history.js — Talent Assessment History tab replicates completed review layout (static content)",
+      "mocks/screens/team-succession-plans.js — My Team's Succession Plans report grid rebuilt from the provided screenshot",
+      "mocks/screens/succession-summary.js — Succession Planning Summary tab with readiness/retention overview grid"
     ],
     "navOrder": [
       "Succession Org Chart (#/org)",
       "Talent Assessment (#/talent-assessment-history)",
       "Create Talent Planning Cycle (Current) (#/cycle)",
       "Create Talent Planning Cycle (Proposed) (#/cycle-proposed)",
+      "Team Succession Plans (#/team-succession-plans)",
+      "Succession Summary (#/succession-summary)",
       "Performance Evaluation (#/performance)",
       "Create Performance Plan (#/performance-plan)"
     ],
-    "navGrouping": "The first four tabs share a bordered nav-group container in the sidebar to visually connect related planning/assessment flows; the remaining tabs render as standalone links.",
+    "navGrouping": "The first four tabs share a bordered nav-group container in the sidebar to visually connect related planning/assessment flows; Team Succession Plans, Succession Summary, and the remaining tabs render as standalone links.",
     "addingScreens": [
       "Requires explicit Product Owner approval",
       "Default experience must remain the Succession Org Chart",
