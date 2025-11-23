@@ -340,6 +340,35 @@ const learningLibrary = {
   ]
 };
 
+function getLearningRecommendations(person) {
+  const focusAreas = person?.competencyGap?.focusAreas ?? [];
+  if (!focusAreas.length) return [];
+  const keywords = new Set();
+  focusAreas.forEach(area => {
+    const tokens = String(area.label ?? '')
+      .toLowerCase()
+      .split(/[^a-z0-9]+/)
+      .filter(token => token.length >= 4);
+    tokens.forEach(token => keywords.add(token));
+  });
+  const haystackList = learningLibrary.competency.map(course => {
+    const haystack = [course.title, course.summary, ...(course.competencies ?? [])]
+      .join(' ')
+      .toLowerCase();
+    let score = 0;
+    keywords.forEach(keyword => {
+      if (haystack.includes(keyword)) score += 1;
+    });
+    return { course, score };
+  });
+  const ranked = haystackList
+    .filter(entry => entry.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .map(entry => entry.course);
+  if (ranked.length) return ranked.slice(0, 3);
+  return learningLibrary.competency.slice(0, 3);
+}
+
 export function OrgChart() {
   const wrap = document.createElement('div');
   const title = document.createElement('h1');
@@ -594,14 +623,36 @@ function openAssignLearning(modals, person) {
       const recList = document.createElement('div');
       recList.className = 'assign-recommendations__pills';
       const focusAreas = (person.competencyGap?.focusAreas ?? []).slice(0, 3);
-      focusAreas.forEach(area => {
-        const pill = document.createElement('span');
-        pill.textContent = area.label;
-        recList.appendChild(pill);
-      });
-     recWrap.append(recTitle, recList);
-     content.appendChild(recWrap);
-   }
+      if (focusAreas.length) {
+        focusAreas.forEach(area => {
+          const pill = document.createElement('span');
+          pill.textContent = area.label;
+          recList.appendChild(pill);
+        });
+      } else {
+        const empty = document.createElement('div');
+        empty.className = 'assign-recommendations__empty';
+        empty.textContent = 'No competency gaps recorded.';
+        recList.appendChild(empty);
+      }
+      const recCourses = getLearningRecommendations(person);
+      recWrap.append(recTitle, recList);
+      if (recCourses.length) {
+        const recCards = document.createElement('div');
+        recCards.className = 'assign-recommendations__cards';
+        const recCardsTitle = document.createElement('div');
+        recCardsTitle.className = 'assign-recommendations__title';
+        recCardsTitle.textContent = 'Recommended Courses';
+        const recGrid = document.createElement('div');
+        recGrid.className = 'assign-recommendations__card-grid';
+        recCourses.forEach(course => {
+          recGrid.appendChild(buildCourseCard(course, 'Recommended'));
+        });
+        recCards.append(recCardsTitle, recGrid);
+        recWrap.appendChild(recCards);
+      }
+      content.appendChild(recWrap);
+    }
 
     const form = document.createElement('form');
     form.className = 'assign-search';
@@ -647,47 +698,44 @@ function openAssignLearning(modals, person) {
       }
 
       filtered.forEach(item => {
-        const card = document.createElement('div');
-        card.className = 'assign-card';
-        card.classList.add('compact');
-        card.classList.add('clickable');
-        const openDetail = () => {
-          modal.close();
-          openLearningDetail(detailModal, person, { ...item, source: config.label });
-        };
-        card.addEventListener('click', () => {
-          openDetail();
-        });
-
-        const info = document.createElement('div');
-        info.className = 'assign-card-info';
-        const h4 = document.createElement('div');
-        h4.className = 'assign-card-title';
-        h4.textContent = item.title;
-        const summary = document.createElement('p');
-        summary.textContent = item.summary;
-        const meta = document.createElement('div');
-        meta.className = 'assign-card-meta';
-        meta.textContent = item.duration;
-        info.append(h4, summary, meta);
-
-        if (config.key === 'competency' && item.competencies?.length) {
-          const pillWrap = document.createElement('div');
-          pillWrap.className = 'assign-competency-pills';
-          item.competencies.forEach(label => {
-            const pill = document.createElement('span');
-            pill.textContent = label;
-            pillWrap.appendChild(pill);
-          });
-          info.appendChild(pillWrap);
-        }
-
-        card.append(info);
-        results.appendChild(card);
+        results.appendChild(buildCourseCard(item, config.label));
       });
     }
 
     renderResults();
+
+    function buildCourseCard(item, sourceLabel) {
+      const card = document.createElement('div');
+      card.className = 'assign-card compact clickable';
+      const openDetail = () => {
+        modal.close();
+        openLearningDetail(detailModal, person, { ...item, source: sourceLabel });
+      };
+      card.addEventListener('click', openDetail);
+      const info = document.createElement('div');
+      info.className = 'assign-card-info';
+      const h4 = document.createElement('div');
+      h4.className = 'assign-card-title';
+      h4.textContent = item.title;
+      const summary = document.createElement('p');
+      summary.textContent = item.summary;
+      const meta = document.createElement('div');
+      meta.className = 'assign-card-meta';
+      meta.textContent = item.duration;
+      info.append(h4, summary, meta);
+      if (config.key === 'competency' && item.competencies?.length) {
+        const pillWrap = document.createElement('div');
+        pillWrap.className = 'assign-competency-pills';
+        item.competencies.forEach(label => {
+          const pill = document.createElement('span');
+          pill.textContent = label;
+          pillWrap.appendChild(pill);
+        });
+        info.appendChild(pillWrap);
+      }
+      card.append(info);
+      return card;
+    }
   }
 
   renderTabs();

@@ -99,6 +99,7 @@ export function CreateTalentPlanningCycle() {
                   <span>N/A</span>
                 </label>
               </div>
+              <button class="icon-btn question-card__delete" type="button" title="Remove question">🗑</button>
             </div>
 
             <div class="question-card">
@@ -146,8 +147,9 @@ export function CreateTalentPlanningCycle() {
                   <input type="radio" name="axisSetting2" />
                   <span>N/A</span>
                 </label>
+              </div>
+              <button class="icon-btn question-card__delete" type="button" title="Remove question">🗑</button>
             </div>
-          </div>
 
             <div class="question-card">
               <div class="question-main">
@@ -195,6 +197,7 @@ export function CreateTalentPlanningCycle() {
                   <span>N/A</span>
                 </label>
               </div>
+              <button class="icon-btn question-card__delete" type="button" title="Remove question">🗑</button>
             </div>
 
             <div class="question-card">
@@ -243,6 +246,7 @@ export function CreateTalentPlanningCycle() {
                   <span>N/A</span>
                 </label>
               </div>
+              <button class="icon-btn question-card__delete" type="button" title="Remove question">🗑</button>
             </div>
 
             <div class="question-card">
@@ -291,6 +295,7 @@ export function CreateTalentPlanningCycle() {
                   <span>N/A</span>
                 </label>
               </div>
+              <button class="icon-btn question-card__delete" type="button" title="Remove question">🗑</button>
             </div>
 
             <div class="question-card">
@@ -339,6 +344,7 @@ export function CreateTalentPlanningCycle() {
                   <span>N/A</span>
                 </label>
               </div>
+              <button class="icon-btn question-card__delete" type="button" title="Remove question">🗑</button>
             </div>
           </div>
         </section>

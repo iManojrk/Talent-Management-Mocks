@@ -169,6 +169,8 @@ tr:hover td { background: rgba(122,162,247,0.08); }
 .assign-recommendations__pills { display: flex; flex-wrap: wrap; gap: 6px; }
 .assign-recommendations__pills span { background: var(--subtle); border: 1px solid var(--border); border-radius: 999px; padding: 4px 10px; font-size: 12px; }
 .assign-recommendations__empty { color: var(--muted); font-size: 12px; }
+.assign-recommendations__cards { display: grid; gap: 6px; margin-top: 4px; }
+.assign-recommendations__card-grid { display: grid; gap: 8px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
 .assign-search input { width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--subtle); font-size: 14px; }
 .assign-results { display: grid; gap: 12px; }
 .assign-results.grid-three { grid-template-columns: repeat(auto-fill, minmax(220px, 220px)); justify-content: flex-start; }
@@ -285,8 +287,10 @@ tr:hover td { background: rgba(122,162,247,0.08); }
 .radio { display: flex; align-items: center; gap: 8px; line-height: 1.2; }
 .radio input[type='radio'] { width: 16px; height: 16px; }
 
-.question-card { border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin-bottom: 18px; display: grid; gap: 16px; background: var(--panel); box-shadow: 0 4px 10px rgba(15,23,42,0.04); grid-template-columns: minmax(0, 1fr) auto; align-items: flex-start; }
+.question-card { border: 1px solid var(--border); border-radius: 16px; padding: 24px 64px 24px 24px; margin-bottom: 18px; display: grid; gap: 16px; background: var(--panel); box-shadow: 0 4px 10px rgba(15,23,42,0.04); grid-template-columns: minmax(0, 1fr) auto; align-items: flex-start; position: relative; }
 .question-card:last-child { margin-bottom: 0; }
+.question-card__delete { position: absolute; top: 50%; transform: translateY(-50%); right: 18px; border: none; background: none; font-size: 18px; color: var(--muted); cursor: pointer; padding: 4px; }
+.question-card__delete:hover { color: var(--primary); }
 .question-main { display: grid; gap: 10px; }
 
 .performance-plan-page { display: grid; gap: 16px; }
@@ -388,7 +392,7 @@ tr:hover td { background: rgba(122,162,247,0.08); }
 .manager-evaluations__avatar { width: 42px; height: 42px; border-radius: 50%; background: #f59e0b; color: #fff; font-weight: 700; display: grid; place-items: center; }
 .manager-evaluations__profile strong { display: block; }
 .manager-evaluations__profile span { color: var(--muted); font-size: 13px; }
-.manager-evaluations__profile-name { border: none; background: none; padding: 0; margin: 0; font: inherit; font-weight: 700; color: var(--text); text-align: left; cursor: pointer; display: block; }
+.manager-evaluations__profile-name { border: none; background: none; padding: 0; margin: 0; font: inherit; font-weight: 700; color: var(--primary); text-align: left; cursor: pointer; display: block; }
 .manager-evaluations__profile-name:hover { text-decoration: underline; }
 .manager-evaluations__status { display: flex; gap: 32px; }
 .manager-evaluations__status p { margin: 0; font-weight: 600; }
@@ -482,6 +486,7 @@ tr:hover td { background: rgba(122,162,247,0.08); }
 .cycle-proposed__toggle--disabled span { background: #f3f4f6; }
 .cycle-proposed__toggle--disabled.is-on { background: #d1d5db; }
 .cycle-proposed__toggle--disabled.is-on span { transform: translateX(20px); background: #f3f4f6; }
+.cycle-proposed__toggle-field.is-hidden { display: none; }
 .cycle-proposed__options { display: grid; gap: 10px; }
 .cycle-proposed__option-row { display: flex; align-items: center; gap: 10px; }
 .cycle-proposed__option-row .cycle-proposed__input { flex: 1; }
@@ -494,8 +499,10 @@ tr:hover td { background: rgba(122,162,247,0.08); }
 .cycle-proposed__axis-header { display: flex; justify-content: space-between; align-items: center; font-weight: 600; }
 .cycle-proposed__radio { display: flex; align-items: center; gap: 8px; line-height: 1.2; }
 .cycle-proposed__radio input[type='radio'] { width: 16px; height: 16px; }
-.cycle-proposed__question-card { border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin-bottom: 18px; display: grid; gap: 16px; background: var(--panel); box-shadow: 0 4px 10px rgba(15,23,42,0.04); grid-template-columns: minmax(0, 1fr); align-items: flex-start; }
+.cycle-proposed__question-card { border: 1px solid var(--border); border-radius: 16px; padding: 24px 64px 24px 24px; margin-bottom: 18px; display: grid; gap: 16px; background: var(--panel); box-shadow: 0 4px 10px rgba(15,23,42,0.04); grid-template-columns: minmax(0, 1fr); align-items: flex-start; position: relative; }
 .cycle-proposed__question-card:last-child { margin-bottom: 0; }
+.cycle-proposed__question-delete { position: absolute; top: 50%; transform: translateY(-50%); right: 18px; border: none; background: none; font-size: 18px; color: var(--muted); cursor: pointer; padding: 4px; }
+.cycle-proposed__question-delete:hover { color: var(--primary); }
 .cycle-proposed__question-main { display: grid; gap: 10px; }
 .cycle-proposed__input:disabled { background: #e5e7eb; border-color: #d1d5db; color: #9ca3af; opacity: 1; }
 
@@ -514,6 +521,8 @@ tr:hover td { background: rgba(122,162,247,0.08); }
 .talent-assessment-history__person-chip.is-active { background: #eef2ff; border-color: #c7d2fe; }
 .talent-assessment-history__avatar { width: 25px; height: 25px; border-radius: 50%; background: #1d4ed8; color: #fff; font-weight: 600; display: grid; place-items: center; font-size: 11px; }
 .talent-assessment-history__person-name { font-weight: 600; }
+.talent-assessment-history__person-name-btn { border: none; background: none; padding: 0; font: inherit; font-size: 24px; font-weight: 600; color: var(--primary); cursor: pointer; text-align: left; }
+.talent-assessment-history__person-name-btn:hover { text-decoration: underline; }
 .talent-assessment-history__detail { background: var(--panel); border: 1px solid var(--border); border-radius: 24px; padding: 24px; display: grid; gap: 24px; }
 .talent-assessment-history__link { color: var(--primary); font-weight: 600; text-decoration: none; border: none; background: transparent; cursor: pointer; padding: 0; }
 .talent-assessment-history__link:hover { text-decoration: underline; }

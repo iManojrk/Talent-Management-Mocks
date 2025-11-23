@@ -2,17 +2,7 @@ import { Modal } from '../components/Modal.js?v=20250205';
 import { createTalentCard, getTalentProfile } from './orgchart.js?v=20250205';
 import { createTalentAssessmentHistoryModal } from './talent-assessment-history.js?v=20250205';
 
-const associates = [
-  'Amina Patel',
-  'Brandon Keller',
-  'Carlos Dominguez',
-  'Daria Novak',
-  'Emiko Sato',
-  'Olivia Brooks',
-  'Gabriel Turner',
-  'Nia Robinson',
-  'Owen Graves'
-];
+const associates = ['Olivia Brooks', 'Amir Hassan', 'Lena Ortiz'];
 
 const overallEvaluation = {
   selfStatus: 'Pending',
@@ -51,7 +41,8 @@ export function PerformanceEvaluation() {
 
   const aside = document.createElement('aside');
   aside.className = 'manager-evaluations__list';
-  aside.innerHTML = associates
+  aside.innerHTML = [...associates]
+    .sort((a, b) => a.localeCompare(b))
     .map(name => `
       <button class="manager-evaluations__person${name === 'Olivia Brooks' ? ' is-active' : ''}">
         <span>${name}</span>

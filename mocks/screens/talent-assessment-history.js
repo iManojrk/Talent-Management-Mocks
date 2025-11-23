@@ -1,4 +1,5 @@
 import { Modal } from '../components/Modal.js?v=20250205';
+import { createTalentCard, getTalentProfile } from './orgchart.js?v=20250205';
 
 const talentAssessmentSections = [
   {
@@ -173,6 +174,7 @@ export function TalentAssessmentHistory() {
   const page = document.createElement('div');
   page.className = 'talent-assessment-history';
   const historyModal = Modal();
+  const talentModal = Modal();
 
   const intro = document.createElement('div');
   intro.className = 'talent-assessment-history__intro';
@@ -194,8 +196,9 @@ export function TalentAssessmentHistory() {
   layout.className = 'talent-assessment-history__layout';
 
   const associates = [
-    { name: 'Ava Mitchell', role: 'Product Manager I', status: 'Completed', active: true },
-    { name: 'Ryan Carter', role: 'Operations Lead', status: 'Completed' }
+    { name: 'Olivia Brooks', role: 'Regional Distribution Manager', status: 'Completed', active: true },
+    { name: 'Amir Hassan', role: 'Fleet Optimization Manager', status: 'Completed' },
+    { name: 'Lena Ortiz', role: 'Warehouse Automation Lead', status: 'Completed' }
   ];
 
   const list = document.createElement('aside');
@@ -203,7 +206,8 @@ export function TalentAssessmentHistory() {
   list.innerHTML = `
     <div class="talent-assessment-history__list-header">Completed</div>
     <div class="talent-assessment-history__list-items">
-      ${associates
+      ${[...associates]
+        .sort((a, b) => a.name.localeCompare(b.name))
         .map(
           person => `
             <button class="talent-assessment-history__person-chip${person.active ? ' is-active' : ''}">
@@ -221,8 +225,8 @@ export function TalentAssessmentHistory() {
   detail.innerHTML = `
     <div class="talent-assessment-history__meta">
       <div class="talent-assessment-history__meta-person">
-        <h2>Ava Mitchell</h2>
-        <p>Product Manager I</p>
+        <button class="talent-assessment-history__person-name-btn" type="button">Olivia Brooks</button>
+        <p>Regional Distribution Manager</p>
       </div>
       <div>
         <span class="talent-assessment-history__meta-label">Cycle Dates</span>
@@ -274,7 +278,7 @@ export function TalentAssessmentHistory() {
   comments.innerHTML = `
     <label class="talent-assessment-history__comments-label">
       <span>Comments and Action Items</span>
-      <textarea class="input" rows="4">Needs broader exposure to enterprise operations. Line up a 3-month rotation with the logistics team and pair Ava with a senior mentor to refine executive communication skills.</textarea>
+      <textarea class="input" rows="4">Needs broader exposure to enterprise operations. Line up a 3-month rotation with the logistics team and pair Olivia with a senior mentor to refine executive communication skills.</textarea>
     </label>
   `;
 
@@ -294,6 +298,16 @@ export function TalentAssessmentHistory() {
       historyModal.open({
         title: 'Talent Assessment History',
         body: createTalentAssessmentHistoryModal()
+      });
+    });
+
+  detail
+    .querySelector('.talent-assessment-history__person-name-btn')
+    ?.addEventListener('click', () => {
+      const profile = getTalentProfile('Olivia Brooks');
+      talentModal.open({
+        title: 'Talent Card',
+        body: createTalentCard(profile)
       });
     });
   layout.append(list, detail);
