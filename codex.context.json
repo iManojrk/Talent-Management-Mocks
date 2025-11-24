@@ -103,9 +103,9 @@
     ],
     "teamSuccessionPlansNotes": [
       "Page title stays \"Team Succession Summary\" without recreating the legacy blue gradient bar; header now omits the prior Succession Planning eyebrow copy and no longer shows download/print icon buttons.",
-      "A static filter row (Associate text, Manager text, Show Indirect Reports checkbox) sits under the title for layout only; fields are disabled placeholders.",
+      "A static filter row (Associate text field plus Show Indirect Reports checkbox) sits under the title; the checkbox toggles between the first three rows (direct reports) and the full dataset, shows a Manager lookup field (disabled placeholder) when active, and otherwise leaves just the Associate field visible.",
       "Toolbar strip above the grid has been removed; table now starts immediately without items count or descriptor callouts.",
-      "Table columns now run left to right: Name, Potential (pill), Performance (pill), Risk of Loss (colored chips), Impact of Loss (colored chips), Successors, Ready Now Successors (forced line break), Last Updated, and a trailing three-dot menu button; Position and Top Candidates columns were removed per PO request.",
+      "Table columns now run left to right: Name, Potential (pill), Performance (pill), Risk of Loss (colored chips), Impact of Loss (colored chips), Performance Rating (two-line label + numeric score), Successors, Ready Now Successors (forced line break), Last Updated, and a trailing three-dot menu button; Position and Top Candidates columns were removed per PO request.",
       "Potential/Performance pills invert the color mapping (High shows green, Low shows red, Medium remains amber) while Risk/Impact chips keep their original Low=green, High=red treatment.",
       "Dataset highlights six Human Resources director roles with mixed readiness/risk states; numbers and names remain the provided placeholders.",
       "Clicking a blue Name link opens the shared Talent Card modal; it reuses Olivia Brooks' detailed layout and only swaps in the clicked name and position.",

@@ -580,25 +580,31 @@ tr:hover td { background: rgba(122,162,247,0.08); }
 }
 
 .succession-plans { display: grid; gap: 18px; }
-.succession-plans__header { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; padding: 20px; border: 1px solid var(--border); border-radius: 18px; background: var(--panel); }
+.succession-plans__header { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; padding: 0 0 12px; border: none; border-radius: 0; background: transparent; }
 .succession-plans__eyebrow { margin: 0; color: var(--primary); font-weight: 600; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; }
 .succession-plans__header h1 { margin: 6px 0; font-size: 22px; }
 .succession-plans__lead { margin: 0; color: var(--muted); max-width: 520px; line-height: 1.4; }
 .succession-plans__header-actions { display: flex; gap: 8px; align-items: flex-start; }
-.succession-plans__filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; width: 100%; }
+.succession-plans__filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; width: 100%; margin: 0 0 12px; }
+.succession-plans__filters-inline { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 .succession-plans__filter { display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: var(--muted); font-weight: 600; }
+.succession-plans__filter--associate { width: 200px; min-width: 200px; flex: 0 0 auto; }
+.succession-plans__filter--manager { width: 200px; min-width: 200px; display: none; }
+.succession-plans__filter--manager.is-visible { display: flex; }
 .succession-plans__filter input[type="text"] { border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; font-size: 14px; background: var(--subtle); color: var(--text); }
-.succession-plans__filter--checkbox { flex-direction: row; align-items: center; font-size: 14px; gap: 8px; }
+.succession-plans__filter--checkbox { flex-direction: row; align-items: center; font-size: 14px; gap: 8px; margin: 0; }
 .succession-plans__filter--checkbox input { width: 16px; height: 16px; }
+.succession-plans__filter--checkbox span { margin: 0; }
 .succession-plans__icon-btn { width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--border); background: var(--subtle); color: var(--text); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; font-size: 16px; }
 .succession-plans__icon-btn:hover { background: #e0e7ff; border-color: #c7d2fe; }
 .succession-plans__table-card { overflow: hidden; }
+.succession-plans__table-container { overflow: visible; }
 .succession-plans__toolbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 14px 16px; border-bottom: 1px solid var(--border); background: var(--panel); }
 .succession-plans__count { font-weight: 600; font-size: 14px; display: block; }
 .succession-plans__description { margin: 2px 0 0; color: var(--muted); font-size: 13px; }
 .succession-plans__toolbar-actions { display: flex; gap: 8px; }
-.succession-plans__table-wrapper { overflow-x: auto; background: var(--panel); }
-.succession-plans__table { width: 100%; min-width: 960px; }
+.succession-plans__table-wrapper { overflow-x: auto; background: transparent; }
+.succession-plans__table { width: 100%; min-width: 1220px; }
 .succession-plans__risk { display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 999px; font-weight: 600; font-size: 13px; }
 .succession-plans__risk--low { background: #dcfce7; color: #166534; }
 .succession-plans__risk--medium { background: #fef3c7; color: #92400e; }
@@ -609,11 +615,15 @@ tr:hover td { background: rgba(122,162,247,0.08); }
 .succession-plans__menu { position: absolute; top: calc(100% + 6px); right: 0; min-width: 160px; background: #f5f6fa; border: 2px solid #cbd5f5; border-radius: 12px; box-shadow: 0 10px 30px rgba(15,23,42,0.15); z-index: 5; overflow: hidden; }
 .succession-plans__menu-item { width: 100%; border: none; background: transparent; padding: 10px 14px; text-align: left; cursor: pointer; font-size: 14px; color: var(--text); }
 .succession-plans__menu-item:hover { background: var(--subtle); }
-.succession-plans__person-btn { border: none; background: none; padding: 0; font: inherit; color: var(--primary); cursor: pointer; font-weight: 600; text-decoration: none; }
+.succession-plans__person-btn { border: none; background: none; padding: 0; font: inherit; color: var(--primary); cursor: pointer; font-weight: 600; text-decoration: none; text-align: left; display: inline-flex; }
 .succession-plans__person-btn:hover { text-decoration: underline; }
 .succession-plans__link { border: none; background: none; color: var(--primary); cursor: pointer; font-weight: 600; padding: 0; }
 .succession-plans__link:hover { text-decoration: underline; }
 .succession-plans__muted { color: var(--muted); font-size: 13px; }
+.succession-plans__rating { display: inline-flex; flex-direction: column; align-items: flex-start; line-height: 1.2; font-size: 13px; }
+.succession-plans__rating-label { font-size: 11px; color: var(--muted); font-weight: 500; }
+.succession-plans__rating-score { font-size: 14px; font-weight: 500; color: var(--text); }
+.succession-plans__divider { border: none; border-top: 1px solid var(--border); margin: 12px 0; }
 
 .modal.manage-successors-modal { background: #fffdf9; border-radius: 28px; border: none; box-shadow: 0 20px 50px rgba(15, 23, 42, 0.25); }
 .modal.manage-successors-modal .modal-header { border-bottom: none; justify-content: flex-end; padding: 18px 18px 0; }
@@ -640,11 +650,11 @@ tr:hover td { background: rgba(122,162,247,0.08); }
 .manage-successors__details strong { font-size: 16px; color: #111; }
 
 @media (max-width: 720px) {
-  .succession-plans__header { flex-direction: column; }
+.succession-plans__header { flex-direction: column; }
   .succession-plans__filters { grid-template-columns: 1fr; }
   .succession-plans__header-actions { align-self: flex-end; }
   .succession-plans__toolbar { flex-direction: column; align-items: flex-start; }
-  .succession-plans__table { min-width: 720px; }
+  .succession-plans__table { min-width: 920px; }
   .manage-successors { padding: 0 20px 24px; }
   .manage-successors__details { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }

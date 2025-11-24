@@ -444,7 +444,7 @@ function renderNode({ name = 'Name', position = 'Position', showChildrenList = f
         e.stopPropagation();
         openContextMenu(menuBtn, [
           { label: 'Assign Learning', onSelect: () => openAssignLearning(modals, child) },
-          { label: 'View Talent Assessment History', onSelect: () => openTalentAssessmentHistory(modals) },
+          { label: 'View Talent Assessment History', onSelect: () => openTalentAssessmentHistory(modals, child.name) },
           { label: 'Edit Successor Readiness', onSelect: () => console.log(`Edit Successor -> ${child.name}`) },
           { label: 'Remove Successor', onSelect: () => console.log(`Remove Successor -> ${child.name}`) }
         ]);
@@ -745,13 +745,15 @@ function openAssignLearning(modals, person) {
   modal.open({ title: 'Assign Learning', body, className: 'modal-wide' });
 }
 
-function openTalentAssessmentHistory(modals) {
+function openTalentAssessmentHistory(modals, personName) {
   const modal = modals.assessmentHistory;
   closeContextMenu();
+  const displayName = personName || 'Employee';
+  const historyTitle = formatHistoryTitle(displayName);
   import('./talent-assessment-history.js?v=20250205')
     .then(module => {
       const body = module.createTalentAssessmentHistoryModal();
-      modal.open({ title: 'Talent Assessment History', body, className: 'modal-talent-history' });
+      modal.open({ title: historyTitle, body, className: 'modal-talent-history' });
     })
     .catch(err => {
       console.error('Failed to load Talent Assessment History modal', err);
@@ -829,13 +831,18 @@ function openLearningDetail(modal, person, course) {
   });
 }
 
+function formatHistoryTitle(name = 'Employee') {
+  const trimmed = String(name ?? '').trim() || 'Employee';
+  return `${trimmed} - Talent Assessment History`;
+}
+
 function incumbentNominationSection(person) {
   const nominations = person.incumbentNominations ?? [];
   const section = document.createElement('div');
   section.className = 'talent-card__section';
   const title = document.createElement('div');
   title.className = 'talent-card__section-title';
-  title.textContent = `Nominated for Incumbents and Positions (${nominations.length || 0})`;
+  title.textContent = `Succession Nominations (${nominations.length || 0})`;
   section.appendChild(title);
 
   if (!nominations.length) {

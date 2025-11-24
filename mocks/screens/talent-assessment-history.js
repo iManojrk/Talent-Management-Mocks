@@ -120,6 +120,11 @@ const talentAssessmentHistoryRecords = [
   }
 ];
 
+function formatHistoryTitle(name = 'Employee') {
+  const trimmed = String(name ?? '').trim() || 'Employee';
+  return `${trimmed} - Talent Assessment History`;
+}
+
 export function createTalentAssessmentHistoryModal() {
   const wrapper = document.createElement('div');
   wrapper.className = 'talent-assessment-history__modal';
@@ -200,6 +205,10 @@ export function TalentAssessmentHistory() {
     { name: 'Amir Hassan', role: 'Fleet Optimization Manager', status: 'Completed' },
     { name: 'Lena Ortiz', role: 'Warehouse Automation Lead', status: 'Completed' }
   ];
+  const activeAssociate = associates.find(person => person.active) ?? associates[0];
+  const activeAssociateName = activeAssociate?.name ?? 'Employee';
+  const activeAssociateRole = activeAssociate?.role ?? 'Regional Distribution Manager';
+  const activeAssociateHistoryTitle = formatHistoryTitle(activeAssociateName);
 
   const list = document.createElement('aside');
   list.className = 'talent-assessment-history__list';
@@ -225,8 +234,8 @@ export function TalentAssessmentHistory() {
   detail.innerHTML = `
     <div class="talent-assessment-history__meta">
       <div class="talent-assessment-history__meta-person">
-        <button class="talent-assessment-history__person-name-btn" type="button">Olivia Brooks</button>
-        <p>Regional Distribution Manager</p>
+        <button class="talent-assessment-history__person-name-btn" type="button">${activeAssociateName}</button>
+        <p>${activeAssociateRole}</p>
       </div>
       <div>
         <span class="talent-assessment-history__meta-label">Cycle Dates</span>
@@ -296,7 +305,7 @@ export function TalentAssessmentHistory() {
     .querySelector('.talent-assessment-history__history-btn')
     ?.addEventListener('click', () => {
       historyModal.open({
-        title: 'Talent Assessment History',
+        title: activeAssociateHistoryTitle,
         body: createTalentAssessmentHistoryModal(),
         className: 'modal-talent-history'
       });
@@ -305,7 +314,7 @@ export function TalentAssessmentHistory() {
   detail
     .querySelector('.talent-assessment-history__person-name-btn')
     ?.addEventListener('click', () => {
-      const profile = getTalentProfile('Olivia Brooks');
+      const profile = getTalentProfile(activeAssociateName);
       talentModal.open({
         title: 'Talent Card',
         body: createTalentCard(profile)

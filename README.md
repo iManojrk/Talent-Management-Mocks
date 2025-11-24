@@ -54,4 +54,6 @@ py -m http.server 4173 --directory mocks
 
 1. Add Manage Successors Screenshot
 2. Org CHart add tabs on the top and the bottom
-3. 
+3. Standard questions
+4. PDF for plan
+5. ondemand custom questions

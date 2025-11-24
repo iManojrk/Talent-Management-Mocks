@@ -2,7 +2,9 @@ import { Modal } from '../components/Modal.js?v=20250205';
 import { createTalentCard, getTalentProfile } from './orgchart.js?v=20250205';
 import { createTalentAssessmentHistoryModal } from './talent-assessment-history.js?v=20250205';
 
-const associates = ['Olivia Brooks', 'Amir Hassan', 'Lena Ortiz'];
+const defaultAssociateName = 'Olivia Brooks';
+const defaultAssociateRole = 'Quality Engineers';
+const associates = [defaultAssociateName, 'Amir Hassan', 'Lena Ortiz'];
 
 const overallEvaluation = {
   selfStatus: 'Pending',
@@ -25,6 +27,9 @@ export function PerformanceEvaluation() {
     talentCard: Modal(),
     history: Modal()
   };
+  const activeReportName = defaultAssociateName;
+  const activeReportRole = defaultAssociateRole;
+  const activeReportHistoryTitle = formatHistoryTitle(activeReportName);
 
   const header = document.createElement('div');
   header.className = 'manager-evaluations__header';
@@ -44,7 +49,7 @@ export function PerformanceEvaluation() {
   aside.innerHTML = [...associates]
     .sort((a, b) => a.localeCompare(b))
     .map(name => `
-      <button class="manager-evaluations__person${name === 'Olivia Brooks' ? ' is-active' : ''}">
+      <button class="manager-evaluations__person${name === activeReportName ? ' is-active' : ''}">
         <span>${name}</span>
       </button>
     `)
@@ -83,8 +88,8 @@ export function PerformanceEvaluation() {
       <div class="manager-evaluations__profile">
         <div class="manager-evaluations__avatar">PP</div>
         <div>
-          <button class="manager-evaluations__profile-name" type="button">Olivia Brooks</button>
-          <span>Quality Engineers</span>
+          <button class="manager-evaluations__profile-name" type="button">${activeReportName}</button>
+          <span>${activeReportRole}</span>
         </div>
       </div>
       <div class="manager-evaluations__status">
@@ -177,14 +182,15 @@ export function PerformanceEvaluation() {
   const historyBtn = content.querySelector('.manager-evaluations__history-link');
   historyBtn?.addEventListener('click', () => {
     overlays.history.open({
-      title: 'Talent Assessment History',
-      body: createTalentAssessmentHistoryModal()
+      title: activeReportHistoryTitle,
+      body: createTalentAssessmentHistoryModal(),
+      className: 'modal-talent-history'
     });
   });
 
   const talentCardBtn = content.querySelector('.manager-evaluations__profile-name');
   talentCardBtn?.addEventListener('click', () => {
-    const profile = getTalentProfile('Olivia Brooks') ?? { name: 'Olivia Brooks', position: 'Quality Engineers' };
+    const profile = getTalentProfile(activeReportName) ?? { name: activeReportName, position: activeReportRole };
     overlays.talentCard.open({
       title: 'Talent Card',
       body: createTalentCard(profile)
@@ -194,4 +200,9 @@ export function PerformanceEvaluation() {
   body.append(aside, content);
   page.append(header, body);
   return page;
+}
+
+function formatHistoryTitle(name = 'Employee') {
+  const trimmed = String(name ?? '').trim() || 'Employee';
+  return `${trimmed} - Talent Assessment History`;
 }

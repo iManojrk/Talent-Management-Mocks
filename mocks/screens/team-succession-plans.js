@@ -6,6 +6,8 @@ const successionPlans = [
     position: 'Director, Recruiting Services',
     incumbent: 'Jacqueline Desjardins',
     performance: 'High',
+    performanceRatingScore: '4.2',
+    performanceRatingLabel: 'Exceeds Expectations',
     potential: 'Medium',
     retention: { label: 'Low', level: 'low' },
     impact: { label: 'High', level: 'high' },
@@ -18,6 +20,8 @@ const successionPlans = [
     position: 'Director, Workforce Planning',
     incumbent: 'Pedro Santiago',
     performance: 'Medium',
+    performanceRatingScore: '3.8',
+    performanceRatingLabel: 'Exceeds Expectations',
     potential: 'High',
     retention: { label: 'High', level: 'high' },
     impact: { label: 'Medium', level: 'medium' },
@@ -30,6 +34,8 @@ const successionPlans = [
     position: 'Director, Payroll Operations',
     incumbent: 'Betty Liu',
     performance: 'High',
+    performanceRatingScore: '4.1',
+    performanceRatingLabel: 'Exceeds Expectations',
     potential: 'High',
     retention: { label: 'Low', level: 'low' },
     impact: { label: 'Low', level: 'low' },
@@ -42,6 +48,8 @@ const successionPlans = [
     position: 'Director, Employee Benefits',
     incumbent: 'Maria Cardoza',
     performance: 'Medium',
+    performanceRatingScore: '3.2',
+    performanceRatingLabel: 'Meets Expectations',
     potential: 'Medium',
     retention: { label: 'Medium', level: 'medium' },
     impact: { label: 'Medium', level: 'medium' },
@@ -54,6 +62,8 @@ const successionPlans = [
     position: 'Director, HR Operations',
     incumbent: 'Robert Hsing',
     performance: 'Low',
+    performanceRatingScore: '2.4',
+    performanceRatingLabel: 'Below Expectations',
     potential: 'Medium',
     retention: { label: 'Medium', level: 'medium' },
     impact: { label: 'High', level: 'high' },
@@ -66,6 +76,8 @@ const successionPlans = [
     position: 'Director, Payroll Operations',
     incumbent: 'Henry Lynch',
     performance: 'Medium',
+    performanceRatingScore: '3.5',
+    performanceRatingLabel: 'Meets Expectations',
     potential: 'Low',
     retention: { label: 'Low', level: 'low' },
     impact: { label: 'Low', level: 'low' },
@@ -89,6 +101,18 @@ function mapPotentialPerformanceLevel(value) {
   if (normalized === 'high') return 'low'; // reuse green styling
   if (normalized === 'low') return 'high'; // reuse red styling
   return 'medium';
+}
+
+function formatPerformanceRating(score, label) {
+  if (!score && !label) return '—';
+  const labelText = label ?? 'Performance';
+  const scoreText = score ? String(score) : '';
+  return `
+    <div class="succession-plans__rating">
+      ${scoreText ? `<div class="succession-plans__rating-score">${scoreText}</div>` : ''}
+      <div class="succession-plans__rating-label">${labelText}</div>
+    </div>
+  `;
 }
 
 const manageSuccessorsModalData = {
@@ -201,6 +225,7 @@ export function TeamSuccessionPlans() {
   };
   const baseTalentProfile = getTalentProfile('Olivia Brooks') ?? {};
   let activeMenu = null;
+  let showIndirectReports = false;
 
   const getInitials = (value) => {
     return String(value ?? '')
@@ -233,27 +258,31 @@ export function TeamSuccessionPlans() {
   const header = document.createElement('div');
   header.className = 'succession-plans__header';
   header.innerHTML = `
-    <div>
-      <h1>Team Succession Summary</h1>
-    </div>
-    <div class="succession-plans__filters">
-      <label class="succession-plans__filter">
-        <span>Associate</span>
-        <input type="text" placeholder="Search associate" disabled>
-      </label>
-      <label class="succession-plans__filter">
-        <span>Manager</span>
-        <input type="text" placeholder="Search manager" disabled>
-      </label>
-      <label class="succession-plans__filter succession-plans__filter--checkbox">
-        <input type="checkbox" disabled>
-        <span>Show Indirect Reports</span>
-      </label>
-    </div>
+    <h1>Team Succession Summary</h1>
   `;
 
+  const filters = document.createElement('div');
+  filters.className = 'succession-plans__filters';
+  filters.innerHTML = `
+    <label class="succession-plans__filter succession-plans__filter--associate">
+      <span>Associate</span>
+      <input type="text" placeholder="Search associate" disabled>
+    </label>
+    <label class="succession-plans__filter succession-plans__filter--checkbox">
+      <input type="checkbox">
+      <span>Show Indirect Reports</span>
+    </label>
+    <label class="succession-plans__filter succession-plans__filter--manager">
+      <span>Manager Lookup</span>
+      <input type="text" placeholder="Lookup manager" disabled>
+    </label>
+  `;
+  filters.classList.add('succession-plans__filters-inline');
+  const showIndirectInput = filters.querySelector('.succession-plans__filter--checkbox input');
+  const managerFilter = filters.querySelector('.succession-plans__filter--manager');
+
   const card = document.createElement('div');
-  card.className = 'table-card succession-plans__table-card';
+  card.className = 'succession-plans__table-container';
   card.innerHTML = `
     <div class="succession-plans__table-wrapper">
       <table class="succession-plans__table">
@@ -264,52 +293,18 @@ export function TeamSuccessionPlans() {
             <th>Performance</th>
             <th>Risk of Loss</th>
             <th>Impact of Loss</th>
+            <th>Performance Rating</th>
             <th>Successors</th>
             <th>Ready Now<br>Successors</th>
             <th>Last Updated</th>
             <th aria-label="Row actions"></th>
           </tr>
         </thead>
-        <tbody>
-          ${successionPlans
-            .map(
-              plan => `
-                <tr>
-                  <td>
-                    <button
-                      type="button"
-                      class="succession-plans__person-btn"
-                      data-person-name="${plan.incumbent}"
-                      data-person-position="${plan.position}"
-                    >
-                      ${plan.incumbent}
-                    </button>
-                  </td>
-                  <td>${renderRiskChip({ label: plan.potential, level: mapPotentialPerformanceLevel(plan.potential) })}</td>
-                  <td>${renderRiskChip({ label: plan.performance, level: mapPotentialPerformanceLevel(plan.performance) })}</td>
-                  <td>${renderRiskChip(plan.retention)}</td>
-                  <td>${renderRiskChip(plan.impact)}</td>
-                  <td>${plan.candidateCount ?? '—'}</td>
-                  <td>${plan.readyNowCount ?? '—'}</td>
-                  <td>${plan.lastUpdated ?? '—'}</td>
-                  <td class="succession-plans__menu-cell">
-                    <button type="button" class="succession-plans__menu-btn" title="Open actions">⋯</button>
-                  </td>
-                </tr>
-              `
-            )
-            .join('')}
-        </tbody>
+        <tbody class="succession-plans__tbody"></tbody>
       </table>
     </div>
   `;
-
-  page.append(header, card);
-  page.querySelectorAll('[data-person-name]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      openTalentCard(btn.dataset.personName, btn.dataset.personPosition);
-    });
-  });
+  const tableBody = card.querySelector('.succession-plans__tbody');
 
   const closeMenu = () => {
     activeMenu?.remove();
@@ -343,17 +338,75 @@ export function TeamSuccessionPlans() {
     activeMenu = menu;
   };
 
-  page.querySelectorAll('.succession-plans__menu-btn').forEach(btn => {
-    btn.addEventListener('click', (event) => {
-      event.stopPropagation();
-      if (activeMenu && activeMenu.parentElement?.contains(btn)) {
-        closeMenu();
-      } else {
-        openMenu(btn);
-      }
-    });
+  showIndirectInput?.addEventListener('change', () => {
+    showIndirectReports = showIndirectInput.checked;
+    managerFilter?.classList.toggle('is-visible', showIndirectReports);
+    renderRows();
   });
 
+  function getVisiblePlans() {
+    if (showIndirectReports) return successionPlans;
+    return successionPlans.slice(0, 3);
+  }
+
+  function renderRows() {
+    const rows = getVisiblePlans()
+      .map(
+        plan => `
+          <tr>
+            <td>
+              <button
+                type="button"
+                class="succession-plans__person-btn"
+                data-person-name="${plan.incumbent}"
+                data-person-position="${plan.position}"
+              >
+                ${plan.incumbent}
+              </button>
+            </td>
+            <td>${renderRiskChip({ label: plan.potential, level: mapPotentialPerformanceLevel(plan.potential) })}</td>
+            <td>${renderRiskChip({ label: plan.performance, level: mapPotentialPerformanceLevel(plan.performance) })}</td>
+            <td>${renderRiskChip(plan.retention)}</td>
+            <td>${renderRiskChip(plan.impact)}</td>
+            <td>${formatPerformanceRating(plan.performanceRatingScore, plan.performanceRatingLabel)}</td>
+            <td>${plan.candidateCount ?? '—'}</td>
+            <td>${plan.readyNowCount ?? '—'}</td>
+            <td>${plan.lastUpdated ?? '—'}</td>
+            <td class="succession-plans__menu-cell">
+              <button type="button" class="succession-plans__menu-btn" title="Open actions">⋯</button>
+            </td>
+          </tr>
+        `
+      )
+      .join('');
+    tableBody.innerHTML = rows;
+    bindRowInteractions();
+  }
+
+  function bindRowInteractions() {
+    tableBody.querySelectorAll('[data-person-name]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        openTalentCard(btn.dataset.personName, btn.dataset.personPosition);
+      });
+    });
+
+    tableBody.querySelectorAll('.succession-plans__menu-btn').forEach(btn => {
+      btn.addEventListener('click', (event) => {
+        event.stopPropagation();
+        if (activeMenu && activeMenu.parentElement?.contains(btn)) {
+          closeMenu();
+        } else {
+          openMenu(btn);
+        }
+      });
+    });
+  }
+
+  renderRows();
+
+  const hrTop = document.createElement('hr');
+  hrTop.className = 'succession-plans__divider';
+  page.append(header, filters, hrTop, card);
   page.addEventListener('click', closeMenu);
   return page;
 }
