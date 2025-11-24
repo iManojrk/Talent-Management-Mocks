@@ -11,6 +11,7 @@ const successionPlans = [
     impact: { label: 'High', level: 'high' },
     topCandidate: 'Norman Chan',
     candidateCount: 3,
+    readyNowCount: 1,
     lastUpdated: '06/30/2025'
   },
   {
@@ -22,6 +23,7 @@ const successionPlans = [
     impact: { label: 'Medium', level: 'medium' },
     topCandidate: 'Sonia Patel',
     candidateCount: 2,
+    readyNowCount: 0,
     lastUpdated: '06/18/2025'
   },
   {
@@ -33,6 +35,7 @@ const successionPlans = [
     impact: { label: 'Low', level: 'low' },
     topCandidate: 'Wendy Liang',
     candidateCount: 4,
+    readyNowCount: 2,
     lastUpdated: '05/25/2025'
   },
   {
@@ -44,6 +47,7 @@ const successionPlans = [
     impact: { label: 'Medium', level: 'medium' },
     topCandidate: 'Ajay Pillai',
     candidateCount: 2,
+    readyNowCount: 0,
     lastUpdated: '05/12/2025'
   },
   {
@@ -55,6 +59,7 @@ const successionPlans = [
     impact: { label: 'High', level: 'high' },
     topCandidate: null,
     candidateCount: null,
+    readyNowCount: null,
     lastUpdated: null
   },
   {
@@ -66,6 +71,7 @@ const successionPlans = [
     impact: { label: 'Low', level: 'low' },
     topCandidate: 'Tran Nguyen',
     candidateCount: 1,
+    readyNowCount: 1,
     lastUpdated: '05/02/2025'
   }
 ];
@@ -78,20 +84,120 @@ function renderRiskChip(retention) {
   `;
 }
 
-function renderTopCandidate(plan) {
-  if (!plan.topCandidate) {
-    return '<span class="succession-plans__muted">—</span>';
-  }
+function mapPotentialPerformanceLevel(value) {
+  const normalized = String(value ?? '').toLowerCase();
+  if (normalized === 'high') return 'low'; // reuse green styling
+  if (normalized === 'low') return 'high'; // reuse red styling
+  return 'medium';
+}
 
-  const dataAttrs = `data-person-name="${plan.topCandidate}" data-person-position="Succession candidate for ${plan.position}"`;
-  return `<button type="button" class="succession-plans__link" ${dataAttrs}>${plan.topCandidate}</button>`;
+const manageSuccessorsModalData = {
+  owner: 'Ian FutureJobChange',
+  successors: [
+    {
+      name: 'Amiya GrantCypressBulkHire',
+      readiness: 'Ready Now',
+      readinessVariant: 'ready',
+      jobTitle: 'SoftwareEngineer',
+      manager: 'Manager Cypress',
+      performance: 'Not Available',
+      readinessSet: 'last month'
+    },
+    {
+      name: 'Ariana Grande',
+      readiness: '12 Months',
+      readinessVariant: 'months',
+      jobTitle: 'ADPRM-1',
+      manager: 'Jack AutotestSix',
+      performance: 'Not Available',
+      readinessSet: 'last month'
+    }
+  ]
+};
+
+function createManageSuccessorsModal(owner) {
+  const container = document.createElement('div');
+  container.className = 'manage-successors';
+  const title = document.createElement('h2');
+  title.className = 'manage-successors__title';
+  title.textContent = owner ?? manageSuccessorsModalData.owner;
+
+  const tabs = document.createElement('div');
+  tabs.className = 'manage-successors__tabs';
+  const manageTab = document.createElement('button');
+  manageTab.type = 'button';
+  manageTab.className = 'manage-successors__tab manage-successors__tab--active';
+  manageTab.textContent = 'Manage Successors';
+  const findTab = document.createElement('button');
+  findTab.type = 'button';
+  findTab.className = 'manage-successors__tab';
+  findTab.textContent = 'Find Successors';
+  tabs.append(manageTab, findTab);
+
+  const cards = document.createElement('div');
+  cards.className = 'manage-successors__cards';
+  manageSuccessorsModalData.successors.forEach(successor => {
+    const card = document.createElement('div');
+    card.className = 'manage-successors__card';
+
+    const topRow = document.createElement('div');
+    topRow.className = 'manage-successors__top';
+
+    const heading = document.createElement('div');
+    heading.className = 'manage-successors__card-heading';
+
+    const name = document.createElement('div');
+    name.className = 'manage-successors__name';
+    name.textContent = successor.name;
+    heading.appendChild(name);
+
+    const badge = document.createElement('span');
+    badge.className = `manage-successors__badge manage-successors__badge--${successor.readinessVariant}`;
+    badge.textContent = successor.readiness;
+    heading.appendChild(badge);
+
+    const actions = document.createElement('button');
+    actions.type = 'button';
+    actions.className = 'manage-successors__actions';
+    actions.innerHTML = `Actions <span class="manage-successors__actions-caret">▾</span>`;
+
+    topRow.append(heading, actions);
+
+    const details = document.createElement('div');
+    details.className = 'manage-successors__details';
+    details.innerHTML = `
+      <div>
+        <span>Job Title</span>
+        <strong>${successor.jobTitle}</strong>
+      </div>
+      <div>
+        <span>Manager</span>
+        <strong>${successor.manager}</strong>
+      </div>
+      <div>
+        <span>Last Performance Rating</span>
+        <strong>${successor.performance}</strong>
+      </div>
+      <div>
+        <span>Readiness Set</span>
+        <strong>${successor.readinessSet}</strong>
+      </div>
+    `;
+
+    card.append(topRow, details);
+    cards.appendChild(card);
+  });
+
+  container.append(title, tabs, cards);
+  return container;
 }
 
 export function TeamSuccessionPlans() {
   const page = document.createElement('div');
   page.className = 'succession-plans';
   const overlays = {
-    talentCard: Modal()
+    talentCard: Modal(),
+    manageSuccessors: Modal()
   };
   const baseTalentProfile = getTalentProfile('Olivia Brooks') ?? {};
   let activeMenu = null;
@@ -128,36 +234,38 @@ export function TeamSuccessionPlans() {
   header.className = 'succession-plans__header';
   header.innerHTML = `
     <div>
-      <p class="succession-plans__eyebrow">Succession Planning</p>
-      <h1>My Team's Succession Plans</h1>
+      <h1>Team Succession Summary</h1>
     </div>
-    <div class="succession-plans__header-actions">
-      <button type="button" class="succession-plans__icon-btn" title="Download grid">⬇︎</button>
-      <button type="button" class="succession-plans__icon-btn" title="Print grid">🖨</button>
+    <div class="succession-plans__filters">
+      <label class="succession-plans__filter">
+        <span>Associate</span>
+        <input type="text" placeholder="Search associate" disabled>
+      </label>
+      <label class="succession-plans__filter">
+        <span>Manager</span>
+        <input type="text" placeholder="Search manager" disabled>
+      </label>
+      <label class="succession-plans__filter succession-plans__filter--checkbox">
+        <input type="checkbox" disabled>
+        <span>Show Indirect Reports</span>
+      </label>
     </div>
   `;
 
   const card = document.createElement('div');
   card.className = 'table-card succession-plans__table-card';
   card.innerHTML = `
-    <div class="succession-plans__toolbar">
-      <div>
-        <span class="succession-plans__count">${successionPlans.length} items</span>
-        <p class="succession-plans__description">Human Resources leadership roles</p>
-      </div>
-    </div>
     <div class="succession-plans__table-wrapper">
       <table class="succession-plans__table">
         <thead>
           <tr>
-            <th>Incumbent</th>
-            <th>Position</th>
+            <th>Name</th>
             <th>Potential</th>
             <th>Performance</th>
             <th>Risk of Loss</th>
             <th>Impact of Loss</th>
-            <th>Top Candidates</th>
-            <th>Candidates</th>
+            <th>Successors</th>
+            <th>Ready Now<br>Successors</th>
             <th>Last Updated</th>
             <th aria-label="Row actions"></th>
           </tr>
@@ -177,13 +285,12 @@ export function TeamSuccessionPlans() {
                       ${plan.incumbent}
                     </button>
                   </td>
-                  <td>${plan.position}</td>
-                  <td>${renderRiskChip({ label: plan.potential, level: plan.potential.toLowerCase() })}</td>
-                  <td>${renderRiskChip({ label: plan.performance, level: plan.performance.toLowerCase() })}</td>
+                  <td>${renderRiskChip({ label: plan.potential, level: mapPotentialPerformanceLevel(plan.potential) })}</td>
+                  <td>${renderRiskChip({ label: plan.performance, level: mapPotentialPerformanceLevel(plan.performance) })}</td>
                   <td>${renderRiskChip(plan.retention)}</td>
                   <td>${renderRiskChip(plan.impact)}</td>
-                  <td>${renderTopCandidate(plan)}</td>
                   <td>${plan.candidateCount ?? '—'}</td>
+                  <td>${plan.readyNowCount ?? '—'}</td>
                   <td>${plan.lastUpdated ?? '—'}</td>
                   <td class="succession-plans__menu-cell">
                     <button type="button" class="succession-plans__menu-btn" title="Open actions">⋯</button>
@@ -209,6 +316,15 @@ export function TeamSuccessionPlans() {
     activeMenu = null;
   };
 
+  const openManageSuccessors = (ownerName) => {
+    const body = createManageSuccessorsModal(ownerName);
+    overlays.manageSuccessors.open({
+      title: '',
+      body,
+      className: 'modal-wide manage-successors-modal'
+    });
+  };
+
   const openMenu = (button) => {
     closeMenu();
     const menu = document.createElement('div');
@@ -217,7 +333,12 @@ export function TeamSuccessionPlans() {
       <button type="button" class="succession-plans__menu-item">Manage Successors</button>
     `;
     menu.addEventListener('click', (event) => event.stopPropagation());
-    menu.querySelector('.succession-plans__menu-item')?.addEventListener('click', closeMenu);
+    menu.querySelector('.succession-plans__menu-item')?.addEventListener('click', () => {
+      closeMenu();
+      const row = button.closest('tr');
+      const nameBtn = row?.querySelector('.succession-plans__person-btn');
+      openManageSuccessors(nameBtn?.textContent?.trim());
+    });
     button.parentElement.appendChild(menu);
     activeMenu = menu;
   };

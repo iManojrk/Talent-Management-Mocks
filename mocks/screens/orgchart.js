@@ -373,16 +373,32 @@ export function OrgChart() {
   const wrap = document.createElement('div');
   const title = document.createElement('h1');
   title.className = 'page-title';
-  title.textContent = 'Succession Org Chart';
+  title.textContent = 'Talent Planning';
+
+  const toolbar = document.createElement('div');
+  toolbar.className = 'org-toolbar';
+  const searchField = document.createElement('div');
+  searchField.className = 'org-toolbar__search';
+  const searchInput = document.createElement('input');
+  searchInput.type = 'text';
+  searchInput.placeholder = 'Search associates or roles';
+  searchInput.className = 'org-toolbar__search-input';
+  searchField.appendChild(searchInput);
+  const summaryLink = document.createElement('a');
+  summaryLink.href = '#/team-succession-plans';
+  summaryLink.className = 'org-toolbar__link';
+  summaryLink.textContent = 'View Team Summary';
+  toolbar.append(searchField, summaryLink);
 
   const modals = {
     profile: Modal(),
     assign: Modal(),
-    learning: Modal()
+    learning: Modal(),
+    assessmentHistory: Modal()
   };
   const chart = renderOrgTree(orgData, modals);
 
-  wrap.append(title, chart);
+  wrap.append(title, toolbar, chart);
   return wrap;
 }
 
@@ -428,7 +444,8 @@ function renderNode({ name = 'Name', position = 'Position', showChildrenList = f
         e.stopPropagation();
         openContextMenu(menuBtn, [
           { label: 'Assign Learning', onSelect: () => openAssignLearning(modals, child) },
-          { label: 'Edit Successor', onSelect: () => console.log(`Edit Successor -> ${child.name}`) },
+          { label: 'View Talent Assessment History', onSelect: () => openTalentAssessmentHistory(modals) },
+          { label: 'Edit Successor Readiness', onSelect: () => console.log(`Edit Successor -> ${child.name}`) },
           { label: 'Remove Successor', onSelect: () => console.log(`Remove Successor -> ${child.name}`) }
         ]);
       });
@@ -726,6 +743,19 @@ function openAssignLearning(modals, person) {
   renderTabs();
   renderContent();
   modal.open({ title: 'Assign Learning', body, className: 'modal-wide' });
+}
+
+function openTalentAssessmentHistory(modals) {
+  const modal = modals.assessmentHistory;
+  closeContextMenu();
+  import('./talent-assessment-history.js?v=20250205')
+    .then(module => {
+      const body = module.createTalentAssessmentHistoryModal();
+      modal.open({ title: 'Talent Assessment History', body, className: 'modal-talent-history' });
+    })
+    .catch(err => {
+      console.error('Failed to load Talent Assessment History modal', err);
+    });
 }
 
 function openLearningDetail(modal, person, course) {

@@ -20,6 +20,14 @@ npx serve mocks
 python3 -m http.server 4173 --directory mocks
 ```
 
+### Cross-platform quick start
+
+No matter which OS you use, the steps are identical: start a lightweight static server that points at the `mocks/` directory, then browse to <http://localhost:4173/>.
+
+- **Linux / macOS**: from the repo root run `python3 -m http.server 4173 --directory mocks` or any other static server (e.g., `npx serve mocks`).  
+- **Windows (PowerShell)**: run `py -m http.server 4173 --directory mocks` or `npx serve mocks`.  
+- **All OSes**: after the server reports it is listening, open <http://localhost:4173/> in your browser; press `Ctrl+C` (or close the terminal) to stop the server when finished.
+
 ## GitHub Actions & GitHub Pages
 
 These Mocks are hosted in GitHub Pages using a GitHub Action
@@ -40,3 +48,10 @@ py -m http.server 4173 --directory mocks
 - `mocks/app.js` / `mocks/router.js` – shell, navigation, and hash routing.
 - `mocks/screens/orgchart.js` – Succession Org Chart markup and modal wiring.
 - `mocks/state.js` – simple in-memory state stub preserved for future enhancements.
+
+
+## TODO
+
+1. Add Manage Successors Screenshot
+2. Org CHart add tabs on the top and the bottom
+3. 

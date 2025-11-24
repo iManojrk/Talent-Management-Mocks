@@ -63,7 +63,7 @@
     "mocksOverview": [
       "Static interactive mock lives under mocks/",
       "No build step: open mocks/index.html directly in a browser",
-      "Active hash routes: /org (Succession Org Chart), /performance (Performance Evaluation mock for Manager Evaluations), /performance-plan (Create Performance Plan placeholder), /talent-assessment-history (Talent Assessment History tab showing completed cycle details mock), /cycle (Create Talent Planning Cycle - Current), /cycle-proposed (Create Talent Planning Cycle - Proposed clone for PO experimentation), /team-succession-plans (My Team's Succession Plans grid recreated from the screenshot), /succession-summary (Succession Planning Summary report)",
+      "Active hash routes: /org (Succession Org Chart), /performance (Performance Evaluation mock for Manager Evaluations), /performance-plan (Create Performance Plan placeholder), /talent-assessment-history (Talent Assessment History tab showing completed cycle details mock), /cycle (Create Talent Planning Cycle - Current), /cycle-proposed (Create Talent Planning Cycle - Proposed clone for PO experimentation), /team-succession-plans (Team Succession Summary grid recreated from the screenshot), /succession-summary (Succession Planning Summary report; sidebar link currently hidden per PO request)",
       "Shared component: Modal (forms/talent profile overlay)"
     ],
     "performanceEvaluationNotes": [
@@ -77,15 +77,18 @@
     "activeSuccessionMock": {
       "summary": [
         "Executive org tree rooted at the CEO with VP-level branches; VP, Fleet Operations exposes a successor list with readiness chips",
+        "On-screen page title now reads \"Talent Planning\" to match PO direction while the nav link stays \"Succession Org Chart\"",
         "Org chart reflects the current hierarchy: Jordan Reyes (CEO) with Maya Chen, Elias Romero, Priya Nair, and Connor Blake reporting to Jordan; Olivia Brooks, Amir Hassan, and Lena Ortiz report up through Elias",
         "Succession plan lives inside Elias Romero's node: three successor rows stay inline, use readiness color chips (green/yellow/red), and act as the only entry point to the Talent Card",
         "Org tiers keep VP-level nodes evenly spaced and now render Elias’s three successors on their own responsive row beneath his card so they stay grouped without inheriting the empty VP columns",
         "Successor rows are activated via mouse click only (keyboard support intentionally removed for presentation fidelity), open the Talent Card modal, and expose placeholder action menu items",
         "Assign Learning menu action opens a dedicated modal showing the selected employee plus Competency vs Catalog search tabs with searchable cards; selecting a card drills into a course detail modal with placeholder Assign CTA",
+        "View Talent Assessment History menu action now loads the shared Talent Assessment History modal (same layout used on the Performance tab) via the existing component; content stays static per screenshot.",
         "Talent Card modal now orders sections as: Talent Assessment (nine-box latest/trend), Performance Rating, Nominated for Incumbents & Positions, Talent Pool Nominations, Competency Gap, Work Experience, Skills, and Education",
         "Readiness chips map ready-green/yellow/red to Ready Now, 1-2 Years, and 3+ Years",
         "Styling is light theme only with custom org connectors, modal layout, and SVG trend visuals",
         "Org-chart connectors render as continuous SVG paths between parent and children to stay aligned at every viewport size",
+        "New toolbar row above the chart introduces a left-aligned search textbox plus a right-aligned \"View Team Summary\" link that routes to #/team-succession-plans; both are static with no filtering behavior.",
         "Entire org chart now renders as a single three-tier grid (CEO, VPs, successors) so layout is consistent regardless of nested depth"
       ],
       "interactivity": "Match existing behavior: click successor rows to open the Talent Card modal, then click Latest/Trend buttons inside the modal to switch views; no keyboard handlers are wired."
@@ -99,14 +102,17 @@
       "Comments & Action Items field defaults to: \"Needs broader exposure to enterprise operations. Line up a 3-month rotation with the logistics team and pair Ava with a senior mentor to refine executive communication skills.\""
     ],
     "teamSuccessionPlansNotes": [
-      "Page title stays \"My Team's Succession Plans\" without recreating the legacy blue gradient bar; compact download/print icon buttons on the right are decorative only.",
-      "Toolbar simply shows the items count and descriptor; no column/filter buttons are present.",
-      "Table columns run left to right: Incumbent, Position, Potential (pill), Performance (pill), Risk of Loss (colored chips), Impact of Loss (colored chips), Top Candidates (blue name link), Candidates, Last Updated, and a trailing three-dot menu button.",
+      "Page title stays \"Team Succession Summary\" without recreating the legacy blue gradient bar; header now omits the prior Succession Planning eyebrow copy and no longer shows download/print icon buttons.",
+      "A static filter row (Associate text, Manager text, Show Indirect Reports checkbox) sits under the title for layout only; fields are disabled placeholders.",
+      "Toolbar strip above the grid has been removed; table now starts immediately without items count or descriptor callouts.",
+      "Table columns now run left to right: Name, Potential (pill), Performance (pill), Risk of Loss (colored chips), Impact of Loss (colored chips), Successors, Ready Now Successors (forced line break), Last Updated, and a trailing three-dot menu button; Position and Top Candidates columns were removed per PO request.",
+      "Potential/Performance pills invert the color mapping (High shows green, Low shows red, Medium remains amber) while Risk/Impact chips keep their original Low=green, High=red treatment.",
       "Dataset highlights six Human Resources director roles with mixed readiness/risk states; numbers and names remain the provided placeholders.",
-      "Clicking an Incumbent or Top Candidate name opens the shared Talent Card modal; it reuses Olivia Brooks' detailed layout and only swaps in the clicked name and position.",
-      "Three-dot menu reveals a single \"Manage Successors\" option (inert) to mimic the screenshot affordance."
+      "Clicking a blue Name link opens the shared Talent Card modal; it reuses Olivia Brooks' detailed layout and only swaps in the clicked name and position.",
+      "Three-dot menu reveals a single \"Manage Successors\" option that opens the Lyric screenshot-accurate modal; title mirrors the clicked associate’s name but the interior content remains the static Ian FutureJobChange example with Amiya/Ariana cards."
     ],
     "successionSummaryNotes": [
+      "Route remains implemented at #/succession-summary but the sidebar link is temporarily hidden per PO request.",
       "Header mirrors the other planning tabs with just the title text (no download/print buttons).",
       "Table renders directly inside the shared table card with no toolbar count/descriptor or filter pills.",
       "Table uses a double-row header with a \"Candidates\" grouping for the latter columns. Column order: Incumbent, Position, Readiness, then Potential, Achievable Level, Risk of Loss, Impact of Loss, Is High Potential, and Performance Rating.",
@@ -126,7 +132,7 @@
       "mocks/screens/cycle-proposed.js — Create Talent Planning Cycle (Proposed tab with isolated styles)",
       "mocks/screens/performance-plan.js — Create Performance Plan placeholder screen",
       "mocks/screens/talent-assessment-history.js — Talent Assessment History tab replicates completed review layout (static content)",
-      "mocks/screens/team-succession-plans.js — My Team's Succession Plans report grid rebuilt from the provided screenshot",
+      "mocks/screens/team-succession-plans.js — Team Succession Summary grid rebuilt from the provided screenshot",
       "mocks/screens/succession-summary.js — Succession Planning Summary tab with readiness/retention overview grid"
     ],
     "navOrder": [
@@ -134,12 +140,12 @@
       "Talent Assessment (#/talent-assessment-history)",
       "Create Talent Planning Cycle (Current) (#/cycle)",
       "Create Talent Planning Cycle (Proposed) (#/cycle-proposed)",
-      "Team Succession Plans (#/team-succession-plans)",
-      "Succession Summary (#/succession-summary)",
+      "Team Succession Summary (#/team-succession-plans)",
+      "Succession Summary (#/succession-summary — hidden from sidebar navigation until PO reenables it)",
       "Performance Evaluation (#/performance)",
       "Create Performance Plan (#/performance-plan)"
     ],
-    "navGrouping": "The first four tabs share a bordered nav-group container in the sidebar to visually connect related planning/assessment flows; Team Succession Plans, Succession Summary, and the remaining tabs render as standalone links.",
+    "navGrouping": "The first four tabs share a bordered nav-group container in the sidebar to visually connect related planning/assessment flows; Team Succession Summary and the remaining tabs render as standalone links (Succession Summary is currently hidden from the sidebar).",
     "addingScreens": [
       "Requires explicit Product Owner approval",
       "Default experience must remain the Succession Org Chart",

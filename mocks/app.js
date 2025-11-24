@@ -59,8 +59,7 @@ function shell() {
 
   nav.append(
     groupedNav,
-    link('/team-succession-plans','Team Succession Plans'),
-    link('/succession-summary','Succession Summary'),
+    link('/team-succession-plans','Team Succession Summary'),
     link('/performance','Performance Evaluation'),
     link('/performance-plan','Create Performance Plan'),
   );

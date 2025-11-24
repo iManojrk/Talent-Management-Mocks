@@ -297,7 +297,8 @@ export function TalentAssessmentHistory() {
     ?.addEventListener('click', () => {
       historyModal.open({
         title: 'Talent Assessment History',
-        body: createTalentAssessmentHistoryModal()
+        body: createTalentAssessmentHistoryModal(),
+        className: 'modal-talent-history'
       });
     });
 
