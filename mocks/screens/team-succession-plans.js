@@ -1,4 +1,5 @@
 import { Modal } from '../components/Modal.js?v=20250205';
+import { createManageSuccessorsModal } from '../components/manage-successors.js?v=20250205';
 import { createTalentCard, getTalentProfile } from './orgchart.js?v=20250205';
 
 const successionPlans = [
@@ -88,6 +89,13 @@ const successionPlans = [
   }
 ];
 
+const managerFilterSets = {
+  betty: {
+    direct: ['Maria Cardoza', 'Robert Hsing'],
+    indirect: ['Maria Cardoza', 'Robert Hsing', 'Henry Lynch']
+  }
+};
+
 function renderRiskChip(retention) {
   return `
     <span class="succession-plans__risk succession-plans__risk--${retention.level}">
@@ -113,107 +121,6 @@ function formatPerformanceRating(score, label) {
       <div class="succession-plans__rating-label">${labelText}</div>
     </div>
   `;
-}
-
-const manageSuccessorsModalData = {
-  owner: 'Ian FutureJobChange',
-  successors: [
-    {
-      name: 'Amiya GrantCypressBulkHire',
-      readiness: 'Ready Now',
-      readinessVariant: 'ready',
-      jobTitle: 'SoftwareEngineer',
-      manager: 'Manager Cypress',
-      performance: 'Not Available',
-      readinessSet: 'last month'
-    },
-    {
-      name: 'Ariana Grande',
-      readiness: '12 Months',
-      readinessVariant: 'months',
-      jobTitle: 'ADPRM-1',
-      manager: 'Jack AutotestSix',
-      performance: 'Not Available',
-      readinessSet: 'last month'
-    }
-  ]
-};
-
-function createManageSuccessorsModal(owner) {
-  const container = document.createElement('div');
-  container.className = 'manage-successors';
-  const title = document.createElement('h2');
-  title.className = 'manage-successors__title';
-  title.textContent = owner ?? manageSuccessorsModalData.owner;
-
-  const tabs = document.createElement('div');
-  tabs.className = 'manage-successors__tabs';
-  const manageTab = document.createElement('button');
-  manageTab.type = 'button';
-  manageTab.className = 'manage-successors__tab manage-successors__tab--active';
-  manageTab.textContent = 'Manage Successors';
-  const findTab = document.createElement('button');
-  findTab.type = 'button';
-  findTab.className = 'manage-successors__tab';
-  findTab.textContent = 'Find Successors';
-  tabs.append(manageTab, findTab);
-
-  const cards = document.createElement('div');
-  cards.className = 'manage-successors__cards';
-  manageSuccessorsModalData.successors.forEach(successor => {
-    const card = document.createElement('div');
-    card.className = 'manage-successors__card';
-
-    const topRow = document.createElement('div');
-    topRow.className = 'manage-successors__top';
-
-    const heading = document.createElement('div');
-    heading.className = 'manage-successors__card-heading';
-
-    const name = document.createElement('div');
-    name.className = 'manage-successors__name';
-    name.textContent = successor.name;
-    heading.appendChild(name);
-
-    const badge = document.createElement('span');
-    badge.className = `manage-successors__badge manage-successors__badge--${successor.readinessVariant}`;
-    badge.textContent = successor.readiness;
-    heading.appendChild(badge);
-
-    const actions = document.createElement('button');
-    actions.type = 'button';
-    actions.className = 'manage-successors__actions';
-    actions.innerHTML = `Actions <span class="manage-successors__actions-caret">▾</span>`;
-
-    topRow.append(heading, actions);
-
-    const details = document.createElement('div');
-    details.className = 'manage-successors__details';
-    details.innerHTML = `
-      <div>
-        <span>Job Title</span>
-        <strong>${successor.jobTitle}</strong>
-      </div>
-      <div>
-        <span>Manager</span>
-        <strong>${successor.manager}</strong>
-      </div>
-      <div>
-        <span>Last Performance Rating</span>
-        <strong>${successor.performance}</strong>
-      </div>
-      <div>
-        <span>Readiness Set</span>
-        <strong>${successor.readinessSet}</strong>
-      </div>
-    `;
-
-    card.append(topRow, details);
-    cards.appendChild(card);
-  });
-
-  container.append(title, tabs, cards);
-  return container;
 }
 
 export function TeamSuccessionPlans() {
@@ -268,18 +175,22 @@ export function TeamSuccessionPlans() {
       <span>Associate</span>
       <input type="text" placeholder="Search associate" disabled>
     </label>
+    <label class="succession-plans__filter succession-plans__filter--manager">
+      <span>Manager</span>
+      <button type="button" class="succession-plans__select">
+        <span class="succession-plans__select-placeholder">Search manager</span>
+      </button>
+    </label>
     <label class="succession-plans__filter succession-plans__filter--checkbox">
       <input type="checkbox">
       <span>Show Indirect Reports</span>
     </label>
-    <label class="succession-plans__filter succession-plans__filter--manager">
-      <span>Manager Lookup</span>
-      <input type="text" placeholder="Lookup manager" disabled>
-    </label>
   `;
   filters.classList.add('succession-plans__filters-inline');
   const showIndirectInput = filters.querySelector('.succession-plans__filter--checkbox input');
-  const managerFilter = filters.querySelector('.succession-plans__filter--manager');
+  const managerSelectButton = filters.querySelector('.succession-plans__select');
+  const managerSelectLabel = managerSelectButton?.querySelector('.succession-plans__select-placeholder');
+  let managerFilterValue = 'none';
 
   const card = document.createElement('div');
   card.className = 'succession-plans__table-container';
@@ -338,16 +249,41 @@ export function TeamSuccessionPlans() {
     activeMenu = menu;
   };
 
+  const updateManagerSelectDisplay = () => {
+    if (!managerSelectButton || !managerSelectLabel) return;
+    if (managerFilterValue === 'betty') {
+      managerSelectLabel.textContent = 'Betty Liu';
+      managerSelectButton.classList.add('is-active');
+    } else {
+      managerSelectLabel.textContent = 'Search manager';
+      managerSelectButton.classList.remove('is-active');
+    }
+  };
+
+  managerSelectButton?.addEventListener('click', () => {
+    managerFilterValue = managerFilterValue === 'betty' ? 'none' : 'betty';
+    updateManagerSelectDisplay();
+    renderRows();
+  });
+
   showIndirectInput?.addEventListener('change', () => {
     showIndirectReports = showIndirectInput.checked;
-    managerFilter?.classList.toggle('is-visible', showIndirectReports);
     renderRows();
   });
 
   function getVisiblePlans() {
+    if (managerFilterValue === 'betty') {
+      const names = showIndirectReports
+        ? managerFilterSets.betty.indirect
+        : managerFilterSets.betty.direct;
+      return successionPlans.filter(plan => names.includes(plan.incumbent));
+    }
+
     if (showIndirectReports) return successionPlans;
     return successionPlans.slice(0, 3);
   }
+
+  updateManagerSelectDisplay();
 
   function renderRows() {
     const rows = getVisiblePlans()

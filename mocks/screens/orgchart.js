@@ -1,4 +1,6 @@
 import { Modal } from '../components/Modal.js?v=20250205';
+import { createManageSuccessorsModal } from '../components/manage-successors.js?v=20250205';
+import { createPlanDownloadPreview } from '../components/plan-download-preview.js?v=20250205';
 
 const orgData = {
   name: 'Jordan Reyes',
@@ -45,8 +47,9 @@ const orgData = {
             ]
           },
           performanceRating: {
-            latest: 3.4,
+            latest: 3.9,
             scale: 5,
+            label: 'Exceeds Expectations',
             trend: [
               { label: 'H1 2023', value: 2.6 },
               { label: 'H2 2023', value: 2.8 },
@@ -110,7 +113,7 @@ const orgData = {
             ]
           },
           performanceRating: {
-            latest: 3.1,
+            latest: 3.6,
             scale: 5,
             trend: [
               { label: 'H1 2023', value: 2.7 },
@@ -394,7 +397,9 @@ export function OrgChart() {
     profile: Modal(),
     assign: Modal(),
     learning: Modal(),
-    assessmentHistory: Modal()
+    assessmentHistory: Modal(),
+    manageSuccessors: Modal(),
+    planPreview: Modal()
   };
   const chart = renderOrgTree(orgData, modals);
 
@@ -410,6 +415,31 @@ function renderNode({ name = 'Name', position = 'Position', showChildrenList = f
   } else {
     n.classList.add('compact');
   }
+
+  const actionWrap = document.createElement('div');
+  actionWrap.className = 'org-node__actions';
+  const actionBtn = document.createElement('button');
+  actionBtn.type = 'button';
+  actionBtn.className = 'org-node__menu-btn';
+  actionBtn.setAttribute('aria-label', `Open actions for ${name}`);
+  actionBtn.textContent = '⋮';
+  const isEliasNode = name === 'Elias Romero';
+  actionBtn.addEventListener('click', (event) => {
+    event.stopPropagation();
+    openContextMenu(actionBtn, [
+      {
+        label: 'Manage Successors',
+        onSelect: isEliasNode ? () => openManageSuccessorsOverlay(modals, name) : undefined
+      },
+      {
+        label: 'Download Succession Plan',
+        onSelect: () => openPlanDownloadPreview(modals)
+      }
+    ]);
+  });
+  actionWrap.appendChild(actionBtn);
+  n.appendChild(actionWrap);
+
   const avatar = document.createElement('div');
   avatar.className = 'avatar';
   avatar.textContent = initials(name);
@@ -562,6 +592,30 @@ function openProfile(modals, person) {
   closeContextMenu();
   const body = createTalentCard(person);
   modal.open({ title: 'Talent Card', body });
+}
+
+function openManageSuccessorsOverlay(modals, ownerName) {
+  const modal = modals.manageSuccessors;
+  if (!modal) return;
+  closeContextMenu();
+  const body = createManageSuccessorsModal(ownerName);
+  modal.open({
+    title: '',
+    body,
+    className: 'modal-wide manage-successors-modal'
+  });
+}
+
+function openPlanDownloadPreview(modals) {
+  const modal = modals.planPreview;
+  if (!modal) return;
+  closeContextMenu();
+  const body = createPlanDownloadPreview();
+  modal.open({
+    title: 'Succession Plan PDF Preview',
+    body,
+    className: 'modal-wide modal-plan-preview'
+  });
 }
 
 function openAssignLearning(modals, person) {
@@ -1210,7 +1264,8 @@ function performanceRatingSection(rating) {
     if (mode === 'latest') {
       const score = document.createElement('div');
       score.className = 'talent-card__rating-score';
-      score.innerHTML = `<span>${rating.latest.toFixed(1)}</span><small>/ ${rating.scale}</small>`;
+      const descriptor = rating.label ?? 'Latest Rating';
+      score.innerHTML = `<span>${rating.latest.toFixed(1)}</span><small>/ ${rating.scale}</small><em>${descriptor}</em>`;
 
       const meter = document.createElement('div');
       meter.className = 'talent-card__rating-meter';

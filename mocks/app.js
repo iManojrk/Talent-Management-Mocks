@@ -5,6 +5,7 @@ import { CreatePerformancePlan } from './screens/performance-plan.js?v=20250205'
 import { CreateTalentPlanningCycle } from './screens/cycle.js?v=20250205';
 import { CreateTalentPlanningCycleProposed } from './screens/cycle-proposed.js?v=20250205';
 import { TalentAssessmentHistory } from './screens/talent-assessment-history.js?v=20250205';
+import { TalentAssessmentStandardQuestions } from './screens/talent-assessment-standard-questions.js?v=20250205';
 import { TeamSuccessionPlans } from './screens/team-succession-plans.js?v=20250205';
 import { SuccessionSummary } from './screens/succession-summary.js?v=20250205';
 
@@ -15,6 +16,7 @@ const routes = {
   '/talent-assessment-history': TalentAssessmentHistory,
   '/cycle': CreateTalentPlanningCycle,
   '/cycle-proposed': CreateTalentPlanningCycleProposed,
+  '/talent-assessment-standard-questions': TalentAssessmentStandardQuestions,
   '/team-succession-plans': TeamSuccessionPlans,
   '/succession-summary': SuccessionSummary,
 };
@@ -54,6 +56,7 @@ function shell() {
     link('/org','Succession Org Chart'),
     link('/talent-assessment-history','Talent Assessment'),
     link('/cycle','Create Talent Planning Cycle (Current)'),
+    link('/talent-assessment-standard-questions','Talent Assessment Standard Questions'),
     link('/cycle-proposed','Create Talent Planning Cycle (Proposed)'),
   );
 

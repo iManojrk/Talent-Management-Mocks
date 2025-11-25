@@ -28,18 +28,13 @@ No matter which OS you use, the steps are identical: start a lightweight static 
 - **Windows (PowerShell)**: run `py -m http.server 4173 --directory mocks` or `npx serve mocks`.  
 - **All OSes**: after the server reports it is listening, open <http://localhost:4173/> in your browser; press `Ctrl+C` (or close the terminal) to stop the server when finished.
 
-## GitHub Actions & GitHub Pages
+## GitHub Pages
 
-These Mocks are hosted in GitHub Pages using a GitHub Action
+This repo currently uses the classic **Deploy from a branch** Pages workflow, pointing at the `main` branch’s root. Because the static site lives inside the `mocks/` folder, the hosted URL is:
 
-- Push this repo to GitHub and open it in the browser.
-- Once the workflow file exists (for example at `.github/workflows/pages.yml`), you can see its runs at <https://github.com/iManojRK/Talent-Management-Mocks/actions/workflows/pages.yml>.
-- After the workflow succeeds, open the Pages URL shown in **Settings → Pages** (for this repo: <https://iManojRK.github.io/Talent-Management-Mocks>) to view the mocks. All hash routes (like `#/org` and `#/performance`) work the same as they do locally.
+<https://iManojRK.github.io/Talent-Management-Mocks/mocks/>
 
-```powershell
-# Windows Python launcher
-py -m http.server 4173 --directory mocks
-```
+Whenever you push to `main`, Pages automatically updates and serves the latest files from that path. All hash routes (like `#/org` and `#/performance`) behave the same as they do locally.
 
 ## Repo Layout
 
@@ -48,12 +43,17 @@ py -m http.server 4173 --directory mocks
 - `mocks/app.js` / `mocks/router.js` – shell, navigation, and hash routing.
 - `mocks/screens/orgchart.js` – Succession Org Chart markup and modal wiring.
 - `mocks/state.js` – simple in-memory state stub preserved for future enhancements.
-
+- `mocks/screens/talent-assessment-standard-questions.js` – CTA-driven staging tab that reveals the full questions layout reused from Create Talent Planning Cycle (Proposed).
 
 ## TODO
 
 1. Add Manage Successors Screenshot
-2. Org CHart add tabs on the top and the bottom
+2. Org Chart add tabs on the top and the bottom
 3. Standard questions
 4. PDF for plan
 5. ondemand custom questions
+
+create a new tab called talent assessment standard questions
+
+after elias's talent card, add a new section for All the successors with their readiness levels
+After that add the talent card for each successor
