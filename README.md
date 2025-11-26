@@ -43,7 +43,7 @@ Whenever you push to `main`, Pages automatically updates and serves the latest f
 - `mocks/app.js` / `mocks/router.js` – shell, navigation, and hash routing.
 - `mocks/screens/orgchart.js` – Succession Org Chart markup and modal wiring.
 - `mocks/state.js` – simple in-memory state stub preserved for future enhancements.
-- `mocks/screens/talent-assessment-standard-questions.js` – CTA-driven staging tab that reveals the full questions layout reused from Create Talent Planning Cycle (Proposed).
+- `mocks/screens/talent-assessment-standard-questions.js` – CTA-driven staging tab that mimics the first-time setup before revealing the question builder reused from Create Talent Planning Cycle (Proposed).
 
 ## TODO
 

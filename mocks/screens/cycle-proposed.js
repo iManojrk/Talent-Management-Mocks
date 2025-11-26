@@ -109,10 +109,6 @@ export function CreateTalentPlanningCycleProposed() {
                   <span>Question*</span>
                   <input class="cycle-proposed__input" value="Risk of Loss" disabled />
                 </label>
-                <div class="cycle-proposed__field cycle-proposed__toggle-field">
-                  <span>Required</span>
-                  <div class="cycle-proposed__toggle cycle-proposed__toggle--disabled is-on"><span></span></div>
-                </div>
                 <label class="cycle-proposed__field">
                   <span>Question Description</span>
                   <textarea class="cycle-proposed__input" rows="3" disabled>Likelihood the associate will depart in the next 12 months based on intent, engagement, and market pull.</textarea>
@@ -139,10 +135,6 @@ export function CreateTalentPlanningCycleProposed() {
                   <span>Question*</span>
                   <input class="cycle-proposed__input" value="Impact of Loss" disabled />
                 </label>
-                <div class="cycle-proposed__field cycle-proposed__toggle-field">
-                  <span>Required</span>
-                  <div class="cycle-proposed__toggle cycle-proposed__toggle--disabled is-on"><span></span></div>
-                </div>
                 <label class="cycle-proposed__field">
                   <span>Question Description</span>
                   <textarea class="cycle-proposed__input" rows="3" disabled>The impact on the organization if an associate leaves or transitions roles, including difficulty to replace and knowledge at risk.</textarea>
@@ -169,10 +161,10 @@ export function CreateTalentPlanningCycleProposed() {
                   <span>Question*</span>
                   <input class="cycle-proposed__input" value="Readiness" />
                 </label>
-                <div class="cycle-proposed__field cycle-proposed__toggle-field">
+                <button class="cycle-proposed__toggle-container is-on" type="button" data-toggle="required">
                   <span>Required</span>
-                  <div class="cycle-proposed__toggle is-on"><span></span></div>
-                </div>
+                  <div class="cycle-proposed__toggle cycle-proposed__toggle--interactive is-on"><span></span></div>
+                </button>
                 <label class="cycle-proposed__field">
                   <span>Question Description</span>
                   <textarea class="cycle-proposed__input" rows="3">The extent to which the associate has the skills and experiences needed to be successful in their envisioned next role.</textarea>
@@ -200,10 +192,10 @@ export function CreateTalentPlanningCycleProposed() {
                   <span>Question*</span>
                   <input class="cycle-proposed__input" value="Next Move" />
                 </label>
-                <div class="cycle-proposed__field cycle-proposed__toggle-field">
+                <button class="cycle-proposed__toggle-container is-on" type="button" data-toggle="required">
                   <span>Required</span>
-                  <div class="cycle-proposed__toggle is-on"><span></span></div>
-                </div>
+                  <div class="cycle-proposed__toggle cycle-proposed__toggle--interactive is-on"><span></span></div>
+                </button>
                 <label class="cycle-proposed__field">
                   <span>Question Description</span>
                   <textarea class="cycle-proposed__input" rows="3">Based on capabilities, drive, and interests, identify the role you see this associate growing into next.</textarea>
@@ -229,5 +221,20 @@ export function CreateTalentPlanningCycleProposed() {
       </main>
     </div>
   `;
+  enableCycleToggleControls(wrap);
   return wrap;
+}
+
+function enableCycleToggleControls(scope) {
+  scope
+    .querySelectorAll('[data-toggle="required"]')
+    .forEach(btn => {
+      if (btn.dataset.toggleBound) return;
+      btn.dataset.toggleBound = 'true';
+      btn.addEventListener('click', () => {
+        btn.classList.toggle('is-on');
+        const slider = btn.querySelector('.cycle-proposed__toggle');
+        slider?.classList.toggle('is-on');
+      });
+    });
 }

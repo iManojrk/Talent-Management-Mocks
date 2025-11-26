@@ -1,3 +1,6 @@
+const SETUP_DESCRIPTION =
+  'Set up the talent assessment questions. These questions are automatically added to every new talent assessment, and you can still edit or remove them while configuring individual talent assessments.';
+
 export function TalentAssessmentStandardQuestions() {
   const page = document.createElement('div');
   page.className = 'talent-assessment-standard';
@@ -12,14 +15,15 @@ export function TalentAssessmentStandardQuestions() {
   const setupSection = document.createElement('section');
   setupSection.className = 'talent-assessment-standard__setup';
   setupSection.innerHTML = `
-    <h2>Placeholder Header</h2>
-    <p>Placeholder description for the setup flow.</p>
+    <h2>First-Time Setup</h2>
+    <p>${SETUP_DESCRIPTION}</p>
     <button type="button" class="talent-assessment-standard__setup-btn">Setup Talent Assessment Questions</button>
   `;
 
   const questionsSection = document.createElement('div');
   questionsSection.className = 'talent-assessment-standard__questions';
   questionsSection.innerHTML = buildQuestionsMarkup();
+  enableStandardToggleControls(questionsSection);
   initQuestionInteractivity(questionsSection);
 
   setupSection
@@ -37,7 +41,7 @@ function buildQuestionsMarkup() {
   return `
     <section class="cycle-proposed__panel cycle-proposed__question-layout">
       <div>
-        <h2>Questions</h2>
+        <p class="talent-assessment-standard__question-description">${SETUP_DESCRIPTION}</p>
         <div class="cycle-proposed__question-card">
           <div class="cycle-proposed__question-main">
             <label class="cycle-proposed__field cycle-proposed__field--question">
@@ -99,10 +103,6 @@ function buildQuestionsMarkup() {
               <span>Question*</span>
               <input class="cycle-proposed__input" value="Risk of Loss" disabled />
             </label>
-            <div class="cycle-proposed__field cycle-proposed__toggle-field">
-              <span>Required</span>
-              <div class="cycle-proposed__toggle cycle-proposed__toggle--disabled is-on"><span></span></div>
-            </div>
             <label class="cycle-proposed__field cycle-proposed__field--description">
               <span>Question Description</span>
               <textarea class="cycle-proposed__input" rows="3" disabled>Likelihood the associate will depart in the next 12 months based on intent, engagement, and market pull.</textarea>
@@ -129,10 +129,6 @@ function buildQuestionsMarkup() {
               <span>Question*</span>
               <input class="cycle-proposed__input" value="Impact of Loss" disabled />
             </label>
-            <div class="cycle-proposed__field cycle-proposed__toggle-field">
-              <span>Required</span>
-              <div class="cycle-proposed__toggle cycle-proposed__toggle--disabled is-on"><span></span></div>
-            </div>
             <label class="cycle-proposed__field cycle-proposed__field--description">
               <span>Question Description</span>
               <textarea class="cycle-proposed__input" rows="3" disabled>The impact on the organization if an associate leaves or transitions roles, including difficulty to replace and knowledge at risk.</textarea>
@@ -159,10 +155,10 @@ function buildQuestionsMarkup() {
               <span>Question*</span>
               <input class="cycle-proposed__input" value="Readiness" />
             </label>
-            <div class="cycle-proposed__field cycle-proposed__toggle-field">
+            <button class="cycle-proposed__toggle-container is-on" type="button" data-toggle="required">
               <span>Required</span>
-              <div class="cycle-proposed__toggle is-on"><span></span></div>
-            </div>
+              <div class="cycle-proposed__toggle cycle-proposed__toggle--interactive is-on"><span></span></div>
+            </button>
             <label class="cycle-proposed__field cycle-proposed__field--description">
               <span>Question Description</span>
               <textarea class="cycle-proposed__input" rows="3">The extent to which the associate has the skills and experiences needed to be successful in their envisioned next role.</textarea>
@@ -190,10 +186,10 @@ function buildQuestionsMarkup() {
               <span>Question*</span>
               <input class="cycle-proposed__input" value="Next Move" />
             </label>
-            <div class="cycle-proposed__field cycle-proposed__toggle-field">
+            <button class="cycle-proposed__toggle-container is-on" type="button" data-toggle="required">
               <span>Required</span>
-              <div class="cycle-proposed__toggle is-on"><span></span></div>
-            </div>
+              <div class="cycle-proposed__toggle cycle-proposed__toggle--interactive is-on"><span></span></div>
+            </button>
             <label class="cycle-proposed__field cycle-proposed__field--description">
               <span>Question Description</span>
               <textarea class="cycle-proposed__input" rows="3">Based on capabilities, drive, and interests, identify the role you see this associate growing into next.</textarea>
@@ -295,4 +291,18 @@ function initQuestionInteractivity(container) {
     cardsWrapper.insertBefore(pendingCard, addQuestionBtn);
     addQuestionBtn.disabled = true;
   });
+}
+
+function enableStandardToggleControls(scope) {
+  scope
+    .querySelectorAll('[data-toggle="required"]')
+    .forEach(btn => {
+      if (btn.dataset.toggleBound) return;
+      btn.dataset.toggleBound = 'true';
+      btn.addEventListener('click', () => {
+        btn.classList.toggle('is-on');
+        const slider = btn.querySelector('.cycle-proposed__toggle');
+        slider?.classList.toggle('is-on');
+      });
+    });
 }

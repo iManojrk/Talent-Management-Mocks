@@ -234,7 +234,7 @@ export function createPlanDownloadPreview() {
     `;
     nominationsContent.appendChild(row);
   });
-  leftColumn.appendChild(buildSection('Nominated For', nominationsContent));
+  rightColumn.appendChild(buildSection('Nominated For', nominationsContent));
 
   const poolsContent = document.createElement('div');
   poolsContent.className = 'plan-preview__pools';
@@ -253,7 +253,7 @@ export function createPlanDownloadPreview() {
     `;
     poolsContent.appendChild(row);
   });
-  leftColumn.appendChild(buildSection('Talent Pool Nominations', poolsContent));
+  rightColumn.appendChild(buildSection('Talent Pool Nominations', poolsContent));
 
   const lowerDivider = document.createElement('div');
   lowerDivider.className = 'plan-preview__divider plan-preview__divider--spacious';

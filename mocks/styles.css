@@ -550,6 +550,11 @@ tr:hover td { background: rgba(122,162,247,0.08); }
 .cycle-proposed__toggle span { position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; background: #fff; border-radius: 50%; transition: transform 0.2s ease; }
 .cycle-proposed__toggle.is-on { background: var(--primary); }
 .cycle-proposed__toggle.is-on span { transform: translateX(20px); }
+.cycle-proposed__toggle--interactive { cursor: pointer; }
+.cycle-proposed__toggle-container { display: inline-flex; align-items: center; gap: 10px; border: 1px solid var(--border); border-radius: 999px; padding: 4px 14px; background: #fff; cursor: pointer; font-size: 13px; font-weight: 600; color: var(--muted); transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease; }
+.cycle-proposed__toggle-container span { pointer-events: none; }
+.cycle-proposed__toggle-container.is-on { border-color: #c7d2fe; box-shadow: 0 6px 14px rgba(59,130,246,0.18); color: var(--text); background: #eef2ff; }
+.cycle-proposed__toggle-container .cycle-proposed__toggle { pointer-events: none; }
 .cycle-proposed__toggle--disabled { background: #d1d5db; cursor: not-allowed; }
 .cycle-proposed__toggle--disabled span { background: #f3f4f6; }
 .cycle-proposed__toggle--disabled.is-on { background: #d1d5db; }
@@ -646,6 +651,7 @@ tr:hover td { background: rgba(122,162,247,0.08); }
 .talent-assessment-standard__questions { display: none; }
 .talent-assessment-standard__questions.is-visible { display: block; }
 .talent-assessment-standard__questions .cycle-proposed__panel { width: 100%; margin: 0; }
+.talent-assessment-standard__question-description { margin: 0 0 20px; color: var(--muted); font-size: 14px; line-height: 1.5; }
 .talent-assessment-standard__questions .cycle-proposed__options { width: 55%; }
 .talent-assessment-standard__questions .cycle-proposed__field--question { width: 55%; }
 .talent-assessment-standard__questions .cycle-proposed__field--description { width: 100%; }
