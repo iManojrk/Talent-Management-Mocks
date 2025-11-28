@@ -155,10 +155,10 @@ function buildQuestionsMarkup() {
               <span>Question*</span>
               <input class="cycle-proposed__input" value="Readiness" />
             </label>
-            <button class="cycle-proposed__toggle-container is-on" type="button" data-toggle="required">
+            <div class="cycle-proposed__field cycle-proposed__toggle-field">
               <span>Required</span>
-              <div class="cycle-proposed__toggle cycle-proposed__toggle--interactive is-on"><span></span></div>
-            </button>
+              <button class="cycle-proposed__toggle cycle-proposed__toggle--interactive is-on" type="button" data-toggle="required"><span></span></button>
+            </div>
             <label class="cycle-proposed__field cycle-proposed__field--description">
               <span>Question Description</span>
               <textarea class="cycle-proposed__input" rows="3">The extent to which the associate has the skills and experiences needed to be successful in their envisioned next role.</textarea>
@@ -186,10 +186,10 @@ function buildQuestionsMarkup() {
               <span>Question*</span>
               <input class="cycle-proposed__input" value="Next Move" />
             </label>
-            <button class="cycle-proposed__toggle-container is-on" type="button" data-toggle="required">
+            <div class="cycle-proposed__field cycle-proposed__toggle-field">
               <span>Required</span>
-              <div class="cycle-proposed__toggle cycle-proposed__toggle--interactive is-on"><span></span></div>
-            </button>
+              <button class="cycle-proposed__toggle cycle-proposed__toggle--interactive is-on" type="button" data-toggle="required"><span></span></button>
+            </div>
             <label class="cycle-proposed__field cycle-proposed__field--description">
               <span>Question Description</span>
               <textarea class="cycle-proposed__input" rows="3">Based on capabilities, drive, and interests, identify the role you see this associate growing into next.</textarea>
@@ -243,6 +243,10 @@ function initQuestionInteractivity(container) {
           <span>Question*</span>
           <input class="cycle-proposed__input" placeholder="Question title" readonly />
         </label>
+        <div class="cycle-proposed__field cycle-proposed__toggle-field">
+          <span>Required</span>
+          <button class="cycle-proposed__toggle cycle-proposed__toggle--interactive" type="button" data-toggle="required-placeholder"><span></span></button>
+        </div>
         <label class="cycle-proposed__field cycle-proposed__field--description">
           <span>Question Description</span>
           <textarea class="cycle-proposed__input" rows="3" placeholder="Add guidance" readonly></textarea>

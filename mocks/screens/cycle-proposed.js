@@ -161,10 +161,10 @@ export function CreateTalentPlanningCycleProposed() {
                   <span>Question*</span>
                   <input class="cycle-proposed__input" value="Readiness" />
                 </label>
-                <button class="cycle-proposed__toggle-container is-on" type="button" data-toggle="required">
+                <div class="cycle-proposed__field cycle-proposed__toggle-field">
                   <span>Required</span>
-                  <div class="cycle-proposed__toggle cycle-proposed__toggle--interactive is-on"><span></span></div>
-                </button>
+                  <button class="cycle-proposed__toggle cycle-proposed__toggle--interactive is-on" type="button" data-toggle="required"><span></span></button>
+                </div>
                 <label class="cycle-proposed__field">
                   <span>Question Description</span>
                   <textarea class="cycle-proposed__input" rows="3">The extent to which the associate has the skills and experiences needed to be successful in their envisioned next role.</textarea>
@@ -192,10 +192,10 @@ export function CreateTalentPlanningCycleProposed() {
                   <span>Question*</span>
                   <input class="cycle-proposed__input" value="Next Move" />
                 </label>
-                <button class="cycle-proposed__toggle-container is-on" type="button" data-toggle="required">
+                <div class="cycle-proposed__field cycle-proposed__toggle-field">
                   <span>Required</span>
-                  <div class="cycle-proposed__toggle cycle-proposed__toggle--interactive is-on"><span></span></div>
-                </button>
+                  <button class="cycle-proposed__toggle cycle-proposed__toggle--interactive is-on" type="button" data-toggle="required"><span></span></button>
+                </div>
                 <label class="cycle-proposed__field">
                   <span>Question Description</span>
                   <textarea class="cycle-proposed__input" rows="3">Based on capabilities, drive, and interests, identify the role you see this associate growing into next.</textarea>
@@ -231,10 +231,6 @@ function enableCycleToggleControls(scope) {
     .forEach(btn => {
       if (btn.dataset.toggleBound) return;
       btn.dataset.toggleBound = 'true';
-      btn.addEventListener('click', () => {
-        btn.classList.toggle('is-on');
-        const slider = btn.querySelector('.cycle-proposed__toggle');
-        slider?.classList.toggle('is-on');
-      });
+      btn.addEventListener('click', () => btn.classList.toggle('is-on'));
     });
 }
