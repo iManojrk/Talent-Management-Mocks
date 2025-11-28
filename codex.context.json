@@ -173,7 +173,10 @@
       "Favicon is set inline via SVG data URI in mocks/index.html; no standalone favicon.ico is needed",
       "Talent Card styles must stay namespaced via the talent-card__* BEM pattern to prevent cross-tab contamination; apply the same approach if new sections are added",
       "Cycle Proposed tab uses cycle-proposed__* class names/CSS; edit those selectors when iterating so the Current tab remains untouched",
-      "Modal close control is a compact grey circle housing a bold × icon; maintain this treatment instead of reverting to text buttons"
+      "Modal close control is a compact grey circle housing a bold × icon; maintain this treatment instead of reverting to text buttons",
+      "Primary/secondary actions share unified button styles using .btn primary (filled blue) and .btn outline (white with blue border); these mirror the Save Assessment and Export as CSV treatments from the reference UI",
+      "Text inputs and comment textareas use unified field tokens (7px radius, warm grey borders, white background, and a softer disabled state) so Comments and Talent Assessment question fields visually align",
+      "Checkboxes use a shared 20px square style with warm grey borders and a filled blue checked state, aligning Performance and Succession filters with the reference mock"
     ]
   },
   "tasks": [

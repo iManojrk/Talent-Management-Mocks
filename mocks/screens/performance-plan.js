@@ -17,8 +17,8 @@ export function CreatePerformancePlan() {
   actions.className = 'performance-plan-actions';
   actions.innerHTML = `
     <button class="btn ghost">Cancel</button>
-    <button class="btn outline">← Back</button>
-    <button class="btn primary">Next →</button>
+    <button class="btn outline">Back</button>
+    <button class="btn primary">Next</button>
   `;
 
   header.append(title, subtitle);

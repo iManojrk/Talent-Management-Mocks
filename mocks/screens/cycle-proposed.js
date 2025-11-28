@@ -5,12 +5,12 @@ export function CreateTalentPlanningCycleProposed() {
     <div class="cycle-proposed__header">
       <div>
         <h1 class="page-title">Create Talent Planning Cycle (Proposed)</h1>
-        <div class="cycle-proposed__subtitle">Assessment Settings</div>
+      <div class="cycle-proposed__subtitle">Assessment Settings</div>
       </div>
       <div class="cycle-proposed__actions">
         <button class="cycle-proposed__btn cycle-proposed__btn--ghost">Cancel</button>
-        <button class="cycle-proposed__btn cycle-proposed__btn--outline">← Back</button>
-        <button class="cycle-proposed__btn cycle-proposed__btn--primary">Next →</button>
+        <button class="cycle-proposed__btn cycle-proposed__btn--outline">Back</button>
+        <button class="cycle-proposed__btn cycle-proposed__btn--primary">Next</button>
       </div>
     </div>
     <div class="cycle-proposed__body">
@@ -111,7 +111,7 @@ export function CreateTalentPlanningCycleProposed() {
                 </label>
                 <label class="cycle-proposed__field">
                   <span>Question Description</span>
-                  <textarea class="cycle-proposed__input" rows="3" disabled>Likelihood the associate will depart in the next 12 months based on intent, engagement, and market pull.</textarea>
+                  <textarea class="cycle-proposed__input" rows="3">Likelihood the associate will depart in the next 12 months based on intent, engagement, and market pull.</textarea>
                 </label>
 
                 <div class="cycle-proposed__options">

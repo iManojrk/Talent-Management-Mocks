@@ -17,7 +17,7 @@ export function TalentAssessmentStandardQuestions() {
   setupSection.innerHTML = `
     <h2>First-Time Setup</h2>
     <p>${SETUP_DESCRIPTION}</p>
-    <button type="button" class="talent-assessment-standard__setup-btn">Setup Talent Assessment Questions</button>
+    <button type="button" class="btn primary talent-assessment-standard__setup-btn">Setup Talent Assessment Questions</button>
   `;
 
   const questionsSection = document.createElement('div');
@@ -105,7 +105,7 @@ function buildQuestionsMarkup() {
             </label>
             <label class="cycle-proposed__field cycle-proposed__field--description">
               <span>Question Description</span>
-              <textarea class="cycle-proposed__input" rows="3" disabled>Likelihood the associate will depart in the next 12 months based on intent, engagement, and market pull.</textarea>
+              <textarea class="cycle-proposed__input" rows="3">Likelihood the associate will depart in the next 12 months based on intent, engagement, and market pull.</textarea>
             </label>
 
             <div class="cycle-proposed__options">
