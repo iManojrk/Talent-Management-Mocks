@@ -131,7 +131,7 @@ function buildQuestionsMarkup() {
             </label>
             <label class="cycle-proposed__field cycle-proposed__field--description">
               <span>Question Description</span>
-              <textarea class="cycle-proposed__input" rows="3" disabled>The impact on the organization if an associate leaves or transitions roles, including difficulty to replace and knowledge at risk.</textarea>
+              <textarea class="cycle-proposed__input" rows="3">The impact on the organization if an associate leaves or transitions roles, including difficulty to replace and knowledge at risk.</textarea>
             </label>
 
             <div class="cycle-proposed__options">

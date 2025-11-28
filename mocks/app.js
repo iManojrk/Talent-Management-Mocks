@@ -35,18 +35,19 @@ function shell() {
   brand.className = 'brand';
   brand.innerHTML = '<span class="dot"></span>Talent';
 
-  header.append(brand);
-
   const sidebar = document.createElement('div');
   sidebar.className = 'sidebar';
   const nav = document.createElement('div');
   nav.className = 'nav';
+
+  const allNavLinks = [];
 
   const link = (path, label) => {
     const a = document.createElement('a');
     a.href = `#${path}`;
     a.textContent = label;
     a.dataset.path = path;
+    allNavLinks.push(a);
     return a;
   };
 
@@ -68,6 +69,36 @@ function shell() {
   );
   sidebar.appendChild(nav);
 
+  const headerActions = document.createElement('div');
+  headerActions.className = 'header-actions';
+
+  const burger = document.createElement('button');
+  burger.type = 'button';
+  burger.className = 'header-burger';
+  burger.setAttribute('aria-label', 'Open navigation');
+  burger.innerHTML = '<span></span><span></span><span></span>';
+
+  const burgerMenu = document.createElement('div');
+  burgerMenu.className = 'header-burger-menu';
+  const burgerList = document.createElement('div');
+  burgerList.className = 'header-burger-menu__list';
+
+  burgerList.append(
+    link('/org','Succession Org Chart'),
+    link('/talent-assessment-history','Talent Assessment'),
+    link('/cycle','Create Talent Planning Cycle (Current)'),
+    link('/talent-assessment-standard-questions','Talent Assessment Standard Questions'),
+    link('/cycle-proposed','Create Talent Planning Cycle (Proposed)'),
+    link('/team-succession-plans','Team Succession Summary'),
+    link('/performance','Performance Evaluation'),
+    link('/performance-plan','Create Performance Plan'),
+  );
+
+  burgerMenu.appendChild(burgerList);
+  headerActions.append(burger, burgerMenu);
+
+  header.append(brand, headerActions);
+
   const content = document.createElement('div');
   content.className = 'content';
 
@@ -75,13 +106,18 @@ function shell() {
   app.innerHTML = '';
   app.appendChild(layout);
 
+  burger.addEventListener('click', () => {
+    burgerMenu.classList.toggle('is-open');
+  });
+
   createRouter({
     routes,
     onChange: (path, fn) => {
       content.innerHTML = '';
       const view = fn?.();
       if (view) content.appendChild(view);
-      [...nav.querySelectorAll('a')].forEach(a => a.classList.toggle('active', a.dataset.path === path));
+      allNavLinks.forEach(a => a.classList.toggle('active', a.dataset.path === path));
+      burgerMenu.classList.remove('is-open');
     }
   });
 }

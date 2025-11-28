@@ -176,7 +176,8 @@
       "Modal close control is a compact grey circle housing a bold × icon; maintain this treatment instead of reverting to text buttons",
       "Primary/secondary actions share unified button styles using .btn primary (filled blue) and .btn outline (white with blue border); these mirror the Save Assessment and Export as CSV treatments from the reference UI",
       "Text inputs and comment textareas use unified field tokens (7px radius, warm grey borders, white background, and a softer disabled state) so Comments and Talent Assessment question fields visually align",
-      "Checkboxes use a shared 20px square style with warm grey borders and a filled blue checked state, aligning Performance and Succession filters with the reference mock"
+      "Checkboxes use a shared 20px square style with warm grey borders and a filled blue checked state, aligning Performance and Succession filters with the reference mock",
+      "Base typography matches the reference paragraph style: Circular20Web, 16px size, 24px line-height, weight 500, color #544E4A; headings and chips keep their relative sizing/weight"
     ]
   },
   "tasks": [
