@@ -59,28 +59,32 @@ export function PerformanceEvaluation() {
   content.className = 'manager-evaluations__content';
   content.innerHTML = `
     <div class="manager-evaluations__plan">
-      <label>
-        <span>Select Performance Plan</span>
-        <div class="manager-evaluations__plan-input">
-          <input type="text" value="A Test Focal Plan - Nov 03 - Criteria Based - TP History Enabled" readonly />
-          <button type="button">🔍</button>
-        </div>
-      </label>
-      <label class="manager-evaluations__checkbox">
-        <input type="checkbox" />
-        <span>Include closed plans</span>
-      </label>
+      <div class="manager-evaluations__plan-left">
+        <label class="manager-evaluations__filter filter-field">
+          <span>Select Performance Plan</span>
+          <input class="input" type="text" value="FY 2026 Performance Plan" readonly />
+          <span class="filter-field__icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="currentColor" d="M11.502485,4 C15.0937084,4 18.0049701,6.90952883 18.0049701,10.4986145 C18.0049701,12.1375978 17.3978667,13.6348689 16.3961459,14.7780684 L19.4859068,18.2675042 C19.8675111,18.698423 19.8273258,19.3569189 19.3961504,19.7382961 C18.9957732,20.092432 18.3990519,20.0830985 18.010315,19.7349406 L17.9244825,19.6485931 L14.7877549,16.1080203 C13.8236763,16.6732 12.7009437,16.997229 11.502485,16.997229 C7.91126172,16.997229 5,14.0877002 5,10.4986145 C5,6.90952883 7.91126172,4 11.502485,4 Z M11.502485,6.08387877 C9.06284165,6.08387877 7.08511991,8.06042329 7.08511991,10.4986145 C7.08511991,12.9368058 9.06284165,14.9133503 11.502485,14.9133503 C13.9421284,14.9133503 15.9198502,12.9368058 15.9198502,10.4986145 C15.9198502,8.06042329 13.9421284,6.08387877 11.502485,6.08387877 Z"></path>
+            </svg>
+          </span>
+        </label>
+        <label class="manager-evaluations__checkbox">
+          <input type="checkbox" />
+          <span>Include closed plans</span>
+        </label>
+      </div>
     </div>
     <div class="manager-evaluations__plan-meta">
       <div>
-        <h2>A Test Focal Plan - Nov 03 - Criteria Based - TP History Enabled</h2>
+        <h2>FY 2026 Performance Plan</h2>
         <p>Required for submission</p>
         <div class="manager-evaluations__progress">
           <span style="width: 0%"></span>
         </div>
       </div>
       <div class="manager-evaluations__actions">
-        <button class="btn ghost">Save as Draft</button>
+        <button class="btn outline">Save as Draft</button>
         <button class="btn primary">Submit Evaluation</button>
       </div>
     </div>

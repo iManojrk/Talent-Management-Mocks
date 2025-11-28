@@ -1,4 +1,6 @@
 import { createRouter } from './router.js?v=20250205';
+import { CombinedPages } from './screens/combined-pages.js?v=20250215';
+import { TalentConfiguration } from './screens/talent-configuration.js?v=20250215';
 import { OrgChart } from './screens/orgchart.js?v=20250205';
 import { PerformanceEvaluation } from './screens/performance.js?v=20250205';
 import { CreatePerformancePlan } from './screens/performance-plan.js?v=20250205';
@@ -10,6 +12,8 @@ import { TeamSuccessionPlans } from './screens/team-succession-plans.js?v=202502
 import { SuccessionSummary } from './screens/succession-summary.js?v=20250205';
 
 const routes = {
+  '/combined': CombinedPages,
+  '/talent-configuration': TalentConfiguration,
   '/org': OrgChart,
   '/performance': PerformanceEvaluation,
   '/performance-plan': CreatePerformancePlan,
@@ -23,6 +27,19 @@ const routes = {
 
 const app = document.getElementById('app');
 
+const navItems = [
+  { path: '/combined', label: 'Talent Management' },
+  { path: '/talent-configuration', label: 'Talent Configuration' },
+  { path: '/org', label: 'Succession Org Chart' },
+  { path: '/talent-assessment-history', label: 'Talent Assessment' },
+  { path: '/cycle', label: 'Create Talent Planning Cycle (Current)' },
+  { path: '/talent-assessment-standard-questions', label: 'Talent Assessment Standard Questions' },
+  { path: '/cycle-proposed', label: 'Create Talent Planning Cycle (Proposed)' },
+  { path: '/team-succession-plans', label: 'Team Succession Summary' },
+  { path: '/performance', label: 'Performance Evaluation' },
+  { path: '/performance-plan', label: 'Create Performance Plan' },
+];
+
 function shell() {
   document.documentElement.removeAttribute('data-theme');
 
@@ -35,14 +52,8 @@ function shell() {
   brand.className = 'brand';
   brand.innerHTML = '<span class="dot"></span>Talent';
 
-  const sidebar = document.createElement('div');
-  sidebar.className = 'sidebar';
-  const nav = document.createElement('div');
-  nav.className = 'nav';
-
   const allNavLinks = [];
-
-  const link = (path, label) => {
+  const createLink = ({ path, label }) => {
     const a = document.createElement('a');
     a.href = `#${path}`;
     a.textContent = label;
@@ -50,24 +61,6 @@ function shell() {
     allNavLinks.push(a);
     return a;
   };
-
-  const groupedNav = document.createElement('div');
-  groupedNav.className = 'nav-group';
-  groupedNav.append(
-    link('/org','Succession Org Chart'),
-    link('/talent-assessment-history','Talent Assessment'),
-    link('/cycle','Create Talent Planning Cycle (Current)'),
-    link('/talent-assessment-standard-questions','Talent Assessment Standard Questions'),
-    link('/cycle-proposed','Create Talent Planning Cycle (Proposed)'),
-  );
-
-  nav.append(
-    groupedNav,
-    link('/team-succession-plans','Team Succession Summary'),
-    link('/performance','Performance Evaluation'),
-    link('/performance-plan','Create Performance Plan'),
-  );
-  sidebar.appendChild(nav);
 
   const headerActions = document.createElement('div');
   headerActions.className = 'header-actions';
@@ -83,31 +76,43 @@ function shell() {
   const burgerList = document.createElement('div');
   burgerList.className = 'header-burger-menu__list';
 
-  burgerList.append(
-    link('/org','Succession Org Chart'),
-    link('/talent-assessment-history','Talent Assessment'),
-    link('/cycle','Create Talent Planning Cycle (Current)'),
-    link('/talent-assessment-standard-questions','Talent Assessment Standard Questions'),
-    link('/cycle-proposed','Create Talent Planning Cycle (Proposed)'),
-    link('/team-succession-plans','Team Succession Summary'),
-    link('/performance','Performance Evaluation'),
-    link('/performance-plan','Create Performance Plan'),
-  );
+  navItems.forEach(item => burgerList.appendChild(createLink(item)));
 
   burgerMenu.appendChild(burgerList);
   headerActions.append(burger, burgerMenu);
 
-  header.append(brand, headerActions);
+  const headerSearch = document.createElement('div');
+  headerSearch.className = 'header-search';
+  const headerSearchText = document.createElement('span');
+  headerSearchText.textContent = 'Search, ask, or start a task...';
+  headerSearch.appendChild(headerSearchText);
+
+  header.append(brand, headerSearch, headerActions);
 
   const content = document.createElement('div');
   content.className = 'content';
 
-  layout.append(header, sidebar, content);
+  layout.append(header, content);
   app.innerHTML = '';
   app.appendChild(layout);
 
-  burger.addEventListener('click', () => {
+  const toggleBurgerMenu = (force) => {
+    if (force === false) {
+      burgerMenu.classList.remove('is-open');
+      return;
+    }
     burgerMenu.classList.toggle('is-open');
+  };
+
+  burger.addEventListener('click', (event) => {
+    event.stopPropagation();
+    toggleBurgerMenu();
+  });
+
+  document.addEventListener('click', (event) => {
+    if (!burgerMenu.contains(event.target) && event.target !== burger) {
+      burgerMenu.classList.remove('is-open');
+    }
   });
 
   createRouter({
@@ -117,7 +122,7 @@ function shell() {
       const view = fn?.();
       if (view) content.appendChild(view);
       allNavLinks.forEach(a => a.classList.toggle('active', a.dataset.path === path));
-      burgerMenu.classList.remove('is-open');
+      toggleBurgerMenu(false);
     }
   });
 }

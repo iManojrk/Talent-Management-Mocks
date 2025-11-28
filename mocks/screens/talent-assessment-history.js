@@ -184,9 +184,9 @@ export function TalentAssessmentHistory() {
   const intro = document.createElement('div');
   intro.className = 'talent-assessment-history__intro';
   intro.innerHTML = `
-    <div class="talent-assessment-history__intro-copy">
-      <p class="talent-assessment-history__eyebrow">Talent Assessment</p>
-      <h1>Talent reviews completed for your direct reports and any other employees you are eligible to assess</h1>
+    <div>
+      <h2 class="talent-assessment-history__heading">Talent Assessment</h2>
+      <p>Talent reviews completed for your direct reports and any other employees you are eligible to assess</p>
     </div>
     <label class="talent-assessment-history__cycle-select">
       <span>Cycle</span>

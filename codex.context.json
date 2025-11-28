@@ -82,6 +82,7 @@
         "Org chart reflects the current hierarchy: Jordan Reyes (CEO) with Maya Chen, Elias Romero, Priya Nair, and Connor Blake reporting to Jordan; Olivia Brooks, Amir Hassan, and Lena Ortiz report up through Elias",
         "Succession plan lives inside Elias Romero's node: three successor rows stay inline, use readiness color chips (green/yellow/red), and act as the only entry point to the Talent Card",
         "Org tiers keep VP-level nodes evenly spaced and now render Elias’s three successors on their own responsive row beneath his card so they stay grouped without inheriting the empty VP columns",
+        "Org chart canvas now sits on a recessed sand card (light tan background, white border, subtle inset shadow, generous interior padding); keep the toolbar/search row outside the framed area so the border only wraps the nodes",
       "Successor rows are activated via mouse click only (keyboard support intentionally removed for presentation fidelity), open the Talent Card modal, and expose placeholder action menu items",
       "Each org node now features a three-dot menu in the top-right corner exposing placeholder actions (Manage Successors, Download Succession Plan); selecting Manage Successors on Elias Romero opens the shared Manage Successors modal populated with his successor trio (Olivia Brooks, Amir Hassan, Lena Ortiz), and choosing Download Succession Plan shows a two-column PDF preview modal with Elias's header plus a Performance Rating (4.6/5 Outstanding with progress bar) and a Talent Assessment section that mirrors the history modal UI (question label + pill answers) locked to the left column. The right column stays a placeholder block indicating additional PDF content not represented in the mock; remaining sections through Talent Pool Nominations retain placeholder copy.",
       "Assign Learning menu action opens a dedicated modal showing the selected employee plus Competency vs Catalog search tabs with searchable cards; selecting a card drills into a course detail modal with placeholder Assign CTA",
@@ -90,7 +91,7 @@
         "Readiness chips now use the locked vocabulary Ready Now, 1 Year, 2 Years, and 3 Years with colors mapped Green=Ready Now, Amber=1 Year, Red=2/3 Years (talent assessment Q&A pills stay neutral regardless of these states)",
         "Styling is light theme only with custom org connectors, modal layout, and SVG trend visuals",
         "Org-chart connectors render as continuous SVG paths between parent and children to stay aligned at every viewport size",
-        "New toolbar row above the chart introduces a left-aligned search textbox plus a right-aligned \"View Team Summary\" link that routes to #/team-succession-plans; both are static with no filtering behavior.",
+        "New toolbar row above the chart introduces a left-aligned search textbox plus a right-aligned \"View Team Summary\" link that routes to #/team-succession-plans; both are static with no filtering behavior, and the search control must use the shared filter-field style with the built-in magnifying glass icon.",
         "Entire org chart now renders as a single three-tier grid (CEO, VPs, successors) so layout is consistent regardless of nested depth"
       ],
       "interactivity": "Match existing behavior: click successor rows to open the Talent Card modal, then click Latest/Trend buttons inside the modal to switch views; no keyboard handlers are wired."
@@ -130,17 +131,21 @@
       "mocks/components/Modal.js — modal backdrop + open/close API",
       "mocks/components/manage-successors.js — shared Manage Successors modal content reused across tabs",
       "mocks/components/plan-download-preview.js — shared Succession Plan PDF preview placeholder with Elias-focused talent card snippet",
-      "mocks/screens/orgchart.js — Succession Org Chart (primary mock and default route; add new files only with PO approval)",
-      "mocks/screens/performance.js — Performance Evaluation screen mirroring Manager Evaluations UI",
-      "mocks/screens/cycle.js — Create Talent Planning Cycle (Current tab)",
-      "mocks/screens/cycle-proposed.js — Create Talent Planning Cycle (Proposed tab with isolated styles)",
-      "mocks/screens/performance-plan.js — Create Performance Plan placeholder screen",
-      "mocks/screens/talent-assessment-history.js — Talent Assessment History tab replicates completed review layout (static content)",
-      "mocks/screens/talent-assessment-standard-questions.js — CTA-driven staging tab mirroring the client-first setup before revealing the Create Talent Planning Cycle (Proposed) questions layout",
-      "mocks/screens/team-succession-plans.js — Team Succession Summary grid rebuilt from the provided screenshot",
-      "mocks/screens/succession-summary.js — Succession Planning Summary tab with readiness/retention overview grid"
+      "mocks/screens/combined-pages.js — Talent Management template with tabbed header ready to host future embeds (Talent Planning active by default)",
+      "mocks/screens/talent-configuration.js — Talent Configuration placeholder template outlining upcoming configuration workstreams",
+      "mocks/screens/orgchart.js — Succession Org Chart template (primary mock and default route; add new files only with PO approval)",
+      "mocks/screens/performance.js — Performance Evaluation template mirroring Manager Evaluations UI",
+      "mocks/screens/cycle.js — Create Talent Planning Cycle (Current template)",
+      "mocks/screens/cycle-proposed.js — Create Talent Planning Cycle (Proposed template with isolated styles)",
+      "mocks/screens/performance-plan.js — Create Performance Plan placeholder template",
+      "mocks/screens/talent-assessment-history.js — Talent Assessment History template replicating completed review layout (static content)",
+      "mocks/screens/talent-assessment-standard-questions.js — CTA-driven staging template mirroring the client-first setup before revealing the Create Talent Planning Cycle (Proposed) questions layout",
+      "mocks/screens/team-succession-plans.js — Team Succession Summary template rebuilt from the provided screenshot",
+      "mocks/screens/succession-summary.js — Succession Planning Summary template with readiness/retention overview grid"
     ],
     "navOrder": [
+      "Talent Management (#/combined)",
+      "Talent Configuration (#/talent-configuration)",
       "Succession Org Chart (#/org)",
       "Talent Assessment (#/talent-assessment-history)",
       "Create Talent Planning Cycle (Current) (#/cycle)",
@@ -151,7 +156,7 @@
       "Performance Evaluation (#/performance)",
       "Create Performance Plan (#/performance-plan)"
     ],
-    "navGrouping": "The first five tabs share a bordered nav-group container in the sidebar to visually connect related planning/assessment flows; Team Succession Summary and the remaining tabs render as standalone links (Succession Summary is currently hidden from the sidebar).",
+    "navGrouping": "Navigation is now surfaced via the header burger menu; the previous left sidebar nav-group has been removed, but keep the item order consistent so users can find each mock quickly.",
     "addingScreens": [
       "Requires explicit Product Owner approval",
       "Default experience must remain the Succession Org Chart",
@@ -177,7 +182,13 @@
       "Primary/secondary actions share unified button styles using .btn primary (filled blue) and .btn outline (white with blue border); these mirror the Save Assessment and Export as CSV treatments from the reference UI",
       "Text inputs and comment textareas use unified field tokens (7px radius, warm grey borders, white background, and a softer disabled state) so Comments and Talent Assessment question fields visually align",
       "Checkboxes use a shared 20px square style with warm grey borders and a filled blue checked state, aligning Performance and Succession filters with the reference mock",
-      "Base typography matches the reference paragraph style: Circular20Web, 16px size, 24px line-height, weight 500, color #544E4A; headings and chips keep their relative sizing/weight"
+      "Filters now use the .filter-field wrapper (shared input + right-aligned magnifying glass icon); reuse this treatment anywhere a search/filter pill is required",
+      "Base typography matches the reference paragraph style: Circular20Web, 16px size, 24px line-height, weight 500, color #544E4A; headings and chips keep their relative sizing/weight",
+      "Primary navigation lives in the header burger menu; no left sidebar or tab bar is rendered in the shell",
+      "Talent Management template now includes interactive tab buttons; each tab exposes a .combined-pages__panel-body[data-slot] container for future embeds (currently only Talent Planning is active)",
+      "Within Talent Planning, a secondary tab bar powers nested routes via .talent-planning__tab-panel-body[data-secondary-slot], the Company Succession tab embeds the shared Org Chart, and the Assessments tab now loads the full Talent Assessment template (TalentAssessmentHistory) while the other secondary tabs remain placeholders",
+      "Talent Configuration route currently renders a blank canvas placeholder until the PO supplies detailed requirements",
+      "When the PO requests common components (text boxes, titles, filters, buttons), default to the existing unified tokens/classes without introducing ad-hoc variants"
     ]
   },
   "tasks": [
