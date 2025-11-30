@@ -8,9 +8,9 @@ export function CreateTalentPlanningCycleProposed() {
       <div class="cycle-proposed__subtitle">Assessment Settings</div>
       </div>
       <div class="cycle-proposed__actions">
-        <button class="cycle-proposed__btn cycle-proposed__btn--ghost">Cancel</button>
-        <button class="cycle-proposed__btn cycle-proposed__btn--outline">Back</button>
-        <button class="cycle-proposed__btn cycle-proposed__btn--primary">Next</button>
+        <button class="btn outline">Cancel</button>
+        <button class="btn outline">Back</button>
+        <button class="btn primary">Next</button>
       </div>
     </div>
     <div class="cycle-proposed__body">

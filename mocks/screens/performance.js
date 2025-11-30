@@ -60,7 +60,7 @@ export function PerformanceEvaluation() {
   content.innerHTML = `
     <div class="manager-evaluations__plan">
       <div class="manager-evaluations__plan-left">
-        <label class="manager-evaluations__filter filter-field">
+        <label class="manager-evaluations__filter filter-field filter-wide">
           <span>Select Performance Plan</span>
           <input class="input" type="text" value="FY 2026 Performance Plan" readonly />
           <span class="filter-field__icon">
@@ -78,10 +78,6 @@ export function PerformanceEvaluation() {
     <div class="manager-evaluations__plan-meta">
       <div>
         <h2>FY 2026 Performance Plan</h2>
-        <p>Required for submission</p>
-        <div class="manager-evaluations__progress">
-          <span style="width: 0%"></span>
-        </div>
       </div>
       <div class="manager-evaluations__actions">
         <button class="btn outline">Save as Draft</button>

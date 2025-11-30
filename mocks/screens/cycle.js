@@ -8,7 +8,7 @@ export function CreateTalentPlanningCycle() {
       <div class="cycle-subtitle">Assessment Settings</div>
       </div>
       <div class="cycle-actions">
-        <button class="btn ghost">Cancel</button>
+        <button class="btn outline">Cancel</button>
         <button class="btn outline">Back</button>
         <button class="btn primary">Next</button>
       </div>

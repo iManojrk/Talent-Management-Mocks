@@ -186,9 +186,15 @@ p {
   display: block;
 }
 .filter-field .input {
-  width: 150%;
-  max-width: 660px;
+  width: 100%;
   padding-right: 52px;
+}
+.filter-field.filter-wide {
+  width: 400px;
+  max-width: 100%;
+}
+.filter-field.filter-wide .input {
+  width: 100%;
 }
 .filter-field input::placeholder {
   color: #8b837c;
@@ -557,7 +563,7 @@ input[type="checkbox"]:checked::after {
   align-items: center;
   justify-content: center;
   border-radius: var(--button-radius);
-  border: 2px solid transparent;
+  border: 2px solid var(--button-secondary-border);
   background: var(--button-secondary-bg);
   color: var(--button-secondary-text);
   padding: 7px 14px;
@@ -566,14 +572,8 @@ input[type="checkbox"]:checked::after {
   cursor: pointer;
 }
 .btn:hover { background: rgba(50, 79, 165, 0.04); }
-.btn.ghost {
-  background: transparent;
-  border-color: transparent;
-  color: var(--muted);
-}
 .btn.outline {
   background: var(--button-secondary-bg);
-  border-color: var(--button-secondary-border);
   color: var(--button-secondary-text);
 }
 .btn.primary {
@@ -597,6 +597,13 @@ input[type="checkbox"]:checked::after {
 .cycle-steps li.active span { border-color: var(--primary); }
 .cycle-content { display: grid; gap: 24px; }
 .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 24px; display: grid; gap: 18px; }
+.cycle-content > .panel:first-of-type,
+.cycle-content > .panel.question-layout {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+}
 .muted { color: var(--muted); font-size: 14px; }
 .check-group { display: grid; gap: 14px; }
 .check-row { display: flex; gap: 12px; align-items: flex-start; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
@@ -757,6 +764,7 @@ input[type="checkbox"]:checked::after {
   display: flex;
   gap: 24px;
   align-items: flex-end;
+  flex-wrap: wrap;
 }
 .manager-evaluations__plan label { display: grid; gap: 6px; font-weight: 600; color: var(--muted); }
 .manager-evaluations__checkbox {
@@ -891,12 +899,6 @@ input[type="checkbox"]:checked::after {
 .cycle-proposed__header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
 .cycle-proposed__subtitle { color: var(--muted); font-weight: 500; }
 .cycle-proposed__actions { display: flex; gap: 8px; }
-.cycle-proposed__btn { border-radius: 999px; border: 2px solid var(--border); background: var(--panel); color: var(--text); padding: 8px 16px; font-weight: 600; cursor: pointer; font-size: 14px; }
-.cycle-proposed__btn:hover { background: var(--subtle); }
-.cycle-proposed__btn--ghost { color: var(--muted); }
-.cycle-proposed__btn--outline { border-color: var(--border); }
-.cycle-proposed__btn--primary { background: var(--primary); border-color: var(--primary); color: #fff; }
-.cycle-proposed__btn--primary:hover { background: #2563eb; border-color: #2563eb; }
 .cycle-proposed__body { display: grid; grid-template-columns: 220px 1fr; gap: 24px; align-items: flex-start; }
 .cycle-proposed__nav { position: relative; padding: 24px 16px 24px 36px; border: 1px solid var(--border); border-radius: 16px; background: var(--panel); }
 .cycle-proposed__nav::before { content: ""; position: absolute; left: 16px; top: 20px; bottom: 20px; width: 4px; border-radius: 999px; background: linear-gradient(180deg, #3b82f6, #a855f7); }
@@ -909,6 +911,13 @@ input[type="checkbox"]:checked::after {
 .cycle-proposed__steps li.active span { border-color: var(--primary); }
 .cycle-proposed__content { display: grid; gap: 24px; }
 .cycle-proposed__panel { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 24px; display: grid; gap: 18px; }
+.cycle-proposed__content > .cycle-proposed__panel:first-of-type,
+.cycle-proposed__content > .cycle-proposed__panel.cycle-proposed__question-layout {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+}
 .cycle-proposed__muted { color: var(--muted); font-size: 14px; }
 .cycle-proposed__check-group { display: grid; gap: 14px; }
 .cycle-proposed__check-row { display: flex; gap: 12px; align-items: flex-start; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
@@ -1119,22 +1128,31 @@ input[type="checkbox"]:checked::after {
   max-width: 1440px;
   margin: 0 auto;
 }
-.talent-assessment-standard__intro { background: var(--panel); border: 1px solid var(--border); border-radius: 20px; padding: 24px; display: grid; gap: 6px; }
+.talent-assessment-standard__intro { background: transparent; border: none; border-radius: 0; padding: 0; display: grid; gap: 6px; }
 .talent-assessment-standard__eyebrow { margin: 0; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); font-size: 12px; }
 .talent-assessment-standard__intro h1 { margin: 0; }
-.talent-assessment-standard__setup { background: var(--panel); border: 1px solid var(--border); border-radius: 20px; padding: 24px; display: grid; gap: 12px; }
-.talent-assessment-standard__setup h2 { margin: 0; }
+.talent-assessment-standard__setup { background: transparent; border: none; border-radius: 0; padding: 0; display: grid; gap: 12px; }
+.talent-assessment-standard__setup h2 { margin: 12px 0 0; font-size: 18px; line-height: 1.3; }
 .talent-assessment-standard__setup p { margin: 0; color: var(--muted); }
 .talent-assessment-standard__setup-btn {
   justify-self: flex-start;
 }
 .talent-assessment-standard__questions { display: none; }
 .talent-assessment-standard__questions.is-visible { display: block; }
-.talent-assessment-standard__questions .cycle-proposed__panel { width: 100%; margin: 0; }
+.talent-assessment-standard__questions .cycle-proposed__panel {
+  width: 55%;
+  margin: 0;
+  background: transparent;
+  border: none;
+  padding: 0;
+  display: grid;
+  justify-content: flex-start;
+  grid-template-columns: minmax(0, 1fr);
+}
 .talent-assessment-standard__question-description { margin: 0 0 20px; color: var(--muted); font-size: 14px; line-height: 1.5; }
 .talent-assessment-standard__questions .cycle-proposed__options { width: 55%; }
 .talent-assessment-standard__questions .cycle-proposed__field--question { width: 55%; }
-.talent-assessment-standard__questions .cycle-proposed__field--description { width: 100%; }
+.talent-assessment-standard__questions .cycle-proposed__field--description { width: 55%; }
 .talent-assessment-standard__questions .cycle-proposed__question-card--pending { border-style: dashed; cursor: pointer; background: var(--panel); }
 .talent-assessment-standard__questions .cycle-proposed__question-card--pending .cycle-proposed__input { background: var(--subtle); border-color: var(--border); color: var(--muted); }
 .talent-assessment-standard__pending-hint { margin: 0; font-size: 13px; color: var(--muted); font-style: italic; }
@@ -1298,20 +1316,12 @@ input[type="checkbox"]:checked::after {
 .combined-pages__panel { display: none; }
 .combined-pages__panel.is-active { display: block; }
 .combined-pages__panel-body { min-height: 40px; }
-<<<<<<< ours
-<<<<<<< ours
-=======
 .combined-pages__panel-body[data-slot="talent-planning"] {
   background: #f7f6f4;
   border-radius: 12px;
   margin: 8px;
   padding: 12px;
 }
->>>>>>> theirs
-
-=======
->>>>>>> theirs
-
 .talent-planning { padding-top: 24px; }
 .talent-planning__title {
   font-size: 42px;

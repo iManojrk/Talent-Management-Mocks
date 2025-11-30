@@ -52,7 +52,7 @@
       "Successor rows and Assign Learning cards are mouse-click only; do not restore keyboard/focus handling unless the PO reverses this directive",
       "Capture any new PO-provided dos/don'ts, copy tweaks, or style-guide adjustments in this file immediately so the next agent inherits the directives",
       "When the PO says they will supply content later, leave the UI regions blank and avoid inserting placeholder text that references pending copy",
-      "PO may have a keyboard issue causing stray 'e' letters or transposed characters; interpret instructions accordingly without overcorrecting"
+      "PO may have a keyboard issue causing stray 'e' letters, missing or transposed characters; interpret instructions accordingly without overcorrecting"
     ],
     "quickStart": [
       "Primary machine-readable source is this file",
