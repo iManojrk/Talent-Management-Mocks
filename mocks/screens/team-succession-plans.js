@@ -164,9 +164,25 @@ export function TeamSuccessionPlans() {
 
   const header = document.createElement('div');
   header.className = 'succession-plans__header';
-  header.innerHTML = `
-    <h1>Team Succession Summary</h1>
+  const headerMain = document.createElement('div');
+  headerMain.className = 'succession-plans__header-main';
+
+  const backButton = document.createElement('button');
+  backButton.type = 'button';
+  backButton.className = 'succession-plans__back-btn';
+  backButton.innerHTML = `
+    <span class="succession-plans__back-icon" aria-hidden="true">←</span>
+    <span>Company Succession</span>
   `;
+  backButton.addEventListener('click', () => {
+    window.location.hash = '#/talent-management';
+  });
+
+  const heading = document.createElement('h1');
+  heading.textContent = 'Team Succession Summary';
+
+  headerMain.append(backButton, heading);
+  header.appendChild(headerMain);
 
   const filters = document.createElement('div');
   filters.className = 'succession-plans__filters';

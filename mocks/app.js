@@ -12,7 +12,7 @@ import { TeamSuccessionPlans } from './screens/team-succession-plans.js?v=202502
 import { SuccessionSummary } from './screens/succession-summary.js?v=20250205';
 
 const routes = {
-  '/combined': CombinedPages,
+  '/talent-management': CombinedPages,
   '/talent-configuration': TalentConfiguration,
   '/org': OrgChart,
   '/performance': PerformanceEvaluation,
@@ -28,7 +28,7 @@ const routes = {
 const app = document.getElementById('app');
 
 const navItems = [
-  { path: '/combined', label: 'Talent Management' },
+  { path: '/talent-management', label: 'Talent Management' },
   { path: '/talent-configuration', label: 'Talent Configuration' },
   { path: '/org', label: 'Succession Org Chart' },
   { path: '/talent-assessment-history', label: 'Talent Assessment' },

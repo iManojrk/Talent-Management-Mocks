@@ -40,6 +40,14 @@ body {
   color: var(--text);
   letter-spacing: normal;
 }
+h1 {
+  font-size: 42px;
+  line-height: 48px;
+  font-weight: 800;
+  letter-spacing: -1.4px;
+  color: #262321;
+  margin: 0 0 12px;
+}
 p {
   font-family: "Circular20Web", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
   font-size: inherit;
@@ -1176,8 +1184,32 @@ input[type="checkbox"]:checked::after {
   width: 100%;
 }
 .succession-plans__header { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; padding: 0 0 12px; border: none; border-radius: 0; background: transparent; }
+.succession-plans__header-main { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+.succession-plans__back-btn {
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  color: var(--primary);
+  font-weight: 400;
+  font-size: 14px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  box-shadow: none;
+  text-decoration: none;
+}
+.succession-plans__back-btn:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+.succession-plans__back-icon {
+  font-size: 16px;
+  line-height: 1;
+}
 .succession-plans__eyebrow { margin: 0; color: var(--primary); font-weight: 600; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; }
-.succession-plans__header h1 { margin: 6px 0; font-size: 22px; }
+.succession-plans__header h1 { margin: 0; }
 .succession-plans__lead { margin: 0; color: var(--muted); max-width: 520px; line-height: 1.4; }
 .succession-plans__header-actions { display: flex; gap: 8px; align-items: flex-start; }
 .succession-plans__filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; width: 100%; margin: 0 0 12px; }
@@ -1317,20 +1349,10 @@ input[type="checkbox"]:checked::after {
 .combined-pages__panel.is-active { display: block; }
 .combined-pages__panel-body { min-height: 40px; }
 .combined-pages__panel-body[data-slot="talent-planning"] {
-  background: #f7f6f4;
-  border-radius: 12px;
   margin: 8px;
   padding: 12px;
 }
 .talent-planning { padding-top: 24px; }
-.talent-planning__title {
-  font-size: 42px;
-  line-height: 48px;
-  font-weight: 800;
-  letter-spacing: -1.4px;
-  color: #262321;
-  margin: 0 0 12px;
-}
 .talent-planning__subtitle {
   margin: 0;
 }

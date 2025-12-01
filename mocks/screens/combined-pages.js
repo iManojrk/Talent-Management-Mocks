@@ -70,7 +70,7 @@ export function CombinedPages() {
     const intro = document.createElement('div');
     intro.className = 'talent-planning';
     intro.innerHTML = `
-      <h1 class="talent-planning__title">Talent Planning</h1>
+      <h1>Talent Planning</h1>
       <p class="talent-planning__subtitle">Create new plans, contribute to existing ones and complete your talent assessments</p>
     `;
     const secondaryTabs = document.createElement('div');
@@ -116,6 +116,11 @@ export function CombinedPages() {
     if (companyPanelBody && typeof OrgChart === 'function') {
       const orgView = OrgChart();
       if (orgView) companyPanelBody.appendChild(orgView);
+    }
+    const teamPanelBody = secondaryPanels.querySelector('[data-secondary-slot="team"]');
+    if (teamPanelBody && typeof OrgChart === 'function') {
+      const teamOrgView = OrgChart();
+      if (teamOrgView) teamPanelBody.appendChild(teamOrgView);
     }
     const assessmentsPanelBody = secondaryPanels.querySelector('[data-secondary-slot="assessments"]');
     if (assessmentsPanelBody && typeof TalentAssessmentHistory === 'function') {

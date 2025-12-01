@@ -106,6 +106,7 @@
     ],
     "teamSuccessionPlansNotes": [
       "Page title stays \"Team Succession Summary\" without recreating the legacy blue gradient bar; header now omits the prior Succession Planning eyebrow copy and no longer shows download/print icon buttons.",
+      "Header shows a simple Company Succession back link that routes to #/talent-management so users can return to the TM template in one click.",
       "A static filter row sits under the title with an Associate text field, a Manager dropdown-style control, and the Show Indirect Reports checkbox. Clicking the Manager control toggles between blank (default dataset) and \"Betty Liu\" (which filters to Maria Cardoza/Robert Hsing when direct-only, and adds Henry Lynch when Show Indirect Reports is active); the checkbox still toggles between the first three rows (direct reports) and the full dataset when no manager filter is applied.",
       "Toolbar strip above the grid has been removed; table now starts immediately without items count or descriptor callouts.",
       "Table columns now run left to right: Name, Potential (pill), Performance (pill), Risk of Loss (colored chips), Impact of Loss (colored chips), Performance Rating (two-line label + numeric score), Successors, Ready Now Successors (forced line break), Last Updated, and a trailing three-dot menu button; Position and Top Candidates columns were removed per PO request.",
@@ -131,9 +132,10 @@
       "mocks/components/Modal.js — modal backdrop + open/close API",
       "mocks/components/manage-successors.js — shared Manage Successors modal content reused across tabs",
       "mocks/components/plan-download-preview.js — shared Succession Plan PDF preview placeholder with Elias-focused talent card snippet",
-      "mocks/screens/combined-pages.js — Talent Management template with tabbed header ready to host future embeds (Talent Planning active by default)",
+      "style-guide.json — machine-readable style guide capturing unified palette, typography, and component tokens",
+      "mocks/screens/combined-pages.js — Talent Management template with tabbed header ready to host future embeds (Talent Planning active by default and now the default landing route)",
       "mocks/screens/talent-configuration.js — Talent Configuration placeholder template outlining upcoming configuration workstreams",
-      "mocks/screens/orgchart.js — Succession Org Chart template (primary mock and default route; add new files only with PO approval)",
+      "mocks/screens/orgchart.js — Succession Org Chart template (primary succession mock reachable via #/org; add new files only with PO approval)",
       "mocks/screens/performance.js — Performance Evaluation template mirroring Manager Evaluations UI",
       "mocks/screens/cycle.js — Create Talent Planning Cycle (Current template)",
       "mocks/screens/cycle-proposed.js — Create Talent Planning Cycle (Proposed template with isolated styles)",
@@ -144,7 +146,7 @@
       "mocks/screens/succession-summary.js — Succession Planning Summary template with readiness/retention overview grid"
     ],
     "navOrder": [
-      "Talent Management (#/combined)",
+      "Talent Management (#/talent-management)",
       "Talent Configuration (#/talent-configuration)",
       "Succession Org Chart (#/org)",
       "Talent Assessment (#/talent-assessment-history)",
@@ -159,7 +161,7 @@
     "navGrouping": "Navigation is now surfaced via the header burger menu; the previous left sidebar nav-group has been removed, but keep the item order consistent so users can find each mock quickly.",
     "addingScreens": [
       "Requires explicit Product Owner approval",
-      "Default experience must remain the Succession Org Chart",
+      "Default experience now lands on the Talent Management template (#/talent-management) while the Succession Org Chart stays available at #/org",
       "If approved, add mocks/screens/<name>.js, register it in mocks/app.js, and document the route here"
     ],
     "environment": [
@@ -186,7 +188,7 @@
       "Base typography matches the reference paragraph style: Circular20Web, 16px size, 24px line-height, weight 500, color #544E4A; headings and chips keep their relative sizing/weight",
       "Primary navigation lives in the header burger menu; no left sidebar or tab bar is rendered in the shell",
       "Talent Management template now includes interactive tab buttons; each tab exposes a .combined-pages__panel-body[data-slot] container for future embeds (currently only Talent Planning is active)",
-      "Within Talent Planning, a secondary tab bar powers nested routes via .talent-planning__tab-panel-body[data-secondary-slot], the Company Succession tab embeds the shared Org Chart, and the Assessments tab now loads the full Talent Assessment template (TalentAssessmentHistory) while the other secondary tabs remain placeholders",
+      "Within Talent Planning, a secondary tab bar powers nested routes via .talent-planning__tab-panel-body[data-secondary-slot]; both Company Succession and Team Succession embed the shared Org Chart (SOC template), Assessments loads the full Talent Assessment view, and the remaining tabs stay placeholders",
       "Talent Configuration route currently renders a blank canvas placeholder until the PO supplies detailed requirements",
       "When the PO requests common components (text boxes, titles, filters, buttons), default to the existing unified tokens/classes without introducing ad-hoc variants"
     ]
@@ -204,7 +206,7 @@
       "id": "succession-orgchart",
       "title": "Maintain Succession Planning mock",
       "acceptanceCriteria": [
-        "Route #/org remains the default and loads the org chart shell",
+        "Route #/talent-management now loads the Talent Management template by default while #/org continues to load the org chart shell",
         "VP, Fleet Operations branch exposes successor list rows with readiness chips and context menu",
         "Assign Learning modal provides search tabs (Competency / Catalog) with clickable cards that open a follow-up course modal and inert Assign button",
         "Talent Card modal surfaces pool nominations, performance/potential nine-box, performance rating metric, and career info cards",

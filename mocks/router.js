@@ -1,7 +1,8 @@
 export function createRouter({ routes, onChange }) {
+  const defaultPath = '/talent-management';
   const findRoute = (hash) => {
-    const path = hash.replace(/^#/, '') || '/org';
-    return routes[path] ? path : '/org';
+    const path = hash.replace(/^#/, '') || defaultPath;
+    return routes[path] ? path : defaultPath;
   };
 
   let current = findRoute(location.hash);

@@ -1,0 +1,163 @@
+{
+  "styleGuide": {
+    "version": "2025.02",
+    "foundation": {
+      "palette": {
+        "background": "#f7f8fb",
+        "surface": "#ffffff",
+        "subtleSurface": "#f0f2f8",
+        "text": "#544e4a",
+        "mutedText": "#5b6473",
+        "primary": "#3b82f6",
+        "accent": "#16a34a",
+        "danger": "#dc2626",
+        "border": "#e5e7eb"
+      },
+      "typography": {
+        "fontFamily": "\"Circular20Web\", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, \"Apple Color Emoji\", \"Segoe UI Emoji\"",
+        "baseSize": "16px",
+        "baseLineHeight": "24px",
+        "baseWeight": 500,
+        "bodyColor": "#544e4a",
+        "headings": {
+          "h1": {
+            "size": "42px",
+            "lineHeight": "48px",
+            "weight": 800,
+            "letterSpacing": "-1.4px",
+            "color": "#262321",
+            "usage": "Primary page titles (e.g., Talent Planning hero) applied to all <h1> elements"
+          },
+          "section": { "size": "22px", "lineHeight": "28px", "weight": 700 }
+        }
+      },
+      "spacing": {
+        "pagePadding": "16px",
+        "panelGap": "18px",
+        "panelPadding": "24px"
+      }
+    },
+    "components": {
+      "buttons": {
+        "borderRadius": "7px",
+        "primary": {
+          "background": "#476bc3",
+          "border": "#476bc3",
+          "text": "#ffffff"
+        },
+        "secondary": {
+          "background": "#ffffff",
+          "border": "#324fa5",
+          "text": "#324fa5"
+        },
+        "link": {
+          "color": "#3b82f6",
+          "hoverColor": "#1d4ed8",
+          "decoration": "underline on hover"
+        }
+      },
+      "inputs": {
+        "borderRadius": "7px",
+        "border": "#938c85",
+        "background": "#ffffff",
+        "textColor": "#262321",
+        "placeholderColor": "#8b837c",
+        "disabled": {
+          "background": "#f2f0ed",
+          "border": "#cdc7c2",
+          "text": "#938c85"
+        }
+      },
+      "checkboxes": {
+        "size": "20px",
+        "border": "#b2aba5",
+        "checkedBackground": "#3b82f6",
+        "checkedBorder": "#3b82f6"
+      },
+      "filterField": {
+        "wrapperClass": ".filter-field",
+        "iconPadding": "52px total, icon aligned right",
+        "searchIcon": "built-in magnifying glass",
+        "usage": "Use for all search/filter controls including Talent Planning toolbar",
+        "layering": "Apply filter-field treatments on top of the base input styles so every filter inherits input tokens plus the wrapper/prefix"
+      },
+      "tabs": {
+        "primaryTabs": {
+          "containerClass": ".combined-pages__tabs",
+          "indicator": "4px blue pill under active tab",
+          "inactiveColor": "#726c66",
+          "activeColor": "#262321"
+        },
+        "secondaryTabs": {
+          "containerClass": ".talent-planning__tab-list",
+          "indicator": "4px bar positioned -6px below button"
+        }
+      },
+      "cards": {
+        "panel": {
+          "background": "#ffffff",
+          "border": "1px solid #e5e7eb",
+          "borderRadius": "16px",
+          "shadow": "0 6px 18px rgba(15, 23, 42, 0.08)"
+        },
+        "tableCard": {
+          "background": "#ffffff",
+          "border": "1px solid #e5e7eb",
+          "borderRadius": "10px",
+          "overflow": "hidden"
+        }
+      },
+      "modals": {
+        "backdrop": "rgba(0,0,0,0.5)",
+        "surface": "#ffffff",
+        "borderRadius": "12px (Manage Successors modal uses 28px)",
+        "closeButton": {
+          "shape": "circle",
+          "size": "26px",
+          "background": "#e5e7eb",
+          "icon": "bold ×"
+        }
+      },
+      "chips": {
+        "base": {
+          "borderRadius": "999px",
+          "fontSize": "12px",
+          "border": "1px solid #e5e7eb"
+        },
+        "readiness": {
+          "readyNow": "rgba(126,231,135,0.25)",
+          "oneYear": "rgba(255,211,99,0.25)",
+          "twoPlusYears": "rgba(255,140,148,0.25)"
+        },
+        "risk": {
+          "low": { "background": "#dcfce7", "text": "#166534" },
+          "medium": { "background": "#fef3c7", "text": "#92400e" },
+          "high": { "background": "#fee2e2", "text": "#b91c1c" }
+        }
+      }
+    },
+    "layout": {
+      "content": {
+        "maxWidth": "1440px",
+        "centered": true,
+        "gutters": "16px"
+      },
+      "talentManagement": {
+        "panelPadding": "12px",
+        "background": "transparent",
+        "tabs": "Primary tabs across the page top with sticky header"
+      },
+      "teamSuccessionSummary": {
+        "header": {
+          "gap": "24px",
+          "backLinkPlacement": "always above the title"
+        },
+        "table": {
+          "columns": ["Name", "Potential", "Performance", "Risk of Loss", "Impact of Loss", "Performance Rating", "Successors", "Ready Now Successors", "Last Updated", "Actions"],
+          "rowHover": "rgba(122,162,247,0.08)",
+          "bodyFontSize": "14px"
+        }
+      }
+    }
+  }
+}
