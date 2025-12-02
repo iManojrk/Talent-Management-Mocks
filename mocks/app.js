@@ -79,7 +79,52 @@ function shell() {
   const burgerList = document.createElement('div');
   burgerList.className = 'header-burger-menu__list';
 
-  navItems.forEach(item => burgerList.appendChild(createLink(item)));
+  const othersPaths = new Set([
+    '/org',
+    '/talent-assessment-standard-questions',
+    '/talent-assessment-history',
+    '/team-succession-plans',
+    '/performance',
+    '/touchpoints',
+  ]);
+  const othersLinks = [];
+
+  navItems.forEach(item => {
+    const link = createLink(item);
+    if (othersPaths.has(item.path)) {
+      othersLinks.push(link);
+    } else {
+      burgerList.appendChild(link);
+    }
+  });
+
+  let othersGroupRef = null;
+  if (othersLinks.length) {
+    const othersGroup = document.createElement('div');
+    othersGroup.className = 'header-burger-menu__others';
+
+    const othersToggle = document.createElement('button');
+    othersToggle.type = 'button';
+    othersToggle.className = 'header-burger-menu__others-toggle';
+    othersToggle.innerHTML = '<span>Others</span><span class="header-burger-menu__chevron" aria-hidden="true">▾</span>';
+
+    const othersList = document.createElement('div');
+    othersList.className = 'header-burger-menu__others-list';
+    othersLinks.forEach(link => othersList.appendChild(link));
+
+    const closeOthers = () => othersGroup.classList.remove('is-open');
+
+    othersToggle.addEventListener('click', event => {
+      event.stopPropagation();
+      othersGroup.classList.toggle('is-open');
+    });
+    othersGroup.addEventListener('mouseenter', () => othersGroup.classList.add('is-open'));
+    othersGroup.addEventListener('mouseleave', closeOthers);
+
+    othersGroup.append(othersToggle, othersList);
+    burgerList.appendChild(othersGroup);
+    othersGroupRef = { close: closeOthers };
+  }
 
   burgerMenu.appendChild(burgerList);
   headerActions.append(burger, burgerMenu);
@@ -102,6 +147,7 @@ function shell() {
   const toggleBurgerMenu = (force) => {
     if (force === false) {
       burgerMenu.classList.remove('is-open');
+      othersGroupRef?.close();
       return;
     }
     burgerMenu.classList.toggle('is-open');

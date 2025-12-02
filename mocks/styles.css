@@ -168,6 +168,43 @@ p {
   background: #fff;
   border-color: rgba(59,130,246,0.7);
 }
+.header-burger-menu__others {
+  margin-top: 8px;
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+  display: grid;
+  gap: 6px;
+}
+.header-burger-menu__others-toggle {
+  border: none;
+  background: transparent;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--text);
+}
+.header-burger-menu__others-toggle:hover {
+  background: var(--subtle);
+  color: var(--primary);
+}
+.header-burger-menu__chevron {
+  font-size: 12px;
+}
+.header-burger-menu__others-list {
+  display: none;
+  padding-left: 10px;
+  border-left: 1px dashed var(--border);
+  margin-left: 6px;
+  gap: 6px;
+}
+.header-burger-menu__others.is-open .header-burger-menu__others-list {
+  display: grid;
+}
 
 .actions { display: flex; align-items: center; gap: 8px; }
 .search { background: var(--subtle); border: 1px solid var(--border); color: var(--text); padding: 6px 10px; border-radius: 8px; min-width: 240px; }
@@ -611,6 +648,12 @@ input[type="checkbox"]:checked::after {
   background: #3c5fb4;
   border-color: #3c5fb4;
 }
+.btn:disabled,
+.btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
 .cycle-body { display: grid; grid-template-columns: 220px 1fr; gap: 24px; align-items: flex-start; }
 .cycle-nav { position: relative; padding: 24px 16px 24px 36px; border: 1px solid var(--border); border-radius: 16px; background: var(--panel); }
 .cycle-nav::before { content: ""; position: absolute; left: 16px; top: 20px; bottom: 20px; width: 4px; border-radius: 999px; background: linear-gradient(180deg, #3b82f6, #a855f7); }
@@ -956,6 +999,15 @@ input[type="checkbox"]:checked::after {
 .cycle-proposed__question-layout { display: grid; gap: 24px; align-items: stretch; }
 .cycle-proposed__field { display: grid; gap: 6px; margin-bottom: 12px; }
 .cycle-proposed__field span { font-weight: 600; }
+.cycle-proposed__field--question span,
+.cycle-proposed__field--description span,
+.cycle-proposed__field--static span,
+.cycle-proposed__field--options span {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 12px;
+  color: var(--muted);
+}
 .cycle-proposed__field small { color: var(--muted); font-size: 12px; }
 .cycle-proposed__input {
   background: var(--field-bg);
@@ -978,10 +1030,45 @@ input[type="checkbox"]:checked::after {
 .cycle-proposed__toggle--disabled.is-on span { transform: translateX(20px); background: #f3f4f6; }
 .cycle-proposed__toggle-field.is-hidden { display: none; }
 .cycle-proposed__options { display: grid; gap: 10px; }
+.cycle-proposed__options-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  font-weight: 600;
+  flex-basis: 100%;
+}
+.cycle-proposed__field--static .cycle-proposed__static-value {
+  margin: 6px 0 0;
+  font-weight: 600;
+  color: var(--text);
+  text-transform: none;
+  letter-spacing: normal;
+  font-size: 16px;
+  line-height: 1.4;
+}
+.cycle-proposed__options--static {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding-top: 8px;
+}
+.cycle-proposed__field--options .cycle-proposed__options--static {
+  padding-top: 4px;
+}
+.cycle-proposed__option-pill {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-weight: 600;
+  background: #fff;
+  color: var(--text);
+}
 .cycle-proposed__option-row { display: flex; align-items: center; gap: 10px; }
 .cycle-proposed__option-row .cycle-proposed__input { flex: 1; }
-.cycle-proposed__icon-btn { border: none; background: transparent; cursor: pointer; font-size: 16px; }
-.cycle-proposed__icon-btn:hover { opacity: 0.7; }
+.cycle-proposed__icon-btn { border: none; background: transparent; cursor: pointer; font-size: 16px; color: rgba(57, 53, 51, 1); }
+.cycle-proposed__icon-btn svg { width: 16px; height: 16px; display: block; color: inherit; transition: color 0.2s ease, opacity 0.2s ease; }
+.cycle-proposed__icon-btn:hover { color: rgba(197, 52, 34, 1); }
 .cycle-proposed__icon-btn--minimal { font-size: 14px; }
 .cycle-proposed__icon-placeholder { width: 16px; height: 16px; display: inline-block; }
 .cycle-proposed__link-btn { border: none; background: transparent; color: var(--primary); cursor: pointer; font-weight: 600; text-align: left; padding: 0; }
@@ -992,8 +1079,10 @@ input[type="checkbox"]:checked::after {
 .cycle-proposed__radio input[type='radio'] { width: 16px; height: 16px; }
 .cycle-proposed__question-card { border: 1px solid var(--border); border-radius: 16px; padding: 24px 64px 24px 24px; margin-bottom: 18px; display: grid; gap: 16px; background: var(--panel); box-shadow: 0 4px 10px rgba(15,23,42,0.04); grid-template-columns: minmax(0, 1fr); align-items: flex-start; position: relative; }
 .cycle-proposed__question-card:last-child { margin-bottom: 0; }
-.cycle-proposed__question-delete { position: absolute; top: 50%; transform: translateY(-50%); right: 18px; border: none; background: none; font-size: 18px; color: var(--muted); cursor: pointer; padding: 4px; }
-.cycle-proposed__question-delete:hover { color: var(--primary); }
+.cycle-proposed__question-top { display: block; }
+.cycle-proposed__question-top .cycle-proposed__field { margin-bottom: 0; }
+.cycle-proposed__question-delete { position: absolute; top: 50%; right: 35%; transform: translateY(-50%); padding: 6px; color: rgba(57, 53, 51, 1); display: inline-flex; align-items: center; justify-content: center; }
+.cycle-proposed__question-delete:hover { color: rgba(197, 52, 34, 1); }
 .cycle-proposed__question-main { display: grid; gap: 10px; }
 .cycle-proposed__input:disabled {
   background: var(--field-disabled-bg);
@@ -1149,7 +1238,7 @@ input[type="checkbox"]:checked::after {
 .talent-assessment-standard__setup { background: transparent; border: none; border-radius: 0; padding: 0; display: grid; gap: 12px; }
 .talent-assessment-standard__setup p { margin: 0; color: var(--muted); }
 .talent-assessment-standard__setup-btn {
-  justify-self: flex-start;
+  justify-self: flex-start; align-self: center; margin-top: 0;
 }
 .talent-assessment-standard__questions { display: none; }
 .talent-assessment-standard__questions.is-visible { display: block; }
@@ -1167,9 +1256,6 @@ input[type="checkbox"]:checked::after {
 .talent-assessment-standard__questions .cycle-proposed__options { width: 55%; }
 .talent-assessment-standard__questions .cycle-proposed__field--question { width: 55%; }
 .talent-assessment-standard__questions .cycle-proposed__field--description { width: 55%; }
-.talent-assessment-standard__questions .cycle-proposed__question-card--pending { border-style: dashed; cursor: pointer; background: var(--panel); }
-.talent-assessment-standard__questions .cycle-proposed__question-card--pending .cycle-proposed__input { background: var(--subtle); border-color: var(--border); color: var(--muted); }
-.talent-assessment-standard__pending-hint { margin: 0; font-size: 13px; color: var(--muted); font-style: italic; }
 
 @media (max-width: 960px) {
   .talent-assessment-history__layout { grid-template-columns: 1fr; }
@@ -1362,9 +1448,63 @@ input[type="checkbox"]:checked::after {
   margin: 8px;
   padding: 12px;
 }
+.talent-configuration__panels {
+  max-width: 1440px;
+}
+.talent-configuration__panel-body {
+  display: grid;
+  gap: 20px;
+}
+.talent-configuration__placeholder {
+  border: 1px dashed var(--border);
+  border-radius: 18px;
+  padding: 24px;
+  background: var(--panel);
+  display: grid;
+  gap: 12px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+.talent-configuration__placeholder h2 {
+  margin: 0;
+  font-size: 22px;
+  line-height: 28px;
+  letter-spacing: -0.6px;
+}
+.talent-configuration__placeholder p {
+  margin: 0;
+  color: var(--muted);
+}
+.talent-configuration__placeholder-eyebrow {
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+.talent-configuration__placeholder-actions {
+  margin-top: 4px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
 .talent-planning { padding-top: 24px; }
 .talent-planning__subtitle {
   margin: 0;
+}
+.talent-planning__cycles-intro {
+  display: grid;
+  gap: 8px;
+  max-width: 720px;
+}
+.talent-planning__cycles-intro h2 {
+  margin: 0;
+  font-size: 26px;
+  letter-spacing: -0.6px;
+}
+.talent-planning__cycles-intro p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.5;
 }
 .performance-tabs {
   padding-top: 24px;

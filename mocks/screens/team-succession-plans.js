@@ -172,7 +172,7 @@ export function TeamSuccessionPlans() {
   backButton.className = 'succession-plans__back-btn';
   backButton.innerHTML = `
     <span class="succession-plans__back-icon" aria-hidden="true">←</span>
-    <span>Company Succession</span>
+    <span>Team Succession</span>
   `;
   backButton.addEventListener('click', () => {
     window.location.hash = '#/talent-management';

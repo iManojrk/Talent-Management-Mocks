@@ -1,5 +1,6 @@
 const SETUP_DESCRIPTION =
   'Set up the talent assessment questions. These questions are automatically added to every new talent assessment, and you can still edit or remove them while configuring individual talent assessments.';
+const TRASH_ICON = '<svg class="icon icon-trash" aria-hidden="true"><use href="#icon-trash"></use></svg>';
 
 export function TalentAssessmentStandardQuestions() {
   const page = document.createElement('div');
@@ -24,6 +25,8 @@ export function TalentAssessmentStandardQuestions() {
   questionsSection.className = 'talent-assessment-standard__questions';
   questionsSection.innerHTML = buildQuestionsMarkup();
   enableStandardToggleControls(questionsSection);
+  enableOptionControls(questionsSection);
+  enableQuestionDeleteControls(questionsSection);
   initQuestionInteractivity(questionsSection);
 
   setupSection
@@ -44,117 +47,84 @@ function buildQuestionsMarkup() {
         <p class="talent-assessment-standard__question-description">${SETUP_DESCRIPTION}</p>
         <div class="cycle-proposed__question-card">
           <div class="cycle-proposed__question-main">
-            <label class="cycle-proposed__field cycle-proposed__field--question">
+            <div class="cycle-proposed__field cycle-proposed__field--question cycle-proposed__field--static">
               <span>Question*</span>
-              <input class="cycle-proposed__input" value="Potential" disabled />
-              <small>Question should not exceed 30 characters (ex. Potential, Performance, Impact of Loss).</small>
-            </label>
-            <div class="cycle-proposed__field cycle-proposed__toggle-field is-hidden"></div>
+              <p class="cycle-proposed__static-value">Potential</p>
+            </div>
             <label class="cycle-proposed__field cycle-proposed__field--description">
               <span>Question Description</span>
               <textarea class="cycle-proposed__input" rows="3">The degree to which an associate has demonstrated initial mastery of skills required to do their current role and a high likelihood of being able to make an impact in a larger scope.</textarea>
             </label>
 
-            <div class="cycle-proposed__options">
-              ${['Low','Medium','High'].map(option => `
-                <div class="cycle-proposed__option-row">
-                  <label class="cycle-proposed__radio">
-                    <input type="radio" name="proposedQuestionOne" />
-                  </label>
-                  <input class="cycle-proposed__input" value="${option}" disabled />
-                  <span class="cycle-proposed__icon-placeholder"></span>
-                </div>
-              `).join('')}
+            <div class="cycle-proposed__options cycle-proposed__options--static">
+              <span class="cycle-proposed__options-label">Options</span>
+              ${['Low','Medium','High'].map(option => `<span class="cycle-proposed__option-pill">${option}</span>`).join('')}
             </div>
-            <button class="cycle-proposed__link-btn">+ Add Option</button>
           </div>
         </div>
 
         <div class="cycle-proposed__question-card">
           <div class="cycle-proposed__question-main">
-            <label class="cycle-proposed__field cycle-proposed__field--question">
+            <div class="cycle-proposed__field cycle-proposed__field--question cycle-proposed__field--static">
               <span>Question*</span>
-              <input class="cycle-proposed__input" value="Performance" disabled />
-            </label>
-            <div class="cycle-proposed__field cycle-proposed__toggle-field is-hidden"></div>
+              <p class="cycle-proposed__static-value">Performance</p>
+            </div>
             <label class="cycle-proposed__field cycle-proposed__field--description">
               <span>Question Description</span>
               <textarea class="cycle-proposed__input" rows="3">Measures the overall execution and business impact demonstrated in the associate's most recent review cycle.</textarea>
             </label>
 
-            <div class="cycle-proposed__options">
-              ${['Low','Medium','High'].map(option => `
-                <div class="cycle-proposed__option-row">
-                  <label class="cycle-proposed__radio">
-                    <input type="radio" name="proposedQuestionTwo" />
-                  </label>
-                  <input class="cycle-proposed__input" value="${option}" disabled />
-                  <span class="cycle-proposed__icon-placeholder"></span>
-                </div>
-              `).join('')}
+            <div class="cycle-proposed__options cycle-proposed__options--static">
+              <span class="cycle-proposed__options-label">Options</span>
+              ${['Low','Medium','High'].map(option => `<span class="cycle-proposed__option-pill">${option}</span>`).join('')}
             </div>
-            <button class="cycle-proposed__link-btn">+ Add Option</button>
           </div>
         </div>
 
         <div class="cycle-proposed__question-card">
           <div class="cycle-proposed__question-main">
-            <label class="cycle-proposed__field cycle-proposed__field--question">
+            <div class="cycle-proposed__field cycle-proposed__field--question cycle-proposed__field--static">
               <span>Question*</span>
-              <input class="cycle-proposed__input" value="Risk of Loss" disabled />
-            </label>
+              <p class="cycle-proposed__static-value">Risk of Loss</p>
+            </div>
             <label class="cycle-proposed__field cycle-proposed__field--description">
               <span>Question Description</span>
               <textarea class="cycle-proposed__input" rows="3">Likelihood the associate will depart in the next 12 months based on intent, engagement, and market pull.</textarea>
             </label>
 
-            <div class="cycle-proposed__options">
-              ${['Low','Medium','High'].map(option => `
-                <div class="cycle-proposed__option-row">
-                  <label class="cycle-proposed__radio">
-                    <input type="radio" name="proposedQuestionThree" />
-                  </label>
-                  <input class="cycle-proposed__input" value="${option}" disabled />
-                  <span class="cycle-proposed__icon-placeholder"></span>
-                </div>
-              `).join('')}
+            <div class="cycle-proposed__options cycle-proposed__options--static">
+              <span class="cycle-proposed__options-label">Options</span>
+              ${['Low','Medium','High'].map(option => `<span class="cycle-proposed__option-pill">${option}</span>`).join('')}
             </div>
-            <button class="cycle-proposed__link-btn" disabled>+ Add Option</button>
           </div>
         </div>
 
         <div class="cycle-proposed__question-card">
           <div class="cycle-proposed__question-main">
-            <label class="cycle-proposed__field cycle-proposed__field--question">
+            <div class="cycle-proposed__field cycle-proposed__field--question cycle-proposed__field--static">
               <span>Question*</span>
-              <input class="cycle-proposed__input" value="Impact of Loss" disabled />
-            </label>
+              <p class="cycle-proposed__static-value">Impact of Loss</p>
+            </div>
             <label class="cycle-proposed__field cycle-proposed__field--description">
               <span>Question Description</span>
               <textarea class="cycle-proposed__input" rows="3">The impact on the organization if an associate leaves or transitions roles, including difficulty to replace and knowledge at risk.</textarea>
             </label>
 
-            <div class="cycle-proposed__options">
-              ${['Low','Medium','High','N/A'].map(option => `
-                <div class="cycle-proposed__option-row">
-                  <label class="cycle-proposed__radio">
-                    <input type="radio" name="proposedQuestionFour" />
-                  </label>
-                  <input class="cycle-proposed__input" value="${option}" disabled />
-                  <span class="cycle-proposed__icon-placeholder"></span>
-                </div>
-              `).join('')}
+            <div class="cycle-proposed__options cycle-proposed__options--static">
+              <span class="cycle-proposed__options-label">Options</span>
+              ${['Low','Medium','High','N/A'].map(option => `<span class="cycle-proposed__option-pill">${option}</span>`).join('')}
             </div>
-            <button class="cycle-proposed__link-btn" disabled>+ Add Option</button>
           </div>
         </div>
 
         <div class="cycle-proposed__question-card" data-question="readiness">
           <div class="cycle-proposed__question-main">
-            <label class="cycle-proposed__field cycle-proposed__field--question">
-              <span>Question*</span>
-              <input class="cycle-proposed__input" value="Readiness" />
-            </label>
+            <div class="cycle-proposed__question-top">
+              <label class="cycle-proposed__field cycle-proposed__field--question">
+                <span>Question*</span>
+                <input class="cycle-proposed__input" value="Readiness" />
+              </label>
+            </div>
             <div class="cycle-proposed__field cycle-proposed__toggle-field">
               <span>Required</span>
               <button class="cycle-proposed__toggle cycle-proposed__toggle--interactive is-on" type="button" data-toggle="required"><span></span></button>
@@ -171,21 +141,23 @@ function buildQuestionsMarkup() {
                     <input type="radio" name="proposedQuestionFive" />
                   </label>
                   <input class="cycle-proposed__input" value="${option}" />
-                  <button class="cycle-proposed__icon-btn" title="Remove option">🗑</button>
+                  <button class="cycle-proposed__icon-btn" title="Remove option">${TRASH_ICON}</button>
                 </div>
               `).join('')}
             </div>
             <button class="cycle-proposed__link-btn">+ Add Option</button>
           </div>
-          <button class="cycle-proposed__icon-btn cycle-proposed__question-delete" type="button" title="Remove question">🗑</button>
+          <button class="cycle-proposed__icon-btn cycle-proposed__question-delete" type="button" title="Remove question">${TRASH_ICON}</button>
         </div>
 
         <div class="cycle-proposed__question-card" data-question="next-move">
           <div class="cycle-proposed__question-main">
-            <label class="cycle-proposed__field cycle-proposed__field--question">
-              <span>Question*</span>
-              <input class="cycle-proposed__input" value="Next Move" />
-            </label>
+            <div class="cycle-proposed__question-top">
+              <label class="cycle-proposed__field cycle-proposed__field--question">
+                <span>Question*</span>
+                <input class="cycle-proposed__input" value="Next Move" />
+              </label>
+            </div>
             <div class="cycle-proposed__field cycle-proposed__toggle-field">
               <span>Required</span>
               <button class="cycle-proposed__toggle cycle-proposed__toggle--interactive is-on" type="button" data-toggle="required"><span></span></button>
@@ -202,13 +174,13 @@ function buildQuestionsMarkup() {
                     <input type="radio" name="proposedQuestionSix" />
                   </label>
                   <input class="cycle-proposed__input" value="${option}" />
-                  <button class="cycle-proposed__icon-btn" title="Remove option">🗑</button>
+                  <button class="cycle-proposed__icon-btn" title="Remove option">${TRASH_ICON}</button>
                 </div>
               `).join('')}
             </div>
             <button class="cycle-proposed__link-btn">+ Add Option</button>
           </div>
-          <button class="cycle-proposed__icon-btn cycle-proposed__question-delete" type="button" title="Remove question">🗑</button>
+          <button class="cycle-proposed__icon-btn cycle-proposed__question-delete" type="button" title="Remove question">${TRASH_ICON}</button>
         </div>
         <button class="cycle-proposed__link-btn cycle-proposed__link-btn--question">+ Add Question</button>
       </div>
@@ -230,70 +202,92 @@ function initQuestionInteractivity(container) {
   });
 
   if (!addQuestionBtn) return;
-  let pendingCard = null;
   addQuestionBtn.disabled = hiddenQueue.length === 0;
 
-  function createPendingCard() {
-    const card = document.createElement('div');
-    card.className = 'cycle-proposed__question-card cycle-proposed__question-card--pending';
-    card.tabIndex = 0;
-    card.innerHTML = `
+  const createEmptyQuestionCard = () => {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'cycle-proposed__question-card';
+    const optionGroup = `customQuestion${Date.now()}`;
+    wrapper.innerHTML = `
       <div class="cycle-proposed__question-main">
-        <label class="cycle-proposed__field cycle-proposed__field--question">
-          <span>Question*</span>
-          <input class="cycle-proposed__input" placeholder="Question title" readonly />
-        </label>
+        <div class="cycle-proposed__question-top">
+          <label class="cycle-proposed__field cycle-proposed__field--question">
+            <span>Question*</span>
+            <input class="cycle-proposed__input" placeholder="Enter question title" />
+          </label>
+        </div>
         <div class="cycle-proposed__field cycle-proposed__toggle-field">
           <span>Required</span>
-          <button class="cycle-proposed__toggle cycle-proposed__toggle--interactive" type="button" data-toggle="required-placeholder"><span></span></button>
+          <button class="cycle-proposed__toggle cycle-proposed__toggle--interactive is-on" type="button" data-toggle="required"><span></span></button>
         </div>
         <label class="cycle-proposed__field cycle-proposed__field--description">
           <span>Question Description</span>
-          <textarea class="cycle-proposed__input" rows="3" placeholder="Add guidance" readonly></textarea>
+          <textarea class="cycle-proposed__input" rows="3" placeholder="Add guidance for reviewers"></textarea>
         </label>
         <div class="cycle-proposed__options">
           <div class="cycle-proposed__option-row">
             <label class="cycle-proposed__radio">
-              <input type="radio" disabled />
+              <input type="radio" name="${optionGroup}" />
             </label>
-            <input class="cycle-proposed__input" placeholder="Option" readonly />
-            <span class="cycle-proposed__icon-placeholder"></span>
+            <input class="cycle-proposed__input" placeholder="Option" />
+            <button class="cycle-proposed__icon-btn" type="button" title="Remove option">${TRASH_ICON}</button>
           </div>
         </div>
+        <button class="cycle-proposed__link-btn" type="button">+ Add Option</button>
       </div>
-      <p class="talent-assessment-standard__pending-hint">Click to load the next standard question</p>
+      <button class="cycle-proposed__icon-btn cycle-proposed__question-delete" type="button" title="Remove question">${TRASH_ICON}</button>
     `;
 
-    const activate = () => {
-      card.removeEventListener('click', activate);
-      card.removeEventListener('keypress', handleKeyPress);
-      const template = hiddenQueue.shift();
-      if (template) {
-        card.replaceWith(template);
-      } else {
-        card.remove();
-      }
-      pendingCard = null;
-      addQuestionBtn.disabled = hiddenQueue.length === 0;
+    const optionsContainer = wrapper.querySelector('.cycle-proposed__options');
+    const addOptionBtn = wrapper.querySelector('.cycle-proposed__link-btn');
+
+    const createOptionRow = () => {
+      const row = document.createElement('div');
+      row.className = 'cycle-proposed__option-row';
+      row.innerHTML = `
+        <label class="cycle-proposed__radio">
+          <input type="radio" name="${optionGroup}" />
+        </label>
+        <input class="cycle-proposed__input" placeholder="Option" />
+        <button class="cycle-proposed__icon-btn" type="button" title="Remove option">${TRASH_ICON}</button>
+      `;
+      return row;
     };
 
-    const handleKeyPress = evt => {
-      if (evt.key === 'Enter' || evt.key === ' ') {
-        evt.preventDefault();
-        activate();
-      }
-    };
+    addOptionBtn?.addEventListener('click', () => {
+      optionsContainer.appendChild(createOptionRow());
+    });
 
-    card.addEventListener('click', activate);
-    card.addEventListener('keypress', handleKeyPress);
-    return card;
-  }
+      optionsContainer.addEventListener('click', event => {
+        const removeBtn = event.target.closest('.cycle-proposed__icon-btn');
+        if (!removeBtn || removeBtn.classList.contains('cycle-proposed__question-delete')) return;
+        const row = removeBtn.closest('.cycle-proposed__option-row');
+        if (row && optionsContainer.children.length > 1) {
+          row.remove();
+        }
+      });
+
+    return wrapper;
+  };
 
   addQuestionBtn.addEventListener('click', () => {
-    if (!hiddenQueue.length || pendingCard) return;
-    pendingCard = createPendingCard();
-    cardsWrapper.insertBefore(pendingCard, addQuestionBtn);
-    addQuestionBtn.disabled = true;
+    if (hiddenQueue.length) {
+      const nextCard = hiddenQueue.shift();
+      if (nextCard) {
+        cardsWrapper.insertBefore(nextCard, addQuestionBtn);
+        enableStandardToggleControls(nextCard);
+        enableOptionControls(nextCard);
+        enableQuestionDeleteControls(nextCard);
+      }
+      addQuestionBtn.disabled = false;
+      return;
+    }
+
+    const emptyCard = createEmptyQuestionCard();
+    cardsWrapper.insertBefore(emptyCard, addQuestionBtn);
+    enableStandardToggleControls(emptyCard);
+    enableOptionControls(emptyCard);
+    enableQuestionDeleteControls(emptyCard);
   });
 }
 
@@ -307,6 +301,61 @@ function enableStandardToggleControls(scope) {
         btn.classList.toggle('is-on');
         const slider = btn.querySelector('.cycle-proposed__toggle');
         slider?.classList.toggle('is-on');
+      });
+    });
+}
+
+function enableOptionControls(scope) {
+  scope
+    .querySelectorAll('.cycle-proposed__question-main')
+    .forEach(question => {
+      const optionsContainer = question.querySelector('.cycle-proposed__options');
+      const addOptionBtn = question.querySelector('.cycle-proposed__link-btn');
+      if (!optionsContainer || !addOptionBtn || addOptionBtn.dataset.optionsBound === 'true') return;
+
+      const radioName =
+        optionsContainer.querySelector('input[type="radio"]')?.name || `customOption${Date.now()}`;
+
+      const createOptionRow = () => {
+        const row = document.createElement('div');
+        row.className = 'cycle-proposed__option-row';
+        row.innerHTML = `
+          <label class="cycle-proposed__radio">
+            <input type="radio" name="${radioName}" />
+          </label>
+          <input class="cycle-proposed__input" placeholder="Option" />
+          <button class="cycle-proposed__icon-btn" type="button" title="Remove option">${TRASH_ICON}</button>
+        `;
+        return row;
+      };
+
+      addOptionBtn.dataset.optionsBound = 'true';
+      addOptionBtn.addEventListener('click', () => {
+        optionsContainer.appendChild(createOptionRow());
+      });
+
+      if (optionsContainer.dataset.optionsBound === 'true') return;
+      optionsContainer.dataset.optionsBound = 'true';
+      optionsContainer.addEventListener('click', event => {
+        const removeBtn = event.target.closest('.cycle-proposed__icon-btn');
+        if (!removeBtn || removeBtn.classList.contains('cycle-proposed__question-delete')) return;
+        const row = removeBtn.closest('.cycle-proposed__option-row');
+        if (row && optionsContainer.children.length > 1) {
+          row.remove();
+        }
+      });
+    });
+}
+
+function enableQuestionDeleteControls(scope) {
+  scope
+    .querySelectorAll('.cycle-proposed__question-delete')
+    .forEach(btn => {
+      if (btn.dataset.questionDeleteBound === 'true') return;
+      btn.dataset.questionDeleteBound = 'true';
+      btn.addEventListener('click', () => {
+        const card = btn.closest('.cycle-proposed__question-card');
+        if (card) card.remove();
       });
     });
 }
