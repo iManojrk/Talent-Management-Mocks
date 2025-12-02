@@ -4,7 +4,7 @@
   --subtle: #f0f2f8;
   --text: rgb(57, 53, 51);
   --muted: #5b6473;
-  --primary: #3b82f6;
+  --primary: rgb(50, 79, 165);
   --accent: #16a34a;
   --danger: #dc2626;
   --border: #e5e7eb;
@@ -311,12 +311,14 @@ tr:hover td { background: rgba(122,162,247,0.08); }
 .modal.modal-talent-history { width: min(600px, calc(100% - 24px)); }
 .modal-header { padding: 12px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; gap: 12px; }
 .modal-header--minimal { border-bottom: none; padding-bottom: 6px; }
-.modal-close { position: relative; border: none; background: #e5e7eb; line-height: 1; padding: 5px; cursor: pointer; border-radius: 50%; width: 26px; height: 26px; display: inline-flex; align-items: center; justify-content: center; }
+.modal-close { position: relative; border: none; background: #e5e7eb; line-height: 1; padding: 5px; cursor: pointer; border-radius: 50%; width: 26px; height: 26px; display: inline-flex; align-items: center; justify-content: center; margin-left: auto; }
 .modal-close::before,
 .modal-close::after { content: ''; position: absolute; width: 12px; height: 3px; background: #1f2937; border-radius: 999px; }
 .modal-close::before { transform: rotate(45deg); }
 .modal-close::after { transform: rotate(-45deg); }
 .modal-close:hover { background: #d1d5db; }
+.modal-title { margin: 0; font-size: 22px; font-weight: 700; color: var(--text); }
+.modal-title--secondary { font-size: 18px; }
 .modal-body { padding: 12px; display: grid; gap: 10px; overflow-y: auto; }
 .form-row { display: grid; gap: 6px; }
 .input,
@@ -869,7 +871,7 @@ input[type="checkbox"]:checked::after {
 .manager-evaluations__avatar { width: 42px; height: 42px; border-radius: 50%; background: #f59e0b; color: #fff; font-weight: 700; display: grid; place-items: center; }
 .manager-evaluations__profile strong { display: block; }
 .manager-evaluations__profile span { color: var(--muted); font-size: 13px; }
-.manager-evaluations__profile-name { border: none; background: none; padding: 0; margin: 0; font: inherit; font-weight: 700; color: var(--primary); text-align: left; cursor: pointer; display: block; }
+.manager-evaluations__profile-name { border: none; background: none; padding: 0; margin: 0; font: inherit; font-weight: 700; color: var(--primary); text-align: left; cursor: pointer; display: block; font-size: 20px; line-height: 1.3; }
 .manager-evaluations__profile-name:hover { text-decoration: underline; }
 .manager-evaluations__status { display: flex; gap: 32px; }
 .manager-evaluations__status p { margin: 0; font-weight: 600; }
@@ -1542,6 +1544,10 @@ input[type="checkbox"]:checked::after {
 .touchpoint-modal__details { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
 .touchpoint-modal__label { margin: 0; color: var(--muted); font-size: 13px; font-weight: 600; }
 .touchpoint-modal__value { margin: 4px 0 0; font-weight: 500; color: var(--text); }
+.touchpoint-modal__question-row .touchpoint-modal__value {
+  margin: 0;
+  flex: 1;
+}
 .touchpoint-modal__goal-callout {
   display: flex;
   gap: 12px;
@@ -1571,8 +1577,10 @@ input[type="checkbox"]:checked::after {
 .touchpoint-modal__question-row {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 8px;
   flex-wrap: wrap;
+  width: 100%;
 }
 .touchpoint-modal__link {
   border: none;
@@ -1661,3 +1669,161 @@ input[type="checkbox"]:checked::after {
 .secondary-tabs__panel { display: none; }
 .secondary-tabs__panel.is-active { display: block; }
 .secondary-tabs__panel-body { min-height: 80px; }
+.card {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: rgba(33, 33, 37, 0.35) 0px 2px 12px -2px;
+  color: #262321;
+  font-family: "Circular20Web", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16px;
+  margin: 8px;
+  padding: 0 8px;
+  overflow: visible;
+}
+.goals-tab { display: grid; gap: 16px; padding-top: 24px; }
+.goals-tab h1 { margin: 0; }
+.goals-tab__tabs { display: grid; gap: 20px; }
+.goals-tab__placeholder { margin: 0; color: var(--muted); font-style: italic; }
+.goals-tab__reports-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.goals-tab__reports-header h2 {
+  margin: 0;
+}
+.goals-tab__reports-table {
+  display: grid;
+  gap: 12px;
+}
+.goals-tab__reports-row {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) 360px 160px 180px;
+  align-items: center;
+  gap: 74px;
+  padding: 12px 16px;
+  border-radius: 12px;
+}
+.goals-tab__reports-row--head {
+  background: transparent;
+  box-shadow: none;
+  padding: 0 4px;
+  border-radius: 0;
+  font-weight: 600;
+  color: var(--muted);
+}
+.goals-tab__associate {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.goals-tab__avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  color: #fff;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+  font-size: 16px;
+}
+.goals-tab__associate-meta {
+  display: grid;
+  gap: 2px;
+}
+.goals-tab__associate-name {
+  margin: 0;
+  font-weight: 600;
+  font-size: 18px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  text-align: left;
+  color: var(--text);
+  cursor: pointer;
+}
+.goals-tab__associate-name:hover {
+  color: var(--primary);
+}
+.goals-tab__progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.goals-tab__progress-track {
+  flex: 1;
+  height: 8px;
+  border-radius: 999px;
+  background: #e7e0d6;
+  display: block;
+  overflow: hidden;
+}
+.goals-tab__progress-track span {
+  display: block;
+  height: 100%;
+  background: var(--primary);
+}
+.goals-tab__progress-value {
+  font-weight: 700;
+  color: #7c3aed;
+}
+.goals-tab__comments {
+  text-align: center;
+  font-weight: 600;
+}
+.goals-tab__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-self: stretch;
+}
+.goals-tab__menu {
+  position: relative;
+  margin-left: auto;
+}
+.goals-tab__menu-btn {
+  border: none;
+  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  cursor: pointer;
+  color: var(--muted);
+  padding: 4px;
+}
+.goals-tab__menu-btn:hover {
+  color: var(--primary);
+}
+.goals-tab__menu-list {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.12);
+  display: none;
+  padding: 8px;
+  min-width: 220px;
+  z-index: 5;
+}
+.goals-tab__menu.is-open .goals-tab__menu-list {
+  display: grid;
+}
+.goals-tab__menu-list button {
+  border: none;
+  background: transparent;
+  text-align: left;
+  padding: 6px 4px;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--text);
+}
+.goals-tab__menu-list button:hover {
+  color: var(--primary);
+}

@@ -76,7 +76,7 @@ function buildTouchpointModal(modalInstance) {
     <section class="touchpoint-modal__section">
       <label class="touchpoint-modal__textarea-label">
         <span>Email Notification to Manager</span>
-        <textarea class="touchpoint-modal__textarea" rows="4" placeholder="Share with your manager any specific goal or area you would like feedback on"></textarea>
+        <textarea class="touchpoint-modal__textarea" rows="4"></textarea>
       </label>
       <p class="touchpoint-modal__helper">Share with your manager any specific goal or area you would like feedback on</p>
     </section>

@@ -183,6 +183,7 @@ export function PerformanceEvaluation() {
   historyBtn?.addEventListener('click', () => {
     overlays.history.open({
       title: activeReportHistoryTitle,
+      titleClassName: 'modal-title--secondary',
       body: createTalentAssessmentHistoryModal(),
       className: 'modal-talent-history'
     });
@@ -192,7 +193,7 @@ export function PerformanceEvaluation() {
   talentCardBtn?.addEventListener('click', () => {
     const profile = getTalentProfile(activeReportName) ?? { name: activeReportName, position: activeReportRole };
     overlays.talentCard.open({
-      title: 'Talent Card',
+      title: '',
       body: createTalentCard(profile)
     });
   });

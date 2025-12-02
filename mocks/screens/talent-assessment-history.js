@@ -306,6 +306,7 @@ export function TalentAssessmentHistory() {
     ?.addEventListener('click', () => {
       historyModal.open({
         title: activeAssociateHistoryTitle,
+        titleClassName: 'modal-title--secondary',
         body: createTalentAssessmentHistoryModal(),
         className: 'modal-talent-history'
       });
@@ -316,7 +317,7 @@ export function TalentAssessmentHistory() {
     ?.addEventListener('click', () => {
       const profile = getTalentProfile(activeAssociateName);
       talentModal.open({
-        title: 'Talent Card',
+        title: '',
         body: createTalentCard(profile)
       });
     });

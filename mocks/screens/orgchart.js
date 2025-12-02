@@ -1,6 +1,7 @@
 import { Modal } from '../components/Modal.js?v=20250205';
 import { createManageSuccessorsModal } from '../components/manage-successors.js?v=20250205';
 import { createPlanDownloadPreview } from '../components/plan-download-preview.js?v=20250205';
+import { buildAssessmentTrendChart, buildPerformanceTrendChart } from '../components/trend-charts.js?v=20250205';
 
 const orgData = {
   name: 'Jordan Reyes',
@@ -595,7 +596,7 @@ function openProfile(modals, person) {
   const modal = modals.profile;
   closeContextMenu();
   const body = createTalentCard(person);
-  modal.open({ title: 'Talent Card', body });
+  modal.open({ title: '', body });
 }
 
 function openManageSuccessorsOverlay(modals, ownerName) {
@@ -616,7 +617,7 @@ function openPlanDownloadPreview(modals) {
   closeContextMenu();
   const body = createPlanDownloadPreview();
   modal.open({
-    title: 'Succession Plan PDF Preview',
+    title: 'Succession Plan PDF',
     body,
     className: 'modal-wide modal-plan-preview'
   });
@@ -811,7 +812,7 @@ function openTalentAssessmentHistory(modals, personName) {
   import('./talent-assessment-history.js?v=20250205')
     .then(module => {
       const body = module.createTalentAssessmentHistoryModal();
-      modal.open({ title: historyTitle, body, className: 'modal-talent-history' });
+      modal.open({ title: historyTitle, titleClassName: 'modal-title--secondary', body, className: 'modal-talent-history' });
     })
     .catch(err => {
       console.error('Failed to load Talent Assessment History modal', err);
@@ -1062,7 +1063,7 @@ function talentAssessmentSection(snapshot) {
   links.className = 'talent-card__tabs';
   const latestBtn = document.createElement('button');
   latestBtn.type = 'button';
-  latestBtn.textContent = 'Latest Rating';
+  latestBtn.textContent = 'Latest Assessment';
   const trendBtn = document.createElement('button');
   trendBtn.type = 'button';
   trendBtn.textContent = 'Trend';
@@ -1130,101 +1131,8 @@ function talentAssessmentSection(snapshot) {
   }
 
   function renderTrend() {
-    const trendData = snapshot.trend ?? [];
-    const trendWrap = document.createElement('div');
-    trendWrap.className = 'talent-card__trend';
-
-    const svgNS = 'http://www.w3.org/2000/svg';
-    const svg = document.createElementNS(svgNS, 'svg');
-    svg.setAttribute('viewBox', '0 0 260 140');
-
-    const axis = document.createElementNS(svgNS, 'rect');
-    axis.setAttribute('x', '40');
-    axis.setAttribute('y', '20');
-    axis.setAttribute('width', '200');
-    axis.setAttribute('height', '90');
-    axis.setAttribute('fill', 'none');
-    axis.setAttribute('stroke', 'var(--border)');
-    svg.appendChild(axis);
-
-    const gridLines = [1, 2];
-    gridLines.forEach(level => {
-      const y = mapY(level);
-      const line = document.createElementNS(svgNS, 'line');
-      line.setAttribute('x1', '40');
-      line.setAttribute('x2', '240');
-      line.setAttribute('y1', y);
-      line.setAttribute('y2', y);
-      line.setAttribute('stroke', 'var(--border)');
-      line.setAttribute('stroke-dasharray', '2,4');
-      svg.appendChild(line);
-    });
-
-    const perfPoints = trendData.map((point, idx) => [mapX(idx, trendData.length), mapY(point.performance)]);
-    const potPoints = trendData.map((point, idx) => [mapX(idx, trendData.length), mapY(point.potential)]);
-
-    const perfLine = document.createElementNS(svgNS, 'polyline');
-    perfLine.setAttribute('points', perfPoints.map(p => p.join(',')).join(' '));
-    perfLine.setAttribute('fill', 'none');
-    perfLine.setAttribute('stroke', '#3b82f6');
-    perfLine.setAttribute('stroke-width', '2');
-    svg.appendChild(perfLine);
-
-    const potLine = document.createElementNS(svgNS, 'polyline');
-    potLine.setAttribute('points', potPoints.map(p => p.join(',')).join(' '));
-    potLine.setAttribute('fill', 'none');
-    potLine.setAttribute('stroke', '#111');
-    potLine.setAttribute('stroke-width', '2');
-    svg.appendChild(potLine);
-
-    perfPoints.forEach(pt => svg.appendChild(pointDot(pt, '#3b82f6')));
-    potPoints.forEach(pt => svg.appendChild(pointDot(pt, '#111')));
-
-    const leftLabel = document.createElement('div');
-    leftLabel.className = 'talent-card__trend-axis talent-card__trend-axis--y';
-    leftLabel.textContent = 'PERFORMANCE';
-    const rightLabel = document.createElement('div');
-    rightLabel.className = 'talent-card__trend-axis talent-card__trend-axis--right';
-    rightLabel.textContent = 'POTENTIAL';
-
-    const bottom = document.createElement('div');
-    bottom.className = 'talent-card__trend-bottom';
-    trendData.forEach(point => {
-      const span = document.createElement('span');
-      span.textContent = point.label;
-      bottom.appendChild(span);
-    });
-
-    const legend = document.createElement('div');
-    legend.className = 'talent-card__trend-legend';
-    legend.innerHTML = '<span><i class="talent-card__legend-dot is-performance"></i>Performance</span><span><i class="talent-card__legend-dot is-potential"></i>Potential</span>';
-
-    trendWrap.append(svg, leftLabel, rightLabel, bottom, legend);
-    content.appendChild(trendWrap);
-  }
-
-  function mapX(index, total) {
-    if (total <= 1) return 40;
-    const step = 200 / (total - 1);
-    return 40 + step * index;
-  }
-
-  function mapY(value) {
-    const min = 1;
-    const max = 3;
-    const range = max - min;
-    const normalized = (value - min) / range;
-    return 110 - normalized * 90;
-  }
-
-  function pointDot([x, y], color) {
-    const svgNS = 'http://www.w3.org/2000/svg';
-    const circle = document.createElementNS(svgNS, 'circle');
-    circle.setAttribute('cx', x);
-    circle.setAttribute('cy', y);
-    circle.setAttribute('r', '3');
-    circle.setAttribute('fill', color);
-    return circle;
+    const trendChart = buildAssessmentTrendChart(snapshot.trend ?? []);
+    content.appendChild(trendChart);
   }
 
   render();
@@ -1279,67 +1187,9 @@ function performanceRatingSection(rating) {
 
       content.append(score, meter);
     } else {
-      const trendWrap = document.createElement('div');
-      trendWrap.className = 'talent-card__rating-trend';
-      const svgNS = 'http://www.w3.org/2000/svg';
-      const svg = document.createElementNS(svgNS, 'svg');
-      svg.setAttribute('viewBox', '0 0 260 120');
-
-      const axis = document.createElementNS(svgNS, 'rect');
-      axis.setAttribute('x', '30');
-      axis.setAttribute('y', '10');
-      axis.setAttribute('width', '200');
-      axis.setAttribute('height', '80');
-      axis.setAttribute('fill', 'none');
-      axis.setAttribute('stroke', 'var(--border)');
-      svg.appendChild(axis);
-
-      const max = rating.scale;
-      const min = 1;
-
-      const line = document.createElementNS(svgNS, 'polyline');
-      const points = rating.trend.map((point, idx) => {
-        const x = mapLinear(idx, rating.trend.length, 30, 230);
-        const y = mapValue(point.value, min, max, 90, 10);
-        return `${x},${y}`;
-      });
-      line.setAttribute('points', points.join(' '));
-      line.setAttribute('fill', 'none');
-      line.setAttribute('stroke', '#3b82f6');
-      line.setAttribute('stroke-width', '2');
-      svg.appendChild(line);
-
-      rating.trend.forEach((point, idx) => {
-        const dot = document.createElementNS(svgNS, 'circle');
-        dot.setAttribute('cx', mapLinear(idx, rating.trend.length, 30, 230));
-        dot.setAttribute('cy', mapValue(point.value, min, max, 90, 10));
-        dot.setAttribute('r', '3');
-        dot.setAttribute('fill', '#3b82f6');
-        svg.appendChild(dot);
-      });
-
-      const labels = document.createElement('div');
-      labels.className = 'talent-card__rating-labels';
-      rating.trend.forEach(point => {
-        const span = document.createElement('span');
-        span.textContent = point.label;
-        labels.appendChild(span);
-      });
-
-      trendWrap.append(svg, labels);
-      content.appendChild(trendWrap);
+      const trendChart = buildPerformanceTrendChart(rating.trend ?? [], rating.scale ?? 5);
+      content.appendChild(trendChart);
     }
-  }
-
-  function mapLinear(index, total, minPx, maxPx) {
-    if (total <= 1) return minPx;
-    const step = (maxPx - minPx) / (total - 1);
-    return minPx + step * index;
-  }
-
-  function mapValue(value, min, max, minPx, maxPx) {
-    const ratio = (value - min) / (max - min);
-    return minPx - (minPx - maxPx) * ratio;
   }
 
   render();

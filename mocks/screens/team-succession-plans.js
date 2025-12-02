@@ -157,7 +157,7 @@ export function TeamSuccessionPlans() {
   const openTalentCard = (name, fallbackPosition) => {
     const body = buildStaticTalentCard(name, fallbackPosition);
     overlays.talentCard.open({
-      title: 'Talent Card',
+      title: '',
       body
     });
   };

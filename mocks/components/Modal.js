@@ -5,13 +5,16 @@ export function Modal() {
   modal.className = 'modal';
   backdrop.appendChild(modal);
 
-  function open({ title = '', body, actions = [], className = '' }) {
+  function open({ title = '', body, actions = [], className = '', titleClassName = '' }) {
     modal.className = ['modal', className].filter(Boolean).join(' ');
     modal.innerHTML = '';
     const header = document.createElement('div');
     header.className = 'modal-header';
     if (title) {
-      header.innerHTML = `<div>${title}</div>`;
+      const heading = document.createElement('h3');
+      heading.className = ['modal-title', titleClassName].filter(Boolean).join(' ');
+      heading.textContent = title;
+      header.appendChild(heading);
     } else {
       header.classList.add('modal-header--minimal');
     }

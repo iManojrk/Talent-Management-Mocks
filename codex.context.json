@@ -131,7 +131,7 @@
       "mocks/state.js — in-memory state with localStorage persistence retained for future scenarios",
       "mocks/components/Modal.js — modal backdrop + open/close API",
       "mocks/components/manage-successors.js — shared Manage Successors modal content reused across tabs",
-      "mocks/components/plan-download-preview.js — shared Succession Plan PDF preview placeholder with Elias-focused talent card snippet",
+      "mocks/components/plan-download-preview.js — shared Succession Plan PDF placeholder with Elias-focused talent card snippet",
       "style-guide.json — machine-readable style guide capturing unified palette, typography, and component tokens",
       "mocks/screens/combined-pages.js — Talent Management template with tabbed header ready to host future embeds (Talent Planning active by default and now the default landing route)",
       "mocks/screens/talent-configuration.js — Talent Configuration placeholder template outlining upcoming configuration workstreams",
