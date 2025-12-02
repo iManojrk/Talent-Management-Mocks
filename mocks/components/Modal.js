@@ -10,7 +10,11 @@ export function Modal() {
     modal.innerHTML = '';
     const header = document.createElement('div');
     header.className = 'modal-header';
-    header.innerHTML = `<div>${title}</div>`;
+    if (title) {
+      header.innerHTML = `<div>${title}</div>`;
+    } else {
+      header.classList.add('modal-header--minimal');
+    }
     const closeBtn = document.createElement('button');
     closeBtn.className = 'modal-close';
     closeBtn.innerHTML = '';

@@ -64,7 +64,7 @@
     "mocksOverview": [
       "Static interactive mock lives under mocks/",
       "No build step: open mocks/index.html directly in a browser",
-      "Active hash routes: /org (Succession Org Chart), /performance (Performance Evaluation mock for Manager Evaluations), /performance-plan (Create Performance Plan placeholder), /talent-assessment-history (Talent Assessment History tab showing completed cycle details mock), /talent-assessment-standard-questions (Talent Assessment Standard Questions tab simulating a first-time setup CTA before revealing the Create Talent Planning Cycle - Proposed question builder), /cycle (Create Talent Planning Cycle - Current), /cycle-proposed (Create Talent Planning Cycle - Proposed clone for PO experimentation), /team-succession-plans (Team Succession Summary grid recreated from the screenshot), /succession-summary (Succession Planning Summary report; sidebar link currently hidden per PO request)",
+      "Active hash routes: /org (Succession Org Chart), /performance (Performance Evaluation mock for Manager Evaluations), /performance-plan (Create Performance Plan placeholder), /touchpoints (Touchpoints template placeholder currently blank), /talent-assessment-history (Talent Assessment History tab showing completed cycle details mock), /talent-assessment-standard-questions (Talent Assessment Standard Questions tab simulating a first-time setup CTA before revealing the Create Talent Planning Cycle - Proposed question builder), /cycle (Create Talent Planning Cycle - Current), /cycle-proposed (Create Talent Planning Cycle - Proposed clone for PO experimentation), /team-succession-plans (Team Succession Summary grid recreated from the screenshot), /succession-summary (Succession Planning Summary report; sidebar link currently hidden per PO request)",
       "Shared component: Modal (forms/talent profile overlay)"
     ],
     "performanceEvaluationNotes": [
@@ -140,6 +140,7 @@
       "mocks/screens/cycle.js — Create Talent Planning Cycle (Current template)",
       "mocks/screens/cycle-proposed.js — Create Talent Planning Cycle (Proposed template with isolated styles)",
       "mocks/screens/performance-plan.js — Create Performance Plan placeholder template",
+      "mocks/screens/touchpoints.js — Touchpoints template placeholder (currently blank until PO supplies content)",
       "mocks/screens/talent-assessment-history.js — Talent Assessment History template replicating completed review layout (static content)",
       "mocks/screens/talent-assessment-standard-questions.js — CTA-driven staging template mirroring the client-first setup before revealing the Create Talent Planning Cycle (Proposed) questions layout",
       "mocks/screens/team-succession-plans.js — Team Succession Summary template rebuilt from the provided screenshot",
@@ -156,7 +157,8 @@
       "Team Succession Summary (#/team-succession-plans)",
       "Succession Summary (#/succession-summary — hidden from sidebar navigation until PO reenables it)",
       "Performance Evaluation (#/performance)",
-      "Create Performance Plan (#/performance-plan)"
+      "Create Performance Plan (#/performance-plan)",
+      "Touchpoints (#/touchpoints)"
     ],
     "navGrouping": "Navigation is now surfaced via the header burger menu; the previous left sidebar nav-group has been removed, but keep the item order consistent so users can find each mock quickly.",
     "addingScreens": [
@@ -188,7 +190,10 @@
       "Base typography matches the reference paragraph style: Circular20Web, 16px size, 24px line-height, weight 500, color #544E4A; headings and chips keep their relative sizing/weight",
       "Primary navigation lives in the header burger menu; no left sidebar or tab bar is rendered in the shell",
       "Talent Management template now includes interactive tab buttons; each tab exposes a .combined-pages__panel-body[data-slot] container for future embeds (currently only Talent Planning is active)",
-      "Within Talent Planning, a secondary tab bar powers nested routes via .talent-planning__tab-panel-body[data-secondary-slot]; both Company Succession and Team Succession embed the shared Org Chart (SOC template), Assessments loads the full Talent Assessment view, and the remaining tabs stay placeholders",
+      "Within Talent Planning, a secondary tab bar powers nested routes via .talent-planning__tab-panel-body[data-secondary-slot]; Team Succession now loads by default (both Company Succession and Team Succession embed the shared Org Chart), Assessments loads the full Talent Assessment view, and the remaining tabs stay placeholders",
+      "Secondary tab bars now rely on the shared .secondary-tabs/.secondary-tabs__list/.secondary-tabs__panel classes (styled after the Talent Planning design) so new tabs should reuse those tokens for consistent spacing and underlines",
+      "Performance tab inside the Talent Management template now mirrors the Talent Planning layout: it shows a Performance Evaluation H1 plus secondary tabs (My Evaluations, My Direct Reports, Touchpoints, Peer Feedback) where Touchpoints loads by default, My Direct Reports embeds the Manager Evaluations mock, Touchpoints renders the Touchpoints template, and the remaining tabs stay intentionally blank",
+      "Touchpoints route (#/touchpoints) now renders a Touchpoints heading, descriptive blurb, Start Touchpoint button, and opens a Touchpoint Request modal using the unified Modal/btn styles when triggered; modal content stays static per screenshot",
       "Talent Configuration route currently renders a blank canvas placeholder until the PO supplies detailed requirements",
       "When the PO requests common components (text boxes, titles, filters, buttons), default to the existing unified tokens/classes without introducing ad-hoc variants"
     ]

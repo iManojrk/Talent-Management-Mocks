@@ -185,7 +185,7 @@ export function TalentAssessmentHistory() {
   intro.className = 'talent-assessment-history__intro';
   intro.innerHTML = `
     <div>
-      <h2 class="talent-assessment-history__heading">Talent Assessment</h2>
+      <h2>Talent Assessment</h2>
       <p>Talent reviews completed for your direct reports and any other employees you are eligible to assess</p>
     </div>
     <label class="talent-assessment-history__cycle-select">

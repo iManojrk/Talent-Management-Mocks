@@ -35,7 +35,7 @@ export function PerformanceEvaluation() {
   header.className = 'manager-evaluations__header';
   header.innerHTML = `
     <div>
-      <p class="manager-evaluations__eyebrow">All Direct Reports</p>
+      <a class="manager-evaluations__eyebrow manager-evaluations__link" href="#">All Direct Reports</a>
       <h1>Manager Evaluations</h1>
     </div>
     <a class="manager-evaluations__link" href="#">View Archived Evaluations</a>

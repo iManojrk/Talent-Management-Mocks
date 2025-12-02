@@ -10,6 +10,7 @@ import { TalentAssessmentHistory } from './screens/talent-assessment-history.js?
 import { TalentAssessmentStandardQuestions } from './screens/talent-assessment-standard-questions.js?v=20250213';
 import { TeamSuccessionPlans } from './screens/team-succession-plans.js?v=20250205';
 import { SuccessionSummary } from './screens/succession-summary.js?v=20250205';
+import { Touchpoints } from './screens/touchpoints.js?v=20250215';
 
 const routes = {
   '/talent-management': CombinedPages,
@@ -17,6 +18,7 @@ const routes = {
   '/org': OrgChart,
   '/performance': PerformanceEvaluation,
   '/performance-plan': CreatePerformancePlan,
+  '/touchpoints': Touchpoints,
   '/talent-assessment-history': TalentAssessmentHistory,
   '/cycle': CreateTalentPlanningCycle,
   '/cycle-proposed': CreateTalentPlanningCycleProposed,
@@ -38,6 +40,7 @@ const navItems = [
   { path: '/team-succession-plans', label: 'Team Succession Summary' },
   { path: '/performance', label: 'Performance Evaluation' },
   { path: '/performance-plan', label: 'Create Performance Plan' },
+  { path: '/touchpoints', label: 'Touchpoints' },
 ];
 
 function shell() {

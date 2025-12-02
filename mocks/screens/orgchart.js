@@ -1368,7 +1368,7 @@ function block(content) {
 
 const ORG_SVG_NS = 'http://www.w3.org/2000/svg';
 let orgNodeIdCounter = 0;
-let activeOrgChart = null;
+const activeOrgCharts = new Set();
 
 function renderOrgTree(rootData, modals) {
   orgNodeIdCounter = 0;
@@ -1458,17 +1458,24 @@ function flattenOrgTree(node, depth = 0, parentId = null, acc = []) {
 }
 
 function scheduleOrgLineLayout(chart) {
-  activeOrgChart = chart;
+  activeOrgCharts.add(chart);
   requestAnimationFrame(() => {
-    if (activeOrgChart !== chart || !chart.isConnected) return;
+    if (!chart.isConnected) {
+      activeOrgCharts.delete(chart);
+      return;
+    }
     layoutOrgLines(chart);
   });
 }
 
 window.addEventListener('resize', () => {
-  if (activeOrgChart?.isConnected) {
-    layoutOrgLines(activeOrgChart);
-  }
+  activeOrgCharts.forEach(chart => {
+    if (!chart.isConnected) {
+      activeOrgCharts.delete(chart);
+      return;
+    }
+    layoutOrgLines(chart);
+  });
 });
 
 function layoutOrgLines(chart) {

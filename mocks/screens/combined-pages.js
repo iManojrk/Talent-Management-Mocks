@@ -1,5 +1,7 @@
 import { OrgChart } from './orgchart.js?v=20250205';
 import { TalentAssessmentHistory } from './talent-assessment-history.js?v=20250205';
+import { PerformanceEvaluation } from './performance.js?v=20250205';
+import { Touchpoints } from './touchpoints.js?v=20250215';
 
 export function CombinedPages() {
   const tabsData = [
@@ -65,6 +67,69 @@ export function CombinedPages() {
   const initialTab = tabsData.find(tab => tab.active)?.key || tabsData[0].key;
   setActiveTab(initialTab);
 
+  const performanceBody = panels.querySelector('[data-slot="performance"]');
+  if (performanceBody) {
+    const performanceSection = document.createElement('div');
+    performanceSection.className = 'performance-tabs';
+    performanceSection.innerHTML = `
+      <h1>Performance Evaluation</h1>
+    `;
+    const performanceTabs = document.createElement('div');
+    performanceTabs.className = 'performance-tabs__tabs secondary-tabs';
+    const performanceTabsData = [
+      { label: 'My Evaluations', key: 'my-evaluations' },
+      { label: 'My Direct Reports', key: 'my-direct-reports' },
+      { label: 'Touchpoints', key: 'touchpoints', active: true },
+      { label: 'Peer Feedback', key: 'peer-feedback' },
+    ];
+    const perfNav = document.createElement('nav');
+    perfNav.className = 'performance-tabs__tab-list secondary-tabs__list';
+    perfNav.innerHTML = performanceTabsData
+      .map(tab => `<button type="button" class="${tab.active ? 'is-active' : ''}" data-performance-tab="${tab.key}">${tab.label}</button>`)
+      .join('');
+    const perfPanels = document.createElement('div');
+    perfPanels.className = 'performance-tabs__tab-panels secondary-tabs__panels';
+    performanceTabsData.forEach(tab => {
+      const panel = document.createElement('section');
+      panel.className = 'performance-tabs__tab-panel secondary-tabs__panel';
+      panel.dataset.performanceTab = tab.key;
+      const panelBody = document.createElement('div');
+      panelBody.className = 'performance-tabs__tab-panel-body secondary-tabs__panel-body';
+      panelBody.dataset.performanceSlot = tab.key;
+      panel.appendChild(panelBody);
+      perfPanels.appendChild(panel);
+    });
+    const setPerformanceTab = key => {
+      [...perfNav.querySelectorAll('button[data-performance-tab]')].forEach(btn => {
+        btn.classList.toggle('is-active', btn.dataset.performanceTab === key);
+      });
+      [...perfPanels.children].forEach(panel => {
+        panel.classList.toggle('is-active', panel.dataset.performanceTab === key);
+      });
+    };
+    perfNav.addEventListener('click', event => {
+      const btn = event.target.closest('button[data-performance-tab]');
+      if (!btn) return;
+      setPerformanceTab(btn.dataset.performanceTab);
+    });
+    setPerformanceTab(performanceTabsData.find(tab => tab.active)?.key || performanceTabsData[0].key);
+
+    const directReportsSlot = perfPanels.querySelector('[data-performance-slot="my-direct-reports"]');
+    if (directReportsSlot && typeof PerformanceEvaluation === 'function') {
+      const evalView = PerformanceEvaluation();
+      if (evalView) directReportsSlot.appendChild(evalView);
+    }
+    const touchpointsSlot = perfPanels.querySelector('[data-performance-slot="touchpoints"]');
+    if (touchpointsSlot && typeof Touchpoints === 'function') {
+      const touchpointsView = Touchpoints();
+      if (touchpointsView) touchpointsSlot.appendChild(touchpointsView);
+    }
+
+    performanceTabs.append(perfNav, perfPanels);
+    performanceSection.appendChild(performanceTabs);
+    performanceBody.appendChild(performanceSection);
+  }
+
   const talentPlanningBody = panels.querySelector('[data-slot="talent-planning"]');
   if (talentPlanningBody) {
     const intro = document.createElement('div');
@@ -74,30 +139,35 @@ export function CombinedPages() {
       <p class="talent-planning__subtitle">Create new plans, contribute to existing ones and complete your talent assessments</p>
     `;
     const secondaryTabs = document.createElement('div');
-    secondaryTabs.className = 'talent-planning__tabs';
+    secondaryTabs.className = 'talent-planning__tabs secondary-tabs';
     const secondaryTabsData = [
-      { label: 'Company Succession', key: 'company', active: true },
-      { label: 'Team Succession', key: 'team' },
+      { label: 'Company Succession', key: 'company' },
+      { label: 'Team Succession', key: 'team', active: true },
       { label: 'Plans', key: 'plans' },
       { label: 'Assessments', key: 'assessments' },
     ];
     const secondaryNav = document.createElement('nav');
-    secondaryNav.className = 'talent-planning__tab-list';
+    secondaryNav.className = 'talent-planning__tab-list secondary-tabs__list';
     secondaryNav.innerHTML = secondaryTabsData
       .map(tab => `<button type="button" class="${tab.active ? 'is-active' : ''}" data-secondary-tab="${tab.key}">${tab.label}</button>`)
       .join('');
     const secondaryPanels = document.createElement('div');
-    secondaryPanels.className = 'talent-planning__tab-panels';
+    secondaryPanels.className = 'talent-planning__tab-panels secondary-tabs__panels';
     secondaryTabsData.forEach(tab => {
       const panel = document.createElement('section');
-      panel.className = 'talent-planning__tab-panel';
+      panel.className = 'talent-planning__tab-panel secondary-tabs__panel';
       panel.dataset.secondaryTab = tab.key;
       const placeholder = document.createElement('div');
-      placeholder.className = 'talent-planning__tab-panel-body';
+      placeholder.className = 'talent-planning__tab-panel-body secondary-tabs__panel-body';
       placeholder.dataset.secondarySlot = tab.key;
       panel.appendChild(placeholder);
       secondaryPanels.appendChild(panel);
     });
+    const triggerOrgRelayout = () => {
+      requestAnimationFrame(() => {
+        window.dispatchEvent(new Event('resize'));
+      });
+    };
     const setSecondaryTab = key => {
       [...secondaryNav.querySelectorAll('button[data-secondary-tab]')].forEach(btn => {
         btn.classList.toggle('is-active', btn.dataset.secondaryTab === key);
@@ -105,6 +175,7 @@ export function CombinedPages() {
       [...secondaryPanels.children].forEach(panel => {
         panel.classList.toggle('is-active', panel.dataset.secondaryTab === key);
       });
+      triggerOrgRelayout();
     };
     secondaryNav.addEventListener('click', event => {
       const btn = event.target.closest('button[data-secondary-tab]');
