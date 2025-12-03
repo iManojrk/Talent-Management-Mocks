@@ -578,9 +578,9 @@ export function createTalentCard(person = {}) {
   }
   sections.push(incumbentNominationSection(profile));
   sections.push(talentPoolSection(profile));
+  sections.push(skillsSection(profile));
   sections.push(competencyGapSection(profile));
   sections.push(workExperienceSection(profile));
-  sections.push(skillsSection(profile));
   sections.push(educationSection(profile));
 
   sections.forEach(section => {
@@ -958,7 +958,7 @@ function talentPoolSection(person) {
 }
 
 function competencyGapSection(person) {
-  const { section, body } = buildInfoSection('Competency Gaps');
+  const { section, body } = buildInfoSection('Competencies');
   const gap = person.competencyGap ?? {};
   const focusAreas = gap.focusAreas ?? [];
   if (focusAreas.length) {

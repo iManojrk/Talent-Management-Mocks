@@ -306,10 +306,19 @@ tr:hover td { background: rgba(122,162,247,0.08); }
 .card .meta { color: var(--muted); font-size: 12px; }
 
 .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: grid; place-items: center; z-index: 1000; }
-.modal { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; width: min(600px, calc(100% - 24px)); max-height: calc(100vh - 40px); display: flex; flex-direction: column; }
+.modal {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  width: min(600px, calc(100% - 24px));
+  max-height: calc(100vh - 40px);
+  display: flex;
+  flex-direction: column;
+  padding: 0 24px 24px;
+}
 .modal.modal-wide { width: min(960px, calc(100% - 24px)); }
 .modal.modal-talent-history { width: min(600px, calc(100% - 24px)); }
-.modal-header { padding: 12px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.modal-header { padding: 12px 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; gap: 12px; }
 .modal-header--minimal { border-bottom: none; padding-bottom: 6px; }
 .modal-close { position: relative; border: none; background: #e5e7eb; line-height: 1; padding: 5px; cursor: pointer; border-radius: 50%; width: 26px; height: 26px; display: inline-flex; align-items: center; justify-content: center; margin-left: auto; }
 .modal-close::before,
@@ -319,7 +328,14 @@ tr:hover td { background: rgba(122,162,247,0.08); }
 .modal-close:hover { background: #d1d5db; }
 .modal-title { margin: 0; font-size: 22px; font-weight: 700; color: var(--text); }
 .modal-title--secondary { font-size: 18px; }
-.modal-body { padding: 12px; display: grid; gap: 10px; overflow-y: auto; }
+.modal-body {
+  padding: 12px 0;
+  padding-right: 12px;
+  display: grid;
+  gap: 10px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
 .form-row { display: grid; gap: 6px; }
 .input,
 select {
@@ -360,7 +376,13 @@ input[type="checkbox"]:checked::after {
   background-size: contain;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='white' d='M9 15.554L5.85686804 12.3288804C5.47140347 11.9333611 4.83829096 11.9252101 4.44277167 12.3106746C4.43242566 12.3207576 4.42229937 12.3310636 4.41239992 12.3415854L4.07467634 12.7005396C3.70435553 13.0941402 3.71374862 13.7107486 4.09588664 14.0928866L8.29289322 18.2898932C8.68341751 18.6804175 9.31658249 18.6804175 9.70710678 18.2898932L20.2710213 7.72597873C20.6615456 7.33545443 20.6615456 6.70228945 20.2710213 6.31176516C20.2638421 6.30458597 20.256554 6.29751653 20.2491595 6.29055929L19.9940515 6.05053675C19.602219 5.68187467 18.9889348 5.68929605 18.6061381 6.06733194L9 15.554Z'/%3E%3C/svg%3E");
 }
-.footer { display: flex; justify-content: flex-end; gap: 8px; padding: 12px; border-top: 1px solid var(--border); }
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 12px 0;
+  border-top: 1px solid var(--border);
+}
 .modal-plan-preview .modal-header,
 .modal-plan-preview .modal-body,
 .modal-plan-preview .footer { width: 100%; margin: 0; }
@@ -471,6 +493,8 @@ input[type="checkbox"]:checked::after {
 .plan-preview__trend-ylabels { position: absolute; left: 0; display: flex; flex-direction: column; justify-content: space-between; font-size: 11px; color: var(--muted); text-align: right; padding-right: 6px; }
 .plan-preview__trend-ylabels--ta { top: 33px; bottom: 45px; }
 .plan-preview__trend-ylabels--pr { top: 27px; bottom: 15px; }
+.talent-card:not(.plan-preview__card) .talent-card__trend .plan-preview__trend-ylabels--ta { left: 50px; }
+.talent-card:not(.plan-preview__card) .talent-card__rating-trend .plan-preview__trend-ylabels--pr { left: 90px; }
 .plan-preview__trend-subtitle { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 600; }
 .plan-preview__trend-embed.talent-card__rating-trend svg { height: 160px; }
 .successor-card { border: 1px solid var(--border); border-radius: 14px; padding: 16px; display: grid; gap: 16px; background: #fff; box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08); }
@@ -1574,12 +1598,14 @@ input[type="checkbox"]:checked::after {
   gap: 16px;
   align-items: flex-start;
 }
+.touchpoint-modal__section-content {
+  flex: 1;
+}
 .touchpoint-modal__question-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  flex-wrap: wrap;
   width: 100%;
 }
 .touchpoint-modal__link {
@@ -1590,16 +1616,9 @@ input[type="checkbox"]:checked::after {
   cursor: pointer;
   padding: 0;
 }
+.touchpoint-modal__link--right { text-align: right; }
 .touchpoint-modal__link:hover { text-decoration: underline; }
-.touchpoint-modal__person-card {
-  border-radius: 18px;
-  border: 1px solid var(--border);
-  padding: 16px;
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-}
+.touchpoint-modal__person-card { display: flex; gap: 12px; align-items: center; }
 .touchpoint-modal__person-avatar {
   width: 48px;
   height: 48px;
@@ -1630,6 +1649,55 @@ input[type="checkbox"]:checked::after {
   justify-content: flex-end;
   gap: 12px;
   padding-top: 8px;
+}
+.manage-questions {
+  gap: 16px;
+}
+.manage-questions__intro {
+  margin: 0;
+  font-weight: 600;
+  color: var(--text);
+}
+.manage-questions__list {
+  display: grid;
+  gap: 16px;
+}
+.manage-questions__item {
+  border-radius: 12px;
+  padding: 16px;
+  background: #fff;
+  display: grid;
+  gap: 8px;
+}
+.manage-questions__input-row {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+.manage-questions__delete-button {
+  padding: 4px;
+  line-height: 0;
+  display: inline-flex;
+}
+.manage-questions__delete-button svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+  fill: currentColor;
+}
+.manage-questions__form {
+  display: grid;
+  gap: 8px;
+}
+.manage-questions__form-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+.manage-questions__textarea {
+  min-height: 64px;
+}
+.manage-questions__actions {
+  padding-top: 0;
 }
 .secondary-tabs { margin-top: 32px; display: grid; gap: 16px; }
 .secondary-tabs__list {
@@ -1679,7 +1747,7 @@ input[type="checkbox"]:checked::after {
   font-weight: 500;
   line-height: 16px;
   margin: 8px;
-  padding: 0 8px;
+  padding: 16px 18px;
   overflow: visible;
 }
 .goals-tab { display: grid; gap: 16px; padding-top: 24px; }
