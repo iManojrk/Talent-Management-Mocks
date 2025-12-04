@@ -203,6 +203,11 @@ export function createPlanDownloadPreview() {
   const card = document.createElement('div');
   card.className = 'talent-card plan-preview__card';
 
+  const incumbentHeading = document.createElement('h3');
+  incumbentHeading.className = 'plan-preview__associate-title';
+  incumbentHeading.textContent = 'Incumbent';
+  card.appendChild(incumbentHeading);
+
   const header = document.createElement('div');
   header.className = 'talent-card__header';
   const main = document.createElement('div');

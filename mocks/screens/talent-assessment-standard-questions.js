@@ -9,16 +9,17 @@ export function TalentAssessmentStandardQuestions() {
   const intro = document.createElement('div');
   intro.className = 'talent-assessment-standard__intro';
   intro.innerHTML = `
-    <p class="talent-assessment-standard__eyebrow">Talent Assessment</p>
-    <h1>Talent Assessment Standard Questions</h1>
+    <h2>Talent Assessment Standard Questions</h2>
   `;
 
   const setupSection = document.createElement('section');
   setupSection.className = 'talent-assessment-standard__setup';
   setupSection.innerHTML = `
-    <h2>First-Time Setup</h2>
-    <p>${SETUP_DESCRIPTION}</p>
-    <button type="button" class="btn primary talent-assessment-standard__setup-btn">Setup Talent Assessment Questions</button>
+    <div class="talent-assessment-standard__setup-body">
+      <h3>First-Time Setup</h3>
+      <p>${SETUP_DESCRIPTION}</p>
+      <button type="button" class="btn primary talent-assessment-standard__setup-btn">Setup Talent Assessment Questions</button>
+    </div>
   `;
 
   const questionsSection = document.createElement('div');

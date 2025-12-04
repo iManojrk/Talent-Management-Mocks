@@ -36,13 +36,13 @@ const orgData = {
             ]
           },
           perfSnapshot: {
-            summary: 'Marginal Performer',
-            performance: 2,
+            summary: 'Accelerated Performer',
+            performance: 3,
             potential: 2,
             trend: [
-              { label: '12/31', performance: 1, potential: 2 },
-              { label: '07/01', performance: 2, potential: 2 },
-              { label: '01/01', performance: 2, potential: 3 },
+              { label: '12/31', performance: 2, potential: 2 },
+              { label: '07/01', performance: 3, potential: 2 },
+              { label: '01/01', performance: 3, potential: 3 },
               { label: '07/04', performance: 3, potential: 2 },
               { label: '01/04', performance: 3, potential: 3 }
             ]
@@ -103,11 +103,11 @@ const orgData = {
           },
           perfSnapshot: {
             summary: 'Consistent Performer with high potential',
-            performance: 2,
-            potential: 3,
+            performance: 3,
+            potential: 2,
             trend: [
-              { label: '12/31', performance: 2, potential: 3 },
-              { label: '07/01', performance: 2, potential: 3 },
+              { label: '12/31', performance: 3, potential: 2 },
+              { label: '07/01', performance: 3, potential: 2 },
               { label: '01/01', performance: 2, potential: 2 },
               { label: '07/04', performance: 3, potential: 2 },
               { label: '01/04', performance: 3, potential: 3 }
@@ -617,7 +617,7 @@ function openPlanDownloadPreview(modals) {
   closeContextMenu();
   const body = createPlanDownloadPreview();
   modal.open({
-    title: 'Succession Plan PDF',
+    title: 'Succession Plan - VP, Fleet Operations',
     body,
     className: 'modal-wide modal-plan-preview'
   });
@@ -916,7 +916,7 @@ function incumbentNominationSection(person) {
     row.className = 'talent-card__pool-row talent-card__pool-row--incumbent';
     const name = document.createElement('div');
     name.className = 'talent-card__pool-name';
-    name.innerHTML = `<strong>${item.incumbent}</strong> <span>${item.position}</span>`;
+    name.innerHTML = `<strong>${item.incumbent}</strong><span> — ${item.position}</span>`;
     row.appendChild(name);
     list.appendChild(row);
   });
