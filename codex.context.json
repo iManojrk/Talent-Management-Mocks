@@ -52,6 +52,8 @@
       "Successor rows and Assign Learning cards are mouse-click only; do not restore keyboard/focus handling unless the PO reverses this directive",
       "Capture any new PO-provided dos/don'ts, copy tweaks, or style-guide adjustments in this file immediately so the next agent inherits the directives",
       "When the PO says they will supply content later, leave the UI regions blank and avoid inserting placeholder text that references pending copy",
+      "When the PO requests a new template, blank means truly empty—render only the routing shell with no headings, copy, panels, or placeholder containers unless the PO specifies otherwise",
+      "Do not extend existing experiences with new sections, data, or behavior unless the PO has specifically requested those exact additions in this chat",
       "PO may have a keyboard issue causing stray 'e' letters, missing or transposed characters; interpret instructions accordingly without overcorrecting"
     ],
     "quickStart": [
@@ -64,7 +66,7 @@
     "mocksOverview": [
       "Static interactive mock lives under mocks/",
       "No build step: open mocks/index.html directly in a browser",
-      "Active hash routes: /org (Succession Org Chart), /performance (Performance Evaluation mock for Manager Evaluations), /performance-plan (Create Performance Plan placeholder), /touchpoints (Touchpoints template placeholder currently blank), /talent-assessment-history (Talent Assessment History tab showing completed cycle details mock), /talent-assessment-standard-questions (Talent Assessment Standard Questions tab simulating a first-time setup CTA before revealing the Create Talent Planning Cycle - Proposed question builder), /cycle (Create Talent Planning Cycle - Current), /cycle-proposed (Create Talent Planning Cycle - Proposed clone for PO experimentation), /team-succession-plans (Team Succession Summary grid recreated from the screenshot), /succession-summary (Succession Planning Summary report; sidebar link currently hidden per PO request)",
+      "Active hash routes: /org (Succession Org Chart), /performance (Performance Evaluation mock for Manager Evaluations), /performance-plan (Create Performance Plan placeholder), /touchpoints (Touchpoints template placeholder currently blank), /talent-assessment-history (Talent Assessment History tab showing completed cycle details mock), /talent-assessment-standard-questions (Talent Assessment Standard Questions tab simulating a first-time setup CTA before revealing the Create Talent Planning Cycle - Proposed question builder), /cycle (Create Talent Planning Cycle - Current), /cycle-proposed (Create Talent Planning Cycle - Proposed clone for PO experimentation), /team-succession-plans (Team Succession Summary grid recreated from the screenshot), /succession-summary (Succession Planning Summary report; sidebar link currently hidden per PO request), /job-change (Job Change template now displays the \"Job Change For:\" heading with a John Herron profile summary, Cancel/Submit actions, instructional copy, Override Restricted Fields link, and static Change Details card using the unified border treatment while remaining otherwise blank), /promotion-modal (Promotion Modal template renders the \"promote Elias Romero\" CTA, Position Details modal content, and a Succession Impact link opening a stacked modal that repeats the incumbent warning blurb plus a View Succession Plan link launching the shared Manage Successors modal)",
       "Shared component: Modal (forms/talent profile overlay)"
     ],
     "performanceEvaluationNotes": [
@@ -140,6 +142,8 @@
       "mocks/screens/cycle.js — Create Talent Planning Cycle (Current template)",
       "mocks/screens/cycle-proposed.js — Create Talent Planning Cycle (Proposed template with isolated styles)",
       "mocks/screens/performance-plan.js — Create Performance Plan placeholder template",
+      "mocks/screens/job-change.js — Job Change template now renders a \"Job Change For:\" hero heading, John Herron profile summary, Cancel/Submit buttons, Override Restricted Fields link, and static Change Details card using the shared border style while awaiting the full workflow content routed at #/job-change",
+      "mocks/screens/promotion-modal.js — Promotion Modal template now renders a \"promote Elias Romero\" CTA that opens the Position Details modal with the Position Assignment Options radio group, New Position section, Cancel/Update actions, and a Succession Impact link that spawns a stacked modal repeating the incumbent warning blurb plus a View Succession Plan link launching the shared Manage Successors modal",
       "mocks/screens/touchpoints.js — Touchpoints template placeholder (currently blank until PO supplies content)",
       "mocks/screens/talent-assessment-history.js — Talent Assessment History template replicating completed review layout (static content)",
       "mocks/screens/talent-assessment-standard-questions.js — CTA-driven staging template mirroring the client-first setup before revealing the Create Talent Planning Cycle (Proposed) questions layout",
@@ -158,6 +162,8 @@
       "Succession Summary (#/succession-summary — hidden from sidebar navigation until PO reenables it)",
       "Performance Evaluation (#/performance)",
       "Create Performance Plan (#/performance-plan)",
+      "Job Change (#/job-change)",
+      "Promotion Modal (#/promotion-modal)",
       "Touchpoints (#/touchpoints)"
     ],
     "navGrouping": "Navigation is now surfaced via the header burger menu; the previous left sidebar nav-group has been removed, but keep the item order consistent so users can find each mock quickly.",

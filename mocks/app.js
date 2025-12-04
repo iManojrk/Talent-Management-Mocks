@@ -11,6 +11,8 @@ import { TalentAssessmentStandardQuestions } from './screens/talent-assessment-s
 import { TeamSuccessionPlans } from './screens/team-succession-plans.js?v=20250205';
 import { SuccessionSummary } from './screens/succession-summary.js?v=20250205';
 import { Touchpoints } from './screens/touchpoints.js?v=20250215';
+import { JobChange } from './screens/job-change.js?v=20250218';
+import { PromotionModal } from './screens/promotion-modal.js?v=20250218';
 
 const routes = {
   '/talent-management': CombinedPages,
@@ -25,6 +27,8 @@ const routes = {
   '/talent-assessment-standard-questions': TalentAssessmentStandardQuestions,
   '/team-succession-plans': TeamSuccessionPlans,
   '/succession-summary': SuccessionSummary,
+  '/job-change': JobChange,
+  '/promotion-modal': PromotionModal,
 };
 
 const app = document.getElementById('app');
@@ -40,6 +44,8 @@ const navItems = [
   { path: '/team-succession-plans', label: 'Team Succession Summary' },
   { path: '/performance', label: 'Performance Evaluation' },
   { path: '/performance-plan', label: 'Create Performance Plan' },
+  { path: '/job-change', label: 'Job Change' },
+  { path: '/promotion-modal', label: 'Promotion Modal' },
   { path: '/touchpoints', label: 'Touchpoints' },
 ];
 
@@ -85,6 +91,7 @@ function shell() {
     '/talent-assessment-history',
     '/team-succession-plans',
     '/performance',
+    '/performance-plan',
     '/touchpoints',
   ]);
   const othersLinks = [];
