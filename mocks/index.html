@@ -14,11 +14,16 @@
     />
     <script>
       (function preventCache() {
-        window.__CACHE_BUST = Date.now().toString();
-        const style = document.createElement('link');
-        style.rel = 'stylesheet';
-        style.href = `./styles.css?v=${window.__CACHE_BUST}`;
-        document.head.appendChild(style);
+        const cacheBust = Date.now().toString();
+        window.__CACHE_BUST = cacheBust;
+        const loadStylesheet = (path) => {
+          const link = document.createElement('link');
+          link.rel = 'stylesheet';
+          link.href = `${path}?v=${cacheBust}`;
+          document.head.appendChild(link);
+        };
+        loadStylesheet('./unified-styles.css');
+        loadStylesheet('./styles.css');
       })();
     </script>
   </head>

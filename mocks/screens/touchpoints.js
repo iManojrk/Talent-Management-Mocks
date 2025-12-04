@@ -12,7 +12,7 @@ const TOUCHPOINT_REQUESTS = [
     subtitle: 'Quarterly manager sync kicking off the FY26 planning cadence.',
     progress: '19 out of 23 completed',
     dueDate: '31/03/2026',
-    status: 'Closed'
+    status: 'Active'
   },
   // 5
   {
@@ -28,7 +28,7 @@ const TOUCHPOINT_REQUESTS = [
     subtitle: 'Quarterly manager sync covering mid-year priorities for FY25.',
     progress: '20 out of 24 completed',
     dueDate: '30/06/2025',
-    status: 'Active'
+    status: 'Closed'
   },
   // 3
   {
@@ -342,13 +342,15 @@ function buildTouchpointRequests() {
   const grid = document.createElement('div');
   grid.className = 'touchpoints__cards';
   const createMetaItem = (label, value) => {
-    const item = document.createElement('p');
+    const item = document.createElement('div');
+    item.className = 'touchpoints-card__meta-item';
     const labelEl = document.createElement('span');
     labelEl.className = 'touchpoints-card__label';
     labelEl.textContent = label;
-    const valueEl = document.createElement('span');
+    const valueEl = document.createElement('p');
+    valueEl.className = 'touchpoints-card__value';
     valueEl.textContent = value;
-    item.append(labelEl, document.createElement('br'), valueEl);
+    item.append(labelEl, valueEl);
     return item;
   };
 
