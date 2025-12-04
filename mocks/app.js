@@ -92,6 +92,7 @@ function shell() {
     '/team-succession-plans',
     '/performance',
     '/performance-plan',
+    '/promotion-modal',
     '/touchpoints',
   ]);
   const othersLinks = [];

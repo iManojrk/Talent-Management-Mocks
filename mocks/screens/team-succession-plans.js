@@ -189,13 +189,16 @@ export function TeamSuccessionPlans() {
   filters.innerHTML = `
     <label class="succession-plans__filter succession-plans__filter--associate">
       <span>Associate</span>
-      <input type="text" placeholder="Search associate" disabled>
+      <select name="associate-filter" disabled>
+        <option>Search associate</option>
+      </select>
     </label>
     <label class="succession-plans__filter succession-plans__filter--manager">
       <span>Manager</span>
-      <button type="button" class="succession-plans__select">
-        <span class="succession-plans__select-placeholder">Search manager</span>
-      </button>
+      <select name="manager-filter">
+        <option value="none">Search manager</option>
+        <option value="betty">Betty Liu</option>
+      </select>
     </label>
     <label class="succession-plans__filter succession-plans__filter--checkbox">
       <input type="checkbox">
@@ -204,8 +207,7 @@ export function TeamSuccessionPlans() {
   `;
   filters.classList.add('succession-plans__filters-inline');
   const showIndirectInput = filters.querySelector('.succession-plans__filter--checkbox input');
-  const managerSelectButton = filters.querySelector('.succession-plans__select');
-  const managerSelectLabel = managerSelectButton?.querySelector('.succession-plans__select-placeholder');
+  const managerSelect = filters.querySelector('[name="manager-filter"]');
   let managerFilterValue = 'none';
 
   const card = document.createElement('div');
@@ -265,20 +267,8 @@ export function TeamSuccessionPlans() {
     activeMenu = menu;
   };
 
-  const updateManagerSelectDisplay = () => {
-    if (!managerSelectButton || !managerSelectLabel) return;
-    if (managerFilterValue === 'betty') {
-      managerSelectLabel.textContent = 'Betty Liu';
-      managerSelectButton.classList.add('is-active');
-    } else {
-      managerSelectLabel.textContent = 'Search manager';
-      managerSelectButton.classList.remove('is-active');
-    }
-  };
-
-  managerSelectButton?.addEventListener('click', () => {
-    managerFilterValue = managerFilterValue === 'betty' ? 'none' : 'betty';
-    updateManagerSelectDisplay();
+  managerSelect?.addEventListener('change', (event) => {
+    managerFilterValue = event.target.value;
     renderRows();
   });
 
@@ -298,8 +288,6 @@ export function TeamSuccessionPlans() {
     if (showIndirectReports) return successionPlans;
     return successionPlans.slice(0, 3);
   }
-
-  updateManagerSelectDisplay();
 
   function renderRows() {
     const rows = getVisiblePlans()

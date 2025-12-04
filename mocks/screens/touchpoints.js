@@ -6,47 +6,53 @@ const additionalQuestions = [ ];
 let additionalQuestionId = additionalQuestions.length + 1;
 
 const TOUCHPOINT_REQUESTS = [
+  // 6
   {
-    title: 'A Scheduled TP - Both - Nov 12 - Entire Org',
-    subtitle: 'A Scheduled TP - Both - Nov 12 - Entire Org',
-    progress: '0 out of 62 completed',
-    dueDate: '05/12/2025',
+    title: '2026 Q1 Touchpoint',
+    subtitle: 'Quarterly manager sync kicking off the FY26 planning cadence.',
+    progress: '19 out of 23 completed',
+    dueDate: '31/03/2026',
+    status: 'Closed'
+  },
+  // 5
+  {
+    title: '2025 Q3 Touchpoint',
+    subtitle: 'Quarterly manager sync aligning on succession updates for FY25 Q3.',
+    progress: '21 out of 25 completed',
+    dueDate: '30/09/2025',
+    status: 'Closed'
+  },
+  // 4
+  {
+    title: '2025 Q2 Touchpoint',
+    subtitle: 'Quarterly manager sync covering mid-year priorities for FY25.',
+    progress: '20 out of 24 completed',
+    dueDate: '30/06/2025',
     status: 'Active'
   },
+  // 3
   {
-    title: 'A Test Scheduled TP - Oct 20 - Criteria Based',
-    subtitle: 'A Test Scheduled TP - Oct 20 - Criteria Based',
-    progress: '0 out of 1 completed',
-    dueDate: '01/11/2025',
+    title: '2025 Q1 Touchpoint',
+    subtitle: 'Quarterly manager sync reviewing FY25 kickoff objectives.',
+    progress: '20 out of 22 completed',
+    dueDate: '31/03/2025',
     status: 'Closed'
   },
-  {
-    title: 'A Scheduled Test TP - Both - Oct 07 - Entire Org',
-    subtitle: 'A Scheduled Test TP - Both - Oct 07 - Entire Org',
-    progress: '0 out of 55 completed',
-    dueDate: '31/10/2025',
-    status: 'Closed'
-  },
-  {
-    title: 'lakshmi',
-    subtitle: 'jkhgf',
-    progress: '0 out of 59 completed',
-    dueDate: '23/10/2025',
-    status: 'Closed'
-  },
+  // 2
   {
     title: 'On-Demand: 10/09/2025',
-    subtitle: 'Automation On-Demand TouchPoint 10-07-25 07:14',
+    subtitle: 'On-Demand TouchPoint 10-07-25 07:14',
     requestedBy: 'You',
     dueDate: '14/10/2025',
-    progress: '1 out of 3 completed',
+    progress: '3 out of 3 completed',
     status: 'Closed'
   },
+  // 1
   {
-    title: 'A Scheduled TP - Both - Sep 03 -Huge Criteria Based Edited',
-    subtitle: 'A Scheduled TP - Both - Sep 03 -Huge Criteria Based Edited',
-    progress: '0 out of 12 completed',
-    dueDate: '04/10/2025',
+    title: '2024 Q4 Touchpoint',
+    subtitle: 'Quarterly manager sync wrapping FY24 readiness plans.',
+    progress: '24 out of 26 completed',
+    dueDate: '31/12/2024',
     status: 'Closed'
   }
 ];
@@ -335,9 +341,20 @@ function buildTouchpointRequests() {
   section.appendChild(heading);
   const grid = document.createElement('div');
   grid.className = 'touchpoints__cards';
+  const createMetaItem = (label, value) => {
+    const item = document.createElement('p');
+    const labelEl = document.createElement('span');
+    labelEl.className = 'touchpoints-card__label';
+    labelEl.textContent = label;
+    const valueEl = document.createElement('span');
+    valueEl.textContent = value;
+    item.append(labelEl, document.createElement('br'), valueEl);
+    return item;
+  };
+
   TOUCHPOINT_REQUESTS.forEach(request => {
     const card = document.createElement('article');
-    card.className = 'touchpoints-card';
+    card.className = 'card touchpoints-card';
     const title = document.createElement('h4');
     title.className = 'touchpoints-card__title';
     title.textContent = request.title;
@@ -348,18 +365,10 @@ function buildTouchpointRequests() {
     meta.className = 'touchpoints-card__meta';
 
     if (request.requestedBy) {
-      const requested = document.createElement('p');
-      requested.innerHTML = `<strong>Requested By</strong><br/>${request.requestedBy}`;
-      meta.appendChild(requested);
+      meta.appendChild(createMetaItem('Requested By', request.requestedBy));
     }
-
-    const progress = document.createElement('p');
-    progress.innerHTML = `<strong>Completion Progress</strong><br/>${request.progress}`;
-    meta.appendChild(progress);
-
-    const due = document.createElement('p');
-    due.innerHTML = `<strong>Due Date</strong><br/>${request.dueDate}`;
-    meta.appendChild(due);
+    meta.appendChild(createMetaItem('Completion Progress', request.progress));
+    meta.appendChild(createMetaItem('Due Date', request.dueDate));
 
     const status = document.createElement('span');
     status.className = `touchpoints-card__status touchpoints-card__status--${request.status === 'Active' ? 'active' : 'closed'}`;
