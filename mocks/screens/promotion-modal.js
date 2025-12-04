@@ -21,17 +21,20 @@ export function PromotionModal() {
   const successionImpactModal = Modal();
   const manageSuccessorsModal = Modal();
   button.addEventListener('click', () => {
-    detailsModal.open({
-      title: 'Position Details',
-      body: buildPromotionModalContent(detailsModal, successionImpactModal, manageSuccessorsModal),
-      className: 'modal-promotion'
-    });
+    openPromotionDetailsModal(detailsModal, successionImpactModal, manageSuccessorsModal);
   });
 
   page.appendChild(button);
   return page;
 }
 
+export function openPromotionDetailsModal(detailsModal, successionImpactModal, manageSuccessorsModal) {
+  detailsModal.open({
+    title: 'Position Details',
+    body: buildPromotionModalContent(detailsModal, successionImpactModal, manageSuccessorsModal),
+    className: 'modal-promotion'
+  });
+}
 function buildPromotionModalContent(modalInstance, impactModal, manageModal) {
   const container = document.createElement('div');
   container.className = 'promotion-position';
@@ -42,6 +45,8 @@ function buildPromotionModalContent(modalInstance, impactModal, manageModal) {
     buildNewPositionSection(),
     buildActions(modalInstance, impactModal, manageModal)
   );
+
+  initPromotionInteractions(container);
 
   return container;
 }
@@ -200,6 +205,22 @@ function createWarningNotice(impactModal, manageModal) {
     });
   });
   return warning;
+}
+
+function initPromotionInteractions(container) {
+  const warning = container.querySelector('.promotion-position__field-warning--actions');
+  const radios = container.querySelectorAll('input[name="promotion-position-option"]');
+  if (!warning || !radios.length) return;
+
+  const update = () => {
+    const active = container.querySelector('input[name="promotion-position-option"]:checked');
+    const shouldShow = active?.value !== 'keep';
+    warning.hidden = !shouldShow;
+    warning.style.visibility = shouldShow ? 'visible' : 'hidden';
+  };
+
+  radios.forEach(radio => radio.addEventListener('change', update));
+  update();
 }
 
 function createSuccessionImpactBody(impactModal, manageModal) {

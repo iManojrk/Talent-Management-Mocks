@@ -1,6 +1,12 @@
+import { Modal } from '../components/Modal.js?v=20250205';
+import { openPromotionDetailsModal } from './promotion-modal.js?v=20250218';
+
 export function JobChange() {
   const page = document.createElement('section');
   page.className = 'job-change job-change--blank';
+  const promotionDetailsModal = Modal();
+  const successionImpactModal = Modal();
+  const manageSuccessorsModal = Modal();
 
   const intro = document.createElement('div');
   intro.className = 'job-change__intro';
@@ -45,7 +51,11 @@ export function JobChange() {
   subtitleWrap.append(subtitle, override);
 
   const changeDetailsCard = buildChangeDetails();
-  const positionDetailsCard = buildPositionDetails();
+  const positionDetailsCard = buildPositionDetails({
+    promotionDetailsModal,
+    successionImpactModal,
+    manageSuccessorsModal,
+  });
 
   intro.append(header, subtitleWrap, changeDetailsCard, positionDetailsCard);
   page.appendChild(intro);
@@ -110,7 +120,7 @@ function buildChangeDetails() {
   return card;
 }
 
-function buildPositionDetails() {
+function buildPositionDetails(modalRefs = {}) {
   const card = document.createElement('div');
   card.className = 'panel job-change__card job-change__position-card';
 
@@ -132,6 +142,14 @@ function buildPositionDetails() {
       </svg>
     </span>
   `;
+  editButton.addEventListener('click', () => {
+    const { promotionDetailsModal, successionImpactModal, manageSuccessorsModal } = modalRefs;
+    openPromotionDetailsModal(
+      promotionDetailsModal ?? Modal(),
+      successionImpactModal ?? Modal(),
+      manageSuccessorsModal ?? Modal()
+    );
+  });
 
   headingRow.append(heading, editButton);
 

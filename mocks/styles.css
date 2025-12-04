@@ -2096,6 +2096,7 @@
 }
 .promotion-position__field-warning--actions {
   margin-top: 0;
+  min-height: 40px;
 }
 .promotion-position__warning-link {
   font-size: 14px;
